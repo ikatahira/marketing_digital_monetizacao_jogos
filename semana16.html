@@ -1,737 +1,358 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 16 - Marketing Digital e Monetização para Jogos</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: #f0f2f5;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-content img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid white;
-            object-fit: cover;
-        }
-
-        .header-text h1 {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-        }
-
-        .header-text p {
-            font-size: 0.9em;
-            opacity: 0.95;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 0 20px;
-            display: flex;
-            gap: 20px;
-        }
-
-        .sidebar {
-            width: 280px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            height: fit-content;
-            position: sticky;
-            top: 120px;
-        }
-
-        .sidebar h2 {
-            color: #6a11cb;
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #2575fc;
-        }
-
-        .week-menu {
-            list-style: none;
-        }
-
-        .week-menu li {
-            margin-bottom: 8px;
-        }
-
-        .week-menu a {
-            display: block;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            color: #6a11cb;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
-        }
-
-        .week-menu a:hover {
-            background: #e3f2fd;
-            border-left-color: #2575fc;
-            transform: translateX(5px);
-        }
-
-        .week-menu a.active {
-            background: #6a11cb;
-            color: white;
-            border-left-color: #2575fc;
-        }
-
-        .week-badge {
-            background: #2575fc;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            margin-right: 8px;
-        }
-
-        .content {
-            flex: 1;
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            min-height: 600px;
-        }
-
-        .week-title {
-            color: #6a11cb;
-            font-size: 2em;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .week-number {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        .week-subtitle {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .section h2 {
-            color: #2575fc;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section h3 {
-            color: #6a11cb;
-            font-size: 1.2em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .icon {
-            font-size: 1.2em;
-        }
-
-        .objectives-list, .topics-list {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #2575fc;
-        }
-
-        .objectives-list li, .topics-list li {
-            margin-bottom: 10px;
-            padding-left: 10px;
-        }
-
-        .video-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .video-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .video-thumbnail {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            font-size: 3em;
-        }
-
-        .video-info {
-            padding: 15px;
-        }
-
-        .video-info h4 {
-            color: #6a11cb;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .video-info p {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 12px;
-        }
-
-        .video-link {
-            display: inline-block;
-            background: #2575fc;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: background 0.3s;
-        }
-
-        .video-link:hover {
-            background: #6a11cb;
-        }
-
-        .activity-card {
-            background: #fff;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .activity-card:hover {
-            border-color: #2575fc;
-            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.1);
-        }
-
-        .activity-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .activity-number {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .activity-title {
-            color: #6a11cb;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-
-        .activity-card p {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        .activity-card ul {
-            margin-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .activity-card li {
-            margin-bottom: 5px;
-        }
-
-        .materials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .material-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .material-card:hover {
-            border-color: #2575fc;
-            transform: translateY(-5px);
-        }
-
-        .material-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-
-        .material-card h4 {
-            color: #6a11cb;
-            margin-bottom: 10px;
-        }
-
-        .material-card p {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .material-link {
-            display: inline-block;
-            color: #2575fc;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .material-link:hover {
-            color: #6a11cb;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #2575fc;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-
-        .success-box {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-
-        .bibliography {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .bibliography-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: white;
-            border-radius: 5px;
-            border-left: 3px solid #2575fc;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .nav-button {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .nav-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
-        }
-
-        @media (max-width: 968px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-            }
-            
-            .video-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Semana 16 — Redes Sociais para Jogos</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d0812;--s:#1a1025;--s2:#211530;--b:rgba(255,255,255,.06);--b2:rgba(255,255,255,.12);
+--a:#ff80ab;--a2:#c51162;--gl:rgba(255,128,171,0.28);--pur:#9c27b0;--pur2:#ce93d8;--or:#ff7043;--or2:#ffab40;
+--gr:#69f0ae;--go:#ffd740;--tx:#f3e5f5;--td:#b39ddb;--tm:#7e57c2;--r:14px}
+html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden}
+.bgl{position:fixed;inset:0;pointer-events:none;z-index:0}
+.bgl::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 70%,var(--gl) 0%,transparent 55%)}
+.bgl::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:56px 56px}
+.hd{position:sticky;top:0;z-index:100;background:rgba(13,8,18,.93);backdrop-filter:blur(20px);border-bottom:1px solid color-mix(in srgb,var(--a) 25%,transparent)}
+.hdi{max-width:1300px;margin:0 auto;padding:0 24px;height:66px;display:flex;align-items:center;gap:14px}
+.lt{font-family:'Fira Code',monospace;font-size:.72rem;padding:5px 12px;border-radius:6px;background:linear-gradient(135deg,var(--a),var(--a2));color:#000;font-weight:700;white-space:nowrap;letter-spacing:.08em;flex-shrink:0}
+.ht{flex:1;min-width:0}.ht h1{font-weight:900;font-size:clamp(.85rem,2vw,1.1rem);background:linear-gradient(90deg,var(--tx),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ht p{font-family:'Fira Code',monospace;font-size:.58rem;color:var(--tm)}
+.hud{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.hp{background:var(--s2);border:1px solid color-mix(in srgb,var(--a) 20%,transparent);border-radius:8px;padding:6px 12px;text-align:center;min-width:58px}
+.hp .hv{font-family:'Fira Code',monospace;font-size:1.1rem;font-weight:700;color:var(--a);display:block;line-height:1}
+.hp .hl{font-size:.5rem;color:var(--tm);text-transform:uppercase;letter-spacing:.1em;font-family:'Fira Code',monospace}
+.hw{min-width:145px}.hwl{display:flex;justify-content:space-between;font-family:'Fira Code',monospace;font-size:.52rem;color:var(--tm);margin-bottom:4px}
+.htr{height:4px;background:rgba(255,255,255,.05);border-radius:100px;overflow:hidden}
+.hfi{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:100px;transition:width .8s ease}
+.ab{font-family:'Fira Code',monospace;font-size:.68rem;color:var(--td);text-decoration:none;background:var(--s2);border:1px solid color-mix(in srgb,var(--a) 20%,transparent);padding:6px 12px;border-radius:6px;transition:all .2s;white-space:nowrap}
+.ab:hover{color:var(--a)}
+.pbw{background:rgba(13,8,18,.85);border-bottom:1px solid var(--b);padding:5px 24px}
+.pbi{max-width:1300px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.pbl{font-family:'Fira Code',monospace;font-size:.58rem;color:var(--tm);white-space:nowrap}
+.pbt{flex:1;height:3px;background:rgba(255,255,255,.05);border-radius:100px;overflow:hidden}
+.pbf{height:100%;background:linear-gradient(90deg,var(--a),var(--pur),var(--a2));border-radius:100px;transition:width .6s ease}
+.tst{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--s2);border:1px solid color-mix(in srgb,var(--a) 40%,transparent);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.7);transform:translateY(120px) scale(.9);opacity:0;transition:all .45s cubic-bezier(.34,1.56,.64,1);max-width:320px}
+.tst.on{transform:translateY(0) scale(1);opacity:1}
+.ti{font-size:1.5rem}.tt{font-family:'Fira Code',monospace;font-size:.82rem;font-weight:700;color:var(--a)}.tm{font-size:.7rem;color:var(--td);margin-top:2px}
+.pg{max-width:1300px;margin:0 auto;padding:26px 24px;position:relative;z-index:2}
+.hero{background:var(--s);border:1px solid color-mix(in srgb,var(--a) 25%,transparent);border-radius:22px;padding:44px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--a),var(--a2),transparent)}
+.ey{font-family:'Fira Code',monospace;font-size:.62rem;color:var(--a);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ey::before{content:'//';color:var(--tm)}
+.hero h2{font-weight:900;font-size:clamp(1.8rem,5vw,3.2rem);line-height:1.08;margin-bottom:12px;background:linear-gradient(135deg,#fff 20%,var(--a) 60%,var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hsub{font-size:.94rem;color:var(--td);max-width:620px;line-height:1.75;margin-bottom:22px}
+.hch{display:flex;flex-wrap:wrap;gap:8px}
+.ch{font-family:'Fira Code',monospace;font-size:.67rem;padding:5px 13px;border-radius:100px;border:1px solid}
+.cha{color:var(--a);border-color:color-mix(in srgb,var(--a) 40%,transparent);background:color-mix(in srgb,var(--a) 8%,transparent)}
+.chp{color:var(--pur2);border-color:rgba(156,39,176,.4);background:rgba(156,39,176,.08)}
+.cho{color:var(--or2);border-color:rgba(255,112,67,.4);background:rgba(255,112,67,.08)}
+.chg{color:var(--gr);border-color:rgba(105,240,174,.35);background:rgba(105,240,174,.07)}
+.chgo{color:var(--go);border-color:rgba(255,215,64,.35);background:rgba(255,215,64,.07)}
+.hbn{position:absolute;right:44px;top:50%;transform:translateY(-50%);font-weight:900;font-size:9rem;color:color-mix(in srgb,var(--a) 5%,transparent);pointer-events:none;user-select:none}
+.duo{background:var(--s);border:1px solid color-mix(in srgb,var(--a) 20%,transparent);border-radius:20px;padding:22px;margin-bottom:20px;position:relative;overflow:hidden}
+.duo::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a),var(--a2))}
+.dh{font-family:'Fira Code',monospace;font-size:.72rem;color:var(--tm);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.dh::after{content:'';flex:1;height:1px;background:var(--b2)}
+.dg{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}
+.ps{background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);padding:18px;transition:all .3s;position:relative}
+.ps.a1{border-color:color-mix(in srgb,var(--a) 50%,transparent);box-shadow:0 0 20px var(--gl)}
+.ps.a2{border-color:rgba(255,112,67,.5);box-shadow:0 0 20px rgba(255,112,67,.2)}
+.ps::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px}
+.p1::before{background:linear-gradient(90deg,var(--a),var(--a2))}.p2::before{background:linear-gradient(90deg,var(--or),var(--or2))}
+.ph{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pav{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.p1 .pav{background:color-mix(in srgb,var(--a) 12%,transparent)}.p2 .pav{background:rgba(255,112,67,.15)}
+.pn{background:transparent;border:none;color:var(--tx);font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;width:100%;outline:none}
+.pn::placeholder{color:var(--tm)}
+.pxr{display:flex;align-items:baseline;gap:4px;margin-bottom:8px}
+.pxv{font-family:'Fira Code',monospace;font-size:2rem;font-weight:700;line-height:1}
+.p1 .pxv{color:var(--a)}.p2 .pxv{color:var(--or2)}
+.pxl{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--tm);text-transform:uppercase}
+.pbs{height:4px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden;margin-bottom:8px}
+.pbf2{height:100%;border-radius:100px;transition:width .6s ease;width:0%}
+.p1 .pbf2{background:var(--a)}.p2 .pbf2{background:var(--or)}
+.pbt{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--tm)}
+.pac{width:100%;margin-top:12px;padding:8px;border:none;border-radius:8px;font-family:'Fira Code',monospace;font-size:.68rem;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.06em}
+.p1 .pac{background:color-mix(in srgb,var(--a) 10%,transparent);color:var(--a)}
+.p1 .pac:hover,.p1.a1 .pac{background:var(--a);color:#000;font-weight:700}
+.p2 .pac{background:rgba(255,112,67,.12);color:var(--or2)}
+.p2 .pac:hover,.p2.a2 .pac{background:var(--or);color:#fff;font-weight:700}
+.vsm{text-align:center;font-weight:900;font-size:2rem;color:rgba(255,255,255,.1)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:20px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--a) 35%,transparent),transparent)}
+.ch2{display:flex;align-items:center;gap:14px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--b)}
+.ci{font-size:1.3rem}.ctt{flex:1}
+.ctit{font-weight:900;font-size:1rem;color:var(--tx);letter-spacing:.02em}
+.csub{font-family:'Fira Code',monospace;font-size:.58rem;color:var(--tm);margin-top:3px}
+.xtag{font-family:'Fira Code',monospace;font-size:.66rem;color:var(--go);background:rgba(255,215,64,.1);border:1px solid rgba(255,215,64,.25);padding:3px 10px;border-radius:100px;margin-left:auto;white-space:nowrap}
+.objs{display:flex;flex-direction:column;gap:8px}
+.obj{display:flex;align-items:center;gap:14px;padding:13px 16px;background:rgba(255,255,255,.015);border:1px solid var(--b);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.88rem;font-weight:500}
+.obj:hover{background:color-mix(in srgb,var(--a) 4%,transparent);border-color:color-mix(in srgb,var(--a) 20%,transparent)}
+.obj.done{background:rgba(105,240,174,.04);border-color:rgba(105,240,174,.18);color:var(--tm);text-decoration:line-through}
+.ock{width:22px;height:22px;border:2px solid var(--b2);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:all .25s}
+.obj.done .ock{background:var(--gr);border-color:var(--gr);color:#000}
+.fcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:8px}
+.fc{background:var(--s2);border:1px solid var(--b);border-radius:16px;height:155px;cursor:pointer;perspective:600px;position:relative}
+.fci{width:100%;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;position:relative}
+.fc.fl .fci{transform:rotateY(180deg)}
+.fcf,.fcb{position:absolute;inset:0;border-radius:16px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fcf{background:var(--s2);border:1px solid color-mix(in srgb,var(--a) 20%,transparent)}
+.fcb{background:color-mix(in srgb,var(--a) 8%,transparent);border:1px solid color-mix(in srgb,var(--a) 35%,transparent);transform:rotateY(180deg)}
+.fft{font-family:'Fira Code',monospace;font-size:.8rem;font-weight:700;color:var(--a);line-height:1.4}
+.fbt{font-size:.76rem;color:var(--td);line-height:1.5}
+.fhi{font-family:'Fira Code',monospace;font-size:.48rem;color:var(--tm);margin-top:6px;letter-spacing:.1em;text-transform:uppercase}
+.fsc{font-family:'Fira Code',monospace;font-size:.72rem;color:var(--tm);text-align:right;margin-top:4px}
+.drs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.dct{font-family:'Fira Code',monospace;font-size:.65rem;color:var(--a);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.di2{display:flex;flex-direction:column;gap:8px;min-height:200px}
+.dit{background:var(--s2);border:1px solid var(--b2);border-radius:10px;padding:11px 13px;font-size:.82rem;color:var(--td);cursor:grab;user-select:none;transition:all .2s}
+.dit:active{cursor:grabbing}.dit.dragging{opacity:.4;transform:scale(.96)}
+.dz{background:rgba(255,255,255,.015);border:2px dashed var(--b2);border-radius:10px;padding:11px 13px;font-size:.82rem;color:var(--tm);min-height:46px;transition:all .2s;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dz.dov{border-color:var(--a);background:color-mix(in srgb,var(--a) 5%,transparent);color:var(--a)}
+.dz.dok{border-color:var(--gr);background:rgba(105,240,174,.06);color:var(--gr);border-style:solid}
+.dz.dno{border-color:#ef5350;background:rgba(239,83,80,.06);color:#ef9a9a;border-style:solid}
+.dcb{background:color-mix(in srgb,var(--a) 10%,transparent);border:1px solid color-mix(in srgb,var(--a) 30%,transparent);color:var(--a);border-radius:10px;padding:10px 22px;font-family:'Fira Code',monospace;font-size:.73rem;font-weight:700;cursor:pointer;transition:all .2s}
+.dcb:hover{background:color-mix(in srgb,var(--a) 18%,transparent)}
+.dr{font-family:'Fira Code',monospace;font-size:.72rem;margin-top:8px;color:var(--tm)}
+.slbl{font-family:'Fira Code',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--tm);text-transform:uppercase;margin:20px 0 12px;display:flex;align-items:center;gap:10px}
+.slbl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--b2),transparent)}
+.cal{border-radius:var(--r);padding:14px 16px;font-size:.84rem;line-height:1.7;margin:12px 0;display:flex;gap:10px}
+.cico{flex-shrink:0;font-size:1rem;margin-top:1px}.ctx b{display:block;font-size:.82rem;margin-bottom:3px}
+.ci2{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);color:#b2ebf2}.ci2 b{color:#00e5ff}
+.cw{background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.2);color:#fff9c4}.cw b{color:var(--go)}
+.cf{background:rgba(255,112,67,.07);border:1px solid rgba(255,112,67,.2);color:#ffe0b2}.cf b{color:var(--or2)}
+.ca2{background:color-mix(in srgb,var(--a) 6%,transparent);border:1px solid color-mix(in srgb,var(--a) 25%,transparent);color:var(--td)}.ca2 b{color:var(--a)}
+.acc{display:flex;flex-direction:column;gap:8px}
+.ai{border:1px solid var(--b);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.ai.open{border-color:color-mix(in srgb,var(--a) 35%,transparent)}
+.aih{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;background:rgba(255,255,255,.015);user-select:none;transition:background .2s}
+.aih:hover{background:color-mix(in srgb,var(--a) 5%,transparent)}
+.ain{font-family:'Fira Code',monospace;font-size:1rem;font-weight:700;color:var(--a);width:28px;flex-shrink:0}
+.aim{flex:1;font-weight:700;font-size:.9rem}.aime{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--tm)}
+.aiar{color:var(--tm);font-size:.7rem;transition:transform .3s;flex-shrink:0}.ai.open .aiar{transform:rotate(180deg)}
+.aib{max-height:0;overflow:hidden;transition:max-height .5s ease,padding .3s}.ai.open .aib{max-height:2000px;padding:0 18px 20px}
+.aic{font-size:.86rem;color:var(--td);line-height:1.85}.aic h4{color:var(--a);font-size:.88rem;margin:14px 0 6px;font-weight:700}
+.aic ul{padding-left:18px}.aic li{margin-bottom:6px}.aic strong{color:var(--tx)}
+.act{background:var(--s2);border:1px solid var(--b);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.acth{display:flex;align-items:center;gap:14px;padding:18px 20px;background:rgba(255,255,255,.015);border-bottom:1px solid var(--b)}
+.actn{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--a),var(--a2));color:#000;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;flex-shrink:0}
+.acthi{flex:1}.acttit{font-weight:800;font-size:1rem;margin-bottom:4px}
+.acttgs{display:flex;gap:6px;flex-wrap:wrap}
+.at{font-family:'Fira Code',monospace;font-size:.6rem;padding:2px 8px;border-radius:100px;border:1px solid}
+.ata{color:var(--a);border-color:color-mix(in srgb,var(--a) 30%,transparent);background:color-mix(in srgb,var(--a) 7%,transparent)}
+.atp{color:var(--pur2);border-color:rgba(156,39,176,.3);background:rgba(156,39,176,.07)}
+.ato{color:var(--or2);border-color:rgba(255,112,67,.3);background:rgba(255,112,67,.07)}
+.atg{color:var(--go);border-color:rgba(255,215,64,.3);background:rgba(255,215,64,.07)}
+.actb{padding:20px}
+.acto{font-size:.87rem;color:var(--td);line-height:1.7;margin-bottom:16px;padding:12px 14px;background:color-mix(in srgb,var(--a) 4%,transparent);border-left:2px solid var(--a);border-radius:0 8px 8px 0}
+.sts{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.st{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:rgba(255,255,255,.015);border-radius:8px;font-size:.84rem;color:var(--td);line-height:1.6}
+.sn{background:color-mix(in srgb,var(--a) 12%,transparent);color:var(--a);border-radius:5px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0;font-family:'Fira Code',monospace}
+.rbt{font-family:'Fira Code',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--tm);text-transform:uppercase;margin-bottom:10px}
+.rub{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.rc{background:rgba(255,255,255,.02);border:1px solid var(--b);border-radius:10px;padding:12px;font-size:.78rem;color:var(--td);line-height:1.55}
+.rlv{display:block;font-family:'Fira Code',monospace;font-size:.66rem;font-weight:700;margin-bottom:5px}
+.ri .rlv{color:#ef5350}.rb .rlv{color:var(--tm)}.rp .rlv{color:var(--a)}.re .rlv{color:var(--go)}
+.cbn{width:100%;padding:12px;background:color-mix(in srgb,var(--a) 8%,transparent);border:1px solid color-mix(in srgb,var(--a) 25%,transparent);color:var(--a);border-radius:10px;font-family:'Fira Code',monospace;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .25s;letter-spacing:.04em}
+.cbn:hover{background:color-mix(in srgb,var(--a) 16%,transparent)}.cbn:disabled{opacity:.5;cursor:default}
+.qpr{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.qpt{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:100px;overflow:hidden}
+.qpf{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:100px;transition:width .4s ease}
+.qlbl{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--tm)}
+.qq{display:none}.qq.on{display:block}
+.qtx{font-weight:700;font-size:.98rem;margin-bottom:16px;line-height:1.6;color:var(--tx)}
+.qop{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.qo{background:rgba(255,255,255,.02);border:1px solid var(--b2);border-radius:10px;padding:12px 16px;text-align:left;font-family:'Outfit',sans-serif;font-size:.85rem;color:var(--td);cursor:pointer;transition:all .2s}
+.qo:hover:not(:disabled){background:color-mix(in srgb,var(--a) 6%,transparent);border-color:color-mix(in srgb,var(--a) 30%,transparent);color:var(--tx)}
+.qo.qok{background:rgba(105,240,174,.1);border-color:var(--gr);color:var(--gr)}
+.qo.qno{background:rgba(239,83,80,.08);border-color:#ef5350;color:#ef9a9a}
+.qfb{display:none;border-radius:10px;padding:12px 14px;font-size:.82rem;line-height:1.6;margin-bottom:10px}
+.qfb.on{display:block}.qfb.ok{background:rgba(105,240,174,.08);border:1px solid rgba(105,240,174,.25);color:#a5d6a7}
+.qfb.fail{background:rgba(239,83,80,.07);border:1px solid rgba(239,83,80,.2);color:#ef9a9a}
+.qnr{display:none}.qnr.on{display:flex;justify-content:flex-end}
+.qnb{background:var(--a);color:#000;border:none;border-radius:8px;padding:10px 22px;font-family:'Fira Code',monospace;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s}
+.qnb:hover{opacity:.85}
+.qrs{display:none;text-align:center;padding:30px 0}.qrs.on{display:block}
+.qrb{font-family:'Fira Code',monospace;font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:10px}
+.qrm{color:var(--td);font-size:.9rem;margin-bottom:8px}.qrx{font-family:'Fira Code',monospace;font-size:.78rem;color:var(--go);margin-bottom:18px}
+.qrbn{font-family:'Fira Code',monospace;font-size:.73rem;padding:10px 24px;background:color-mix(in srgb,var(--a) 8%,transparent);border:1px solid color-mix(in srgb,var(--a) 30%,transparent);color:var(--a);border-radius:8px;cursor:pointer;transition:all .2s}
+.qrbn:hover{background:color-mix(in srgb,var(--a) 16%,transparent)}
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.ach{background:var(--s2);border:1px solid var(--b);border-radius:var(--r);padding:16px 10px;text-align:center;filter:grayscale(1) opacity(.28);transition:all .4s}
+.ach.got{filter:none;border-color:rgba(255,215,64,.4);background:rgba(255,215,64,.05);box-shadow:0 0 22px rgba(255,215,64,.15);animation:ab .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes ab{0%{transform:scale(.4) rotate(-10deg)}60%{transform:scale(1.2) rotate(3deg)}100%{transform:scale(1) rotate(0deg)}}
+.ae{font-size:1.8rem;display:block;margin-bottom:6px}.an{font-family:'Fira Code',monospace;font-size:.58rem;color:var(--tm);line-height:1.4}.ach.got .an{color:var(--go)}
+.bn{display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--b);flex-wrap:wrap;gap:12px}
+.bna{font-family:'Fira Code',monospace;font-size:.73rem;padding:12px 22px;background:var(--s2);border:1px solid var(--b2);color:var(--td);text-decoration:none;border-radius:10px;font-weight:600;transition:all .25s;letter-spacing:.04em}
+.bna:hover{color:var(--a);border-color:color-mix(in srgb,var(--a) 35%,transparent)}
+@media(max-width:768px){.hud{display:none}.pg{padding:16px}.hero{padding:28px 20px}.dg{grid-template-columns:1fr 1fr}.vsm{display:none}.rub{grid-template-columns:1fr 1fr}.hbn{display:none}.drs{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <img src="foto_professor.png" alt="Professor Isaque Katahira">
-            <div class="header-text">
-                <h1>🎮 Marketing Digital e Monetização para Jogos</h1>
-                <p>Curso Superior de Tecnologia em Jogos Digitais - FATEC Ourinhos</p>
-                <p><strong>Professor Responsável:</strong> Isaque Katahira</p>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <aside class="sidebar">
-            <h2>📚 Semanas</h2>
-            <ul class="week-menu">
-                <li><a href="semana01.html"><span class="week-badge">01</span>Introdução ao Marketing Digital</a></li>
-                <li><a href="semana02.html"><span class="week-badge">02</span>Mercado de Jogos Nacional</a></li>
-                <li><a href="semana03.html"><span class="week-badge">03</span>Mercado de Jogos Internacional</a></li>
-                <li><a href="semana04.html"><span class="week-badge">04</span>Plataformas e Demografia</a></li>
-                <li><a href="semana05.html"><span class="week-badge">05</span>Marketing 4.0 e Jogadores</a></li>
-                <li><a href="semana06.html"><span class="week-badge">06</span>Free-to-Play</a></li>
-                <li><a href="semana07.html"><span class="week-badge">07</span>Paid Games e Premium</a></li>
-                <li><a href="semana08.html"><span class="week-badge">08</span>Modelos Híbridos</a></li>
-                <li><a href="semana09.html"><span class="week-badge">09</span>Battle Pass e Season Pass</a></li>
-                <li><a href="semana10.html"><span class="week-badge">10</span>Monetização e Game Design</a></li>
-                <li><a href="semana11.html"><span class="week-badge">11</span>SEO e ASO para Jogos</a></li>
-                <li><a href="semana12.html"><span class="week-badge">12</span>Google Analytics e Firebase</a></li>
-                <li><a href="semana13.html"><span class="week-badge">13</span>ROI, CAC e LTV</a></li>
-                <li><a href="semana14.html"><span class="week-badge">14</span>Facebook e Instagram Ads</a></li>
-                <li><a href="semana15.html"><span class="week-badge">15</span>Análise Competitiva</a></li>
-                <li><a href="semana16.html" class="active"><span class="week-badge">16</span>Redes Sociais para Jogos</a></li>
-                <li><a href="semana17.html"><span class="week-badge">17</span>Influenciadores e Streamers</a></li>
-                <li><a href="semana18.html"><span class="week-badge">18</span>Eventos e Festivais</a></li>
-                <li><a href="semana19.html"><span class="week-badge">19</span>Press Kit e Divulgação</a></li>
-                <li><a href="semana20.html"><span class="week-badge">20</span>Projeto Final</a></li>
-            </ul>
-        </aside>
-
-        <main class="content">
-            <div class="week-title">
-                <div class="week-number">16</div>
-                <div>Redes Sociais para Jogos</div>
-            </div>
-            <p class="week-subtitle">Estratégias de presença e engajamento em redes sociais</p>
-
-            <section class="section">
-                <h2><span class="icon">🎯</span>Objetivos da Semana</h2>
-                <ul class="objectives-list">
-                    <li>Desenvolver estratégia social media</li>
-                    <li>Criar conteúdo engajador</li>
-                    <li>Gerenciar comunidade</li>
-                    <li>Mensurar resultados redes sociais</li>
-                    <li>Construir presença consistente</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">📖</span>Conteúdo Teórico</h2>
-                <div class="topics-list">
-                    <h3>1. Estratégia de Redes Sociais</h3>
-                    <ul>
-                        <li>Escolha de plataformas</li>
-                        <li>Voice e tone brand</li>
-                        <li>Calendário editorial</li>
-                        <li>Frequency e timing</li>
-                    </ul>
-                    <h3>2. Plataformas para Jogos</h3>
-                    <ul>
-                        <li>Twitter: updates e community</li>
-                        <li>Instagram: visual content</li>
-                        <li>TikTok: short-form video</li>
-                        <li>Discord: community hub</li>
-                        <li>Reddit: discussions</li>
-                    </ul>
-                    <h3>3. Tipos de Conteúdo</h3>
-                    <ul>
-                        <li>Development updates</li>
-                        <li>Behind-the-scenes</li>
-                        <li>User-generated content</li>
-                        <li>Memes e humor</li>
-                        <li>Contests e giveaways</li>
-                    </ul>
-                    <h3>4. Community Management</h3>
-                    <ul>
-                        <li>Response guidelines</li>
-                        <li>Crisis management</li>
-                        <li>Feedback collection</li>
-                        <li>Moderator team</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">🎬</span>Vídeos Recomendados</h2>
-                <div class="video-container">
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Social Media Strategy Indie</h4>
-                            <p>Estratégia redes indie</p>
-                            <a href="https://www.youtube.com/watch?v=F9Y-28U_DqE" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Building Gaming Community</h4>
-                            <p>Construindo comunidade</p>
-                            <a href="https://www.youtube.com/watch?v=oMB38KKRYek" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Twitter Marketing Game Devs</h4>
-                            <p>Twitter para devs</p>
-                            <a href="https://www.youtube.com/watch?v=9R7hPbLPfJk" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Discord Server Setup</h4>
-                            <p>Setup servidor Discord</p>
-                            <a href="https://www.youtube.com/watch?v=EHc6KQqkTFw" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>TikTok for Game Marketing</h4>
-                            <p>TikTok marketing games</p>
-                            <a href="https://www.youtube.com/watch?v=mQF8pGbQhBw" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Community Management Best Practices</h4>
-                            <p>Melhores práticas CM</p>
-                            <a href="https://www.youtube.com/watch?v=JkPbQ4r3gwo" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">✏️</span>Atividades Práticas</h2>
-                
-                
-                <div class="activity-card">
-                    <div class="activity-header">
-                        <div class="activity-number">1</div>
-                        <div class="activity-title">Estratégia Social Media</div>
-                    </div>
-                    <p><strong>Objetivo:</strong> Criar plano completo</p>
-                    <p><strong>Procedimento:</strong></p>
-                    <ul>
-                        <li>Definir plataformas-chave</li>
-                        <li>Criar voice & tone guide</li>
-                        <li>Desenvolver calendário 30 dias</li>
-                        <li>Definir KPIs</li>
-                        <li>Planejar recursos</li>
-                    </ul>
-                    <p><strong>Duração:</strong> 45 minutos</p>
-                </div>
-
-                <div class="activity-card">
-                    <div class="activity-header">
-                        <div class="activity-number">2</div>
-                        <div class="activity-title">Criação de Conteúdo</div>
-                    </div>
-                    <p><strong>Objetivo:</strong> Produzir conteúdo 1 semana</p>
-                    <p><strong>Procedimento:</strong></p>
-                    <ul>
-                        <li>Criar 7 posts diferentes</li>
-                        <li>Desenvolver hashtag strategy</li>
-                        <li>Design visual posts</li>
-                        <li>Escrever captions</li>
-                        <li>Agendar publicações</li>
-                    </ul>
-                    <p><strong>Duração:</strong> 40 minutos</p>
-                </div>
-
-                <div class="activity-card">
-                    <div class="activity-header">
-                        <div class="activity-number">3</div>
-                        <div class="activity-title">Setup Discord Server</div>
-                    </div>
-                    <p><strong>Objetivo:</strong> Criar servidor comunidade</p>
-                    <p><strong>Procedimento:</strong></p>
-                    <ul>
-                        <li>Criar servidor Discord</li>
-                        <li>Configurar canais</li>
-                        <li>Setup bots</li>
-                        <li>Criar regras</li>
-                        <li>Planejar eventos</li>
-                    </ul>
-                    <p><strong>Duração:</strong> 30 minutos</p>
-                </div>
-
-            
-            </section>
-
-            <div class="info-box">
-                <strong>💡 DICA PROFISSIONAL</strong><br>
-                No marketing de jogos, autenticidade e conexão com a comunidade são mais importantes que grandes orçamentos. Jogadores valorizam desenvolvedores que se comunicam de forma transparente e genuína.
-            </div>
-
-            <section class="section">
-                <h2><span class="icon">📖</span>Material de Apoio</h2>
-                <div class="materials-grid">
-                    <div class="material-card">
-                        <div class="material-icon">📄</div>
-                        <h4>Guia de Marketing para Jogos Indie</h4>
-                        <p>eBook completo sobre estratégias indie</p>
-                        <a href="#" class="material-link">Download PDF →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">📊</div>
-                        <h4>Template de Persona</h4>
-                        <p>Modelo editável para criação de personas</p>
-                        <a href="#" class="material-link">Download →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">📈</div>
-                        <h4>Checklist de Pré-Lançamento</h4>
-                        <p>Lista completa de ações de marketing</p>
-                        <a href="#" class="material-link">Download PDF →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">🎯</div>
-                        <h4>Cases de Sucesso</h4>
-                        <p>Análise de 10 campanhas bem-sucedidas</p>
-                        <a href="#" class="material-link">Acessar →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">📚</div>
-                        <h4>Glossário de Marketing Digital</h4>
-                        <p>Termos essenciais do marketing de jogos</p>
-                        <a href="#" class="material-link">Download PDF →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">🔗</div>
-                        <h4>Links Úteis</h4>
-                        <p>Comunidades e recursos online</p>
-                        <a href="#" class="material-link">Acessar Lista →</a>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">📚</span>Bibliografia da Semana</h2>
-                <div class="bibliography">
-                    <div class="bibliography-item">
-                        <strong>KOTLER, Philip; KARTAJAYA, Hermawan; SETIAWAN, Iwan.</strong> Marketing 4.0: Moving from Traditional to Digital. 1. ed. New Jersey: John Wiley Trade, 2016.<br>
-                        <em>Capítulo 1: Power Shifts to the Connected Customers</em>
-                    </div>
-                    <div class="bibliography-item">
-                        <strong>GABRIEL, M.</strong> Marketing Na Era Digital - Conceitos, Plataformas e Estratégias. São Paulo: Novatec, 2010.<br>
-                        <em>Capítulo 1: A Revolução Digital</em>
-                    </div>
-                    <div class="bibliography-item">
-                        <strong>CHANDLER, H. M.</strong> Manual de Produção de Jogos Digitais. 2ª Ed. Porto Alegre: Bookman, 2012.<br>
-                        <em>Capítulo 14: Marketing e Relações Públicas</em>
-                    </div>
-                    <div class="bibliography-item">
-                        <strong>MASTROCOLA, V. M.</strong> Game Design: Modelos de Negócio e Processos Criativos. 1 ed. São Paulo: Cengage Learning, 2015.<br>
-                        <em>Capítulo 3: Modelos de Negócio para Jogos Digitais</em>
-                    </div>
-                </div>
-            </section>
-
-            <div class="warning-box">
-                <strong>⚠️ Para a Próxima Aula:</strong><br>
-                • Pesquisar sobre o mercado brasileiro de jogos digitais<br>
-                • Levantar dados sobre faturamento e crescimento do setor no Brasil<br>
-                • Identificar os principais estúdios brasileiros<br>
-                • Trazer exemplos de jogos brasileiros de sucesso
-            </div>
-
-            <div class="success-box">
-                <strong>✅ Tarefa para Casa:</strong><br>
-                1. Assistir aos vídeos recomendados<br>
-                2. Ler o Capítulo 1 do Marketing 4.0<br>
-                3. Completar as atividades práticas propostas<br>
-                4. Criar uma conta no Google Analytics (gratuito)<br>
-                5. Seguir pelo menos 5 estúdios de jogos nas redes sociais
-            </div>
-
-            <div class="navigation">
-                <a href="semana15.html" class="nav-button">⬅️ Semana Anterior</a>
-                <a href="semana17.html" class="nav-button">Próxima Semana ➡️</a>
-            </div>
-        </main>
+<div class="bgl"></div>
+<div class="tst" id="tst"><div class="ti" id="tsti">⚡</div><div><div class="tt" id="tstt">+XP</div><div class="tm" id="tstm"></div></div></div>
+<header class="hd">
+  <div class="hdi">
+    <div class="lt">MKTG GAMES</div>
+    <div class="ht"><h1>Marketing Digital e Monetização para Jogos</h1><p>Prof. Isaque Katahira · Jogos Digitais 6º Sem · FATEC Ourinhos</p></div>
+    <a href="semana15.html" class="ab">← Sem 15</a>
+    <a href="index.html" class="ab">⌂ Índice</a>
+    <div class="hud">
+      <div class="hp"><span class="hv" id="hxp">0</span><span class="hl">XP</span></div>
+      <div class="hp"><span class="hv" id="hstk">0</span><span class="hl">Streak</span></div>
+      <div class="hp hw"><div class="hwl"><span id="hlv">Novato</span><span id="hpct">0%</span></div><div class="htr"><div class="hfi" id="hbar" style="width:0%"></div></div></div>
     </div>
-</body>
-</html>
+  </div>
+</header>
+<div class="pbw"><div class="pbi"><span class="pbl">PROGRESSO S16</span><div class="pbt"><div class="pbf" id="prog" style="width:0%"></div></div><span class="pbl" id="progt">0/12</span></div></div>
+<main class="pg">
+<section class="hero">
+  <div class="ey">SEMANA 16 · MÓDULO 7 — COMUNIDADE E CONTEÚDO</div>
+  <h2>Redes Sociais para Jogos</h2>
+  <p class="hsub">TikTok descobriu Hollow Knight para uma nova geração. Discord transformou Among Us de jogo morto em fenômeno global. Redes sociais não são apenas marketing — são o ecossistema onde comunidades de jogos vivem, crescem e morrem. Dominar cada plataforma com seu tom e formato próprio é o que separa games virais de games invisíveis.</p>
+  <div class="hch"><span class="ch cha">⏱ 110 min</span><span class="ch chgo">⚡ 440 XP</span><span class="ch cho">✏️ 2 atividades</span><span class="ch chp">📱 TikTok + Discord</span><span class="ch chg">💻 Calendário Editorial</span></div>
+  <div class="hbn">16</div>
+</section>
+<div class="duo">
+  <div class="dh">⚔️ MODO DUELO — SEMANA 16</div>
+  <div class="dg">
+    <div class="ps p1" id="ps1"><div class="ph"><div class="pav">⚡</div><input class="pn" id="p1n" type="text" value="Player 1" placeholder="Seu nome" maxlength="16"></div><div class="pxr"><span class="pxv" id="p1xp">0</span><span class="pxl">XP S16</span></div><div class="pbs"><div class="pbf2" id="p1pb"></div></div><div class="pbt" id="p1bd">0 conquistas</div><button class="pac" onclick="sA(1)">Jogar como P1</button></div>
+    <div class="vsm">VS</div>
+    <div class="ps p2" id="ps2"><div class="ph"><div class="pav">🔥</div><input class="pn" id="p2n" type="text" value="Player 2" placeholder="Seu nome" maxlength="16"></div><div class="pxr"><span class="pxv" id="p2xp">0</span><span class="pxl">XP S16</span></div><div class="pbs"><div class="pbf2" id="p2pb"></div></div><div class="pbt" id="p2bd">0 conquistas</div><button class="pac" onclick="sA(2)">Jogar como P2</button></div>
+  </div>
+</div>
+<div class="card">
+  <div class="ch2"><span class="ci">🎯</span><div class="ctt"><div class="ctit">OBJETIVOS DA SEMANA</div><div class="csub">Clique para marcar — +5 XP cada</div></div><div class="xtag">+5 XP cada</div></div>
+  <div class="objs" id="objs"></div>
+</div>
+<div class="card">
+  <div class="ch2"><span class="ci">🃏</span><div class="ctt"><div class="ctit">FLASHCARDS — CONCEITOS-CHAVE</div><div class="csub">Clique para virar · memorize os termos · +3 XP cada</div></div><div class="xtag">+24 XP</div></div>
+  <div class="fcg" id="fcg"></div>
+  <div class="fsc" id="fcsc">0/8 virados</div>
+</div>
+<div class="card">
+  <div class="ch2"><span class="ci">🧩</span><div class="ctt"><div class="ctit">ARRASTA E SOLTA — CONECTE OS PARES</div><div class="csub">Arraste os conceitos para as definições · +5 XP por acerto</div></div><div class="xtag">+25 XP</div></div>
+  <div class="drs">
+    <div><div class="dct">📦 Conceitos</div><div class="di2" id="ditems"></div></div>
+    <div><div class="dct">🎯 Definições</div><div class="di2" id="dzones"></div></div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:12px">
+    <button class="dcb" onclick="chkD()">✔ Verificar</button>
+    <button class="dcb" onclick="rstD()" style="background:rgba(255,255,255,.04)">↺ Reiniciar</button>
+  </div>
+  <div class="dr" id="dres"></div>
+</div>
+<div class="card">
+  <div class="ch2"><span class="ci">📖</span><div class="ctt"><div class="ctit">CONTEÚDO TEÓRICO</div><div class="csub">Abra cada tópico — +5 XP por tópico</div></div><div class="xtag">+20 XP</div></div>
+  <div class="acc" id="acc"></div>
+</div>
+<div class="card">
+  <div class="ch2"><span class="ci">✏️</span><div class="ctt"><div class="ctit">ATIVIDADES PRÁTICAS</div><div class="csub">Rubricas completas · 50 XP cada</div></div><div class="xtag">+100 XP</div></div>
+  <div id="acts"></div>
+</div>
+<div class="card">
+  <div class="ch2"><span class="ci">🧠</span><div class="ctt"><div class="ctit">QUIZ — REDES SOCIAIS PARA JOGOS</div><div class="csub">10 questões · sem consulta</div></div><div class="xtag">até +100 XP</div></div>
+  <div class="qpr"><div class="qpt"><div class="qpf" id="qpf" style="width:0%"></div></div><span class="qlbl" id="qcnt">0/10</span></div>
+  <div id="quiz"></div>
+</div>
+<div class="card">
+  <div class="ch2"><span class="ci">🏆</span><div class="ctt"><div class="ctit">CONQUISTAS — SEMANA 16</div></div></div>
+  <div class="ag" id="ag"></div>
+</div>
+<div class="cal cw" style="margin-bottom:20px"><span class="cico">📌</span><div class="ctx"><b>Para a Próxima Aula (Semana 17):</b> Estudar marketing de influenciadores e streamers para jogos · Como selecionar influencers pelo fit de audiência · Contratos e métricas de campanha · TikTok vs YouTube vs Twitch · Como estruturar uma campanha de lançamento com influencers.</div></div>
+<div class="bn"><a href="semana15.html" class="bna">← Semana 15</a><a href="semana17.html" class="bna">Semana 17 →</a></div>
+</main>
+<script>
+let xp=0,stk=0,acts=0,ap=1,p1x=0,p2x=0,p1b=0,p2b=0;
+const MX=440;
+let accS=new Set(),objA=[],fcF=new Set(),dDone=false,dragSrc=null,dragAns={};
+function sA(n){ap=n;document.getElementById('ps1').classList.toggle('a1',n===1);document.getElementById('ps2').classList.toggle('a2',n===2);t('🎮',document.getElementById('p'+n+'n').value||'Player '+n,'ativo!');}
+function aPXP(v){if(ap===1){p1x+=v;document.getElementById('p1xp').textContent=p1x;document.getElementById('p1pb').style.width=Math.min(p1x/MX*100,100)+'%';}else{p2x+=v;document.getElementById('p2xp').textContent=p2x;document.getElementById('p2pb').style.width=Math.min(p2x/MX*100,100)+'%';}}
+function uBd(){document.getElementById('p1bd').textContent=p1b+' conquista'+(p1b!==1?'s':'');document.getElementById('p2bd').textContent=p2b+' conquista'+(p2b!==1?'s':'');}
+function gXP(v,i,m){xp+=v;aPXP(v);uHUD();t(i,'+'+v+' XP',m);}
+function uHUD(){
+  document.getElementById('hxp').textContent=xp;document.getElementById('hstk').textContent=stk;
+  const lv=['Novato','Aprendiz','Analista','Expert','Mestre','Lendário'];
+  const th=[0,60,150,250,350,MX];let l=0;for(let i=0;i<th.length;i++)if(xp>=th[i])l=i;
+  document.getElementById('hlv').textContent=lv[l];
+  const p=Math.min(Math.round(xp/MX*100),100);
+  document.getElementById('hpct').textContent=p+'%';document.getElementById('hbar').style.width=p+'%';
+  document.getElementById('prog').style.width=Math.min(acts/12*100,100)+'%';
+  document.getElementById('progt').textContent=Math.min(acts,12)+'/12';
+}
+let tT;function t(i,tt,m){const el=document.getElementById('tst');document.getElementById('tsti').textContent=i;document.getElementById('tstt').textContent=tt;document.getElementById('tstm').textContent=m;el.classList.add('on');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('on'),2800);}
+function ul(id,n){const el=document.getElementById(id);if(el&&!el.classList.contains('got')){el.classList.add('got');if(ap===1)p1b++;else p2b++;uBd();t('🏆','Conquista!',n);}}
+const OBJ=["Entender o papel de cada rede social para jogos", "Criar estratégia de conteúdo por plataforma", "Desenvolver calendário editorial de 30 dias", "Construir e gerenciar comunidade no Discord", "Medir performance de conteúdo orgânico"];
+(function(){const c=document.getElementById('objs');OBJ.forEach((o,i)=>{const d=document.createElement('div');d.className='obj';d.innerHTML='<div class="ock" id="ck'+i+'"></div><span>'+o+'</span>';d.onclick=()=>dObj(i);c.appendChild(d);objA.push(false);});}());
+function dObj(i){if(objA[i])return;objA[i]=true;const d=document.querySelectorAll('.obj')[i];d.classList.add('done');document.getElementById('ck'+i).textContent='✓';gXP(5,'🎯','Objetivo!');acts++;uHUD();if(objA.every(Boolean))ul('ach-obj','Mestre dos Objetivos');}
+const FC=[{"q": "Algoritmo TikTok", "a": "Distribui conteúdo por interesse real (FYP), não por seguidores. Hook nos primeiros 2 segundos determina se o vídeo vai viralizar ou morrer."}, {"q": "Discord Server", "a": "Hub de comunidade em tempo real com canais separados por tópico. O melhor lugar para construir comunidade leal ao redor de um jogo."}, {"q": "Content Calendar", "a": "Planejamento editorial de posts por plataforma e data. Garante consistência de publicação — fator mais importante para crescimento orgânico."}, {"q": "Organic Reach", "a": "Alcance sem investimento em anúncios. Cada plataforma tem seu algoritmo de distribuição orgânica — entender o algoritmo é a chave."}, {"q": "Community Manager", "a": "Responsável por moderar, engajar e cultivar a comunidade do jogo. Responde comentários, organiza eventos, cria senso de pertencimento."}, {"q": "Hashtag Strategy", "a": "Combinação de hashtags de alto volume (descoberta) + nicho específico (comunidade) + branded (identidade). Evite hashtags irrelevantes."}, {"q": "Devlog", "a": "Developer log — conteúdo de bastidores do desenvolvimento. Alto engajamento pois humaniza o jogo e cria conexão emocional com a audiência."}, {"q": "UGC (Orgânico)", "a": "Conteúdo criado por jogadores espontaneamente: fanart, gameplay, memes. Maior prova social — indica comunidade saudável e engajada."}];
+(function(){const g=document.getElementById('fcg');FC.forEach((f,i)=>{const d=document.createElement('div');d.className='fc';d.innerHTML='<div class="fci"><div class="fcf"><div><div class="fft">'+f.q+'</div><div class="fhi">clique para ver ▼</div></div></div><div class="fcb"><div class="fbt">'+f.a+'</div></div></div>';d.onclick=()=>fFC(i,d);g.appendChild(d);});}());
+function fFC(i,el){el.classList.toggle('fl');if(!fcF.has(i)&&el.classList.contains('fl')){fcF.add(i);gXP(3,'🃏','Flashcard!');acts++;uHUD();document.getElementById('fcsc').textContent=fcF.size+'/'+FC.length+' virados';if(fcF.size===FC.length)ul('ach-fc','Mestre dos Flashcards');}}
+const DP=[["TikTok", "Plataforma de vídeos curtos com algoritmo de descoberta por interesse"], ["Discord", "Hub de comunidade em tempo real com canais por tópico"], ["Content Calendar", "Planejamento editorial de posts por plataforma e data"], ["Devlog", "Conteúdo de bastidores do desenvolvimento — humaniza o jogo"], ["UGC Orgânico", "Conteúdo criado por jogadores espontaneamente: fanart, gameplay, memes"]];
+(function(){
+  const itm=document.getElementById('ditems'),zns=document.getElementById('dzones');
+  const sh=[...DP].sort(()=>Math.random()-.5);
+  sh.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='dit';d.draggable=true;d.dataset.v=p[0];d.textContent=p[0];
+    d.addEventListener('dragstart',e=>{dragSrc=d;d.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+    d.addEventListener('dragend',()=>d.classList.remove('dragging'));
+    itm.appendChild(d);
+  });
+  DP.forEach((p,i)=>{
+    const z=document.createElement('div');z.className='dz';z.dataset.i=i;z.dataset.c=p[0];
+    z.innerHTML='<span style="font-size:.68rem;font-family:'Fira Code',monospace;color:var(--tm);flex-shrink:0">'+(i+1)+'.</span><span class="dzt">'+p[1]+'</span>';
+    z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('dov');});
+    z.addEventListener('dragleave',()=>z.classList.remove('dov'));
+    z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('dov');if(dragSrc){dragAns[i]=dragSrc.dataset.v;z.dataset.d=dragSrc.dataset.v;z.querySelector('.dzt').textContent=dragSrc.dataset.v+' → '+p[1];dragSrc.style.opacity='.35';dragSrc=null;}});
+    zns.appendChild(z);
+  });
+}());
+function chkD(){
+  if(dDone)return;let ok=0;
+  document.querySelectorAll('.dz').forEach((z,i)=>{
+    z.classList.remove('dok','dno');
+    if(z.dataset.d){const good=z.dataset.d===z.dataset.c;z.classList.add(good?'dok':'dno');if(good)ok++;}
+  });
+  if(ok===DP.length){dDone=true;gXP(DP.length*5,'🧩','Todos corretos!');ul('ach-drag','Mestre das Conexões');}
+  else gXP(ok*5,'🧩',ok+'/'+DP.length+' corretos!');
+  acts++;uHUD();document.getElementById('dres').textContent='✔ '+ok+'/'+DP.length+' pares corretos';
+}
+function rstD(){dDone=false;dragAns={};document.querySelectorAll('.dz').forEach(z=>{z.classList.remove('dok','dno');z.dataset.d='';z.querySelector('.dzt').textContent=DP[z.dataset.i][1];});document.querySelectorAll('.dit').forEach(d=>{d.style.opacity='1';});document.getElementById('dres').textContent='';}
+const ACC=[{"n": "01", "name": "Estratégia por Plataforma", "meta": "TikTok · Instagram · Twitter/X · YouTube · Discord", "body": "<h4>Cada rede tem sua cultura</h4><ul><li><strong>TikTok:</strong> vídeos 15-60s, autenticidade > produção, hook nos 2 primeiros segundos, trending sounds. Melhor para descoberta de novos públicos.</li><li><strong>Instagram:</strong> Reels para alcance, Stories para comunidade próxima, carrosséis para tutoriais. Visual polido importa mais que no TikTok.</li><li><strong>Twitter/X:</strong> desenvolvimento em público (devlogs em thread), cultura gamer nativa, memes, anúncios rápidos. Tom casual e direto.</li><li><strong>YouTube:</strong> trailers, devlogs longos, let's plays. Evergreen — conteúdo de anos atrás ainda gera views.</li><li><strong>Discord:</strong> comunidade, suporte, feedback, beta, eventos. Não é plataforma de descoberta — é retenção de comunidade.</li></ul>"}, {"n": "02", "name": "TikTok para Jogos — Guia Prático", "meta": "Hook · FYP · Trending · Formato · Frequência", "body": "<h4>A Fórmula do TikTok para Games</h4><ul><li><strong>Hook:</strong> os 2 primeiros segundos decidem tudo. 'Você sabia que...' / 'Olha o que acontece quando...' / [cena mais impressionante do gameplay]</li><li><strong>Formato que funciona:</strong> gameplay + legenda de desafio, devlog 'making of' de 30s, memes sobre o jogo, reaction a fanarts</li><li><strong>Frequência:</strong> 1-3 posts/dia é ideal para crescimento. Consistência supera qualidade no TikTok.</li><li><strong>Trending sounds:</strong> usar áudio em alta aumenta distribuição pelo algoritmo — crie gameplay com trending sound</li></ul><h4>Hollow Knight Effect</h4>Em 2022, TikToks de gameplay de Hollow Knight lançaram o jogo ao top de vendas no Steam — 6 anos após o lançamento. O TikTok ressuscitou o jogo via descoberta orgânica."}, {"n": "03", "name": "Discord — Construindo Comunidade", "meta": "Estrutura · Moderação · Eventos · Engagement", "body": "<h4>Estrutura de Servidor para Jogos</h4><ul><li><strong>Canais de boas-vindas:</strong> #regras, #roles (jogadores podem se marcar), #apresentações</li><li><strong>Canais principais:</strong> #announcements (só staff), #geral, #feedback, #bugs, #fan-art, #off-topic</li><li><strong>Canais de evento:</strong> #beta-testers, #tournaments, #daily-challenge</li></ul><h4>Táticas de Engajamento</h4><ul><li>Bot de XP por mensagens (MEE6, UnbelievaBoat) — gamificação do próprio Discord</li><li>Concursos mensais de fanart com prêmio in-game</li><li>AMA (Ask Me Anything) mensal com o dev</li><li>Canal de #bugs com status updates — transforma críticos em colaboradores</li></ul>"}, {"n": "04", "name": "Calendário Editorial e Métricas", "meta": "Planejamento · Frequência · KPIs · Ferramentas", "body": "<h4>Estrutura do Calendário</h4>Distribua por pilares de conteúdo:<ul><li><strong>Educativo (30%):</strong> tutoriais, mecânicas explicadas, lore</li><li><strong>Entretenimento (40%):</strong> gameplay highlights, memes, challenges</li><li><strong>Bastidores (20%):</strong> devlogs, making of, processo criativo</li><li><strong>Engajamento (10%):</strong> perguntas à comunidade, enquetes, UGC compartilhado</li></ul><h4>KPIs de Social Media para Games</h4><ul><li>TikTok: views totais, completion rate, novos seguidores por vídeo</li><li>Instagram: reach de Reels, saves (melhor KPI de Reels), perfil visits</li><li>Discord: DAU/MAU do servidor, messages por membro, retenção de membros</li></ul>"}];
+(function(){const c=document.getElementById('acc');ACC.forEach((a,i)=>{const d=document.createElement('div');d.className='ai';d.id='ai'+i;d.innerHTML='<div class="aih" onclick="tA('+i+')"><span class="ain">'+a.n+'</span><span class="aim">'+a.name+'</span><span class="aime">'+a.meta+'</span><span class="aiar">▼</span></div><div class="aib"><div class="aic">'+a.body+'</div></div>';c.appendChild(d);});}());
+function tA(i){const el=document.getElementById('ai'+i);const w=el.classList.contains('open');el.classList.toggle('open');if(!w&&!accS.has(i)){accS.add(i);gXP(5,'📖','Tópico!');acts++;uHUD();if(accS.size===ACC.length)ul('ach-reader','Leitor Dedicado');}}
+const ACTS=[{"num": "A1", "title": "Calendário Editorial de 30 Dias", "id": "a1", "ach": "ach-a1", "an": "Content Strategist", "xp": 50, "obj": "Crie um calendário editorial de 30 dias para um jogo hipotético cobrindo TikTok, Instagram e Twitter/X com pelo menos 60 posts planejados.", "tags": [{"t": "Individual", "c": "atp"}, {"t": "45 min", "c": "ata"}, {"t": "Google Sheets", "c": "ato"}, {"t": "+50 XP", "c": "atg"}], "steps": ["Defina o jogo hipotético e seu tom de comunicação (ex: sério/épico, humor/casual, indie/aconchegante)", "Distribua os pilares de conteúdo: 30% educativo, 40% entretenimento, 20% bastidores, 10% engajamento", "Para cada dia, defina: plataforma, formato, pillar, descrição de 1 linha do conteúdo, hashtags sugeridas", "Inclua ao menos: 4 devlogs, 8 gameplay highlights, 4 challenges, 4 fanart features, 3 anúncios", "Apresente o calendário em planilha + justifique a estratégia de frequência por plataforma"], "rub": [{"l": "Insuficiente", "d": "Menos de 30 posts ou apenas uma plataforma", "c": "ri"}, {"l": "Básico", "d": "60 posts nas 3 plataformas com pilares definidos", "c": "rb"}, {"l": "Proficiente", "d": "60 posts com formato, pillar, descrição e hashtags + justificativa de estratégia", "c": "rp"}, {"l": "Excelente", "d": "Calendário completo + análise de 3 concorrentes no social media + projeção de crescimento de seguidores por plataforma em 30 dias", "c": "re"}]}, {"num": "A2", "title": "Estrutura e Estratégia de Discord", "id": "a2", "ach": "ach-a2", "an": "Community Builder", "xp": 50, "obj": "Projete a estrutura completa de um servidor Discord para um jogo indie e crie um plano de lançamento para atingir 1.000 membros em 60 dias.", "tags": [{"t": "Dupla", "c": "atp"}, {"t": "35 min", "c": "ata"}, {"t": "Discord", "c": "ato"}, {"t": "+50 XP", "c": "atg"}], "steps": ["Crie um servidor Discord real (ou em papel) com a estrutura de canais completa para o jogo hipotético", "Defina os roles (cargos) de membros: visitante, membro, beta tester, top contributor, moderador", "Crie o sistema de onboarding: o que um novo membro vê primeiro? Quais canais são visíveis antes de aceitar as regras?", "Planeje 3 eventos de engajamento do mês 1: concurso, AMA, beta exclusivo", "Defina a estratégia de crescimento: como os primeiros 100 membros vêm? Os 1.000?"], "rub": [{"l": "Insuficiente", "d": "Estrutura de canais sem sistema de roles ou onboarding", "c": "ri"}, {"l": "Básico", "d": "Estrutura completa de canais e roles definidos", "c": "rb"}, {"l": "Proficiente", "d": "Servidor estruturado com onboarding, 3 eventos planejados, estratégia de crescimento", "c": "rp"}, {"l": "Excelente", "d": "Servidor completo + plano de moderação e community guidelines + métricas de saúde do servidor (DAU, messages/member, churn de membros) para monitorar", "c": "re"}]}];
+(function(){
+  const c=document.getElementById('acts');
+  ACTS.forEach(a=>{
+    const tgs=a.tags.map(t=>'<span class="at '+t.c+'">'+t.t+'</span>').join('');
+    const sts=a.steps.map((s,i)=>'<div class="st"><div class="sn">'+(i+1)+'</div><div>'+s+'</div></div>').join('');
+    const rb=a.rub.map(r=>'<div class="rc '+r.c+'"><span class="rlv">'+r.l+'</span><p>'+r.d+'</p></div>').join('');
+    const d=document.createElement('div');d.className='act';
+    d.innerHTML='<div class="acth"><div class="actn">'+a.num+'</div><div class="acthi"><div class="acttit">'+a.title+'</div><div class="acttgs">'+tgs+'</div></div></div><div class="actb"><div class="acto">'+a.obj+'</div><div class="slbl">PASSO A PASSO</div><div class="sts">'+sts+'</div><div class="rbt">RUBRICA</div><div class="rub">'+rb+'</div><button class="cbn" id="cb-'+a.id+'" onclick="dA(\''+a.id+'\',\''+a.ach+'\',\''+a.an+'\','+a.xp+',this)">✅ CONCLUÍDA — +'+a.xp+' XP</button></div>';
+    c.appendChild(d);
+  });
+}());
+function dA(id,ach,an,v,btn){if(btn.disabled)return;btn.disabled=true;btn.textContent='✅ Concluída!';gXP(v,'✏️','Atividade!');ul(ach,an);acts++;uHUD();}
+const QS=[{"q": "Por que o algoritmo do TikTok é único comparado ao Instagram e YouTube?", "opts": ["Usa inteligência artificial mais avançada", "Distribui conteúdo baseado em interesse real (FYP), não em seguidores — qualquer vídeo pode viralizar independente do tamanho da conta", "É pago por views", "Prioriza contas verificadas"], "c": 1, "xp": 10, "fb": "✅ O FYP (For You Page) do TikTok analisa o comportamento do usuário (tempo assistido, replays, compartilhamentos) para inferir interesses e distribuir conteúdo relevante. Uma conta nova com 0 seguidores pode ter um vídeo com 1 milhão de views se o algoritmo detectar alto engagement. Isso democratiza a descoberta de forma única."}, {"q": "O que é o 'Hollow Knight Effect' no TikTok?", "opts": ["Estratégia de marketing da Team Cherry", "Fenômeno onde TikToks orgânicos de gameplay ressuscitaram as vendas do jogo anos após o lançamento, provando o poder do algoritmo de descoberta", "Efeito visual especial do jogo", "Técnica de animação usada no jogo"], "c": 1, "xp": 10, "fb": "✅ Em 2022, Hollow Knight (2017) voltou ao top de vendas no Steam graças a uma onda orgânica de TikToks mostrando o gameplay. A Team Cherry não fez nada — a comunidade de criadores gerou conteúdo, o algoritmo distribuiu para interessados em jogos indie, e as vendas explodiram. Prova que o TikTok pode ser o melhor canal de 'long tail' para jogos indie."}, {"q": "Por que o Discord é considerado a plataforma ideal para retenção de comunidade (mas não descoberta)?", "opts": ["É mais barato de manter", "É fechado — você precisa do link para entrar. Ideal para aprofundar relacionamento com quem já conhece o jogo, não para descoberta orgânica", "Tem mais usuários que outras plataformas", "É integrado às lojas de apps"], "c": 1, "xp": 10, "fb": "✅ Discord é um servidor fechado: sem link de convite, você não entra. Isso significa que apenas quem já conhece o jogo pode participar. Isso é ótimo para aprofundar engagement, coletar feedback, criar beta testers leais e transformar jogadores em evangelistas. Para descoberta inicial, TikTok, Instagram e YouTube são mais eficazes."}, {"q": "Qual é a frequência recomendada de posts no TikTok para crescimento?", "opts": ["1 post por semana — qualidade acima de quantidade", "1-3 posts por dia — consistência e volume superam qualidade no TikTok", "1 post por dia nos horários de pico", "2 posts por semana para não saturar a audiência"], "c": 1, "xp": 10, "fb": "✅ O TikTok funciona diferente de outras plataformas: cada vídeo compete independentemente no algoritmo, não em relação aos seus vídeos anteriores. Portanto, volume = mais chances de um vídeo 'pegar'. Creators que crescem mais rápido no TikTok postam 1-3x/dia. A qualidade importa (hook, conteúdo), mas consistência é o fator #1."}, {"q": "O que é o 'Content Calendar' e por que é essencial?", "opts": ["Calendário de lançamentos do jogo", "Planejamento editorial de posts por data e plataforma — garante consistência, diversidade de conteúdo e alinhamento com eventos importantes", "Agenda de reuniões da equipe de desenvolvimento", "Cronograma de atualizações do jogo"], "c": 1, "xp": 10, "fb": "✅ Consistência é o fator mais importante para crescimento orgânico em qualquer plataforma. Sem calendário, você posta quando lembra → gaps de publicação → algoritmo reduz distribuição. Com calendário, você antecipa datas importantes (lançamento de update, feriados, trending topics) e garante mix saudável de tipos de conteúdo."}, {"q": "Por que 'Saves' é a melhor métrica de Reels no Instagram?", "opts": ["Saves são raros então são mais valiosos", "Salvar um post sinaliza 'quero ver de novo ou usar depois' — é a métrica de maior valor no algoritmo, mais que curtidas ou comentários", "O Instagram paga por saves", "Saves aumentam o alcance pago"], "c": 1, "xp": 10, "fb": "✅ O algoritmo do Instagram pondera ações por intensidade de intenção: like = interesse leve | comentário = interesse médio | save = interesse alto (vou guardar para usar/ver de novo) | compartilhamento = interesse máximo. Reels com muitos saves são distribuídos mais amplamente pelo algoritmo. Para Reels de tutoriais e listas, saves são especialmente altos."}, {"q": "Qual pillar de conteúdo tem tipicamente o maior engajamento para jogos?", "opts": ["Posts promocionais de venda", "Conteúdo de bastidores (devlog, making of) — humaniza o jogo e cria conexão emocional que promoções não conseguem", "Screenshots de gameplay estático", "Anúncios de datas de lançamento"], "c": 1, "xp": 10, "fb": "✅ Devlogs e conteúdo de bastidores criam o que marketers chamam de 'brand intimacy' — o público sente que conhece os criadores. Stardew Valley (ConcernedApe) e Undertale (Toby Fox) construíram comunidades massivas compartilhando processo criativo honesto. Isso gera mais engajamento que posts promocionais porque é autêntico e raro."}, {"q": "O que é 'UGC orgânico' e por que é valioso para jogos?", "opts": ["Conteúdo pago criado por usuários", "Conteúdo criado voluntariamente por jogadores: fanart, gameplay, memes — maior prova social possível, indica comunidade saudável", "Conteúdo gerado por IA", "Conteúdo do tutorial do jogo criado pelos desenvolvedores"], "c": 1, "xp": 10, "fb": "✅ UGC orgânico é marketing gratuito e extremamente credível: um jogador criando fanart, fazendo speedrun ou fazendo meme sobre o jogo é muito mais persuasivo para novos jogadores do que qualquer anúncio pago. Montar uma pasta de UGC compartilhado com crédito ao criador é uma das estratégias de comunidade mais eficazes e econômicas."}, {"q": "Qual é a estrutura recomendada de hashtags para posts de jogos?", "opts": ["Usar apenas hashtags de alto volume (#game, #gaming)", "Misturar hashtags de alto volume (descoberta) + nicho específico (comunidade) + branded (identidade do jogo)", "Não usar hashtags — são consideradas spam", "Usar o máximo de hashtags possível (30+)"], "c": 1, "xp": 10, "fb": "✅ A estratégia equilibrada funciona porque cada tipo tem função diferente: hashtags gigantes (#gaming, 50B posts) expõem a novos usuários mas você compete com todos; hashtags de nicho (#indiegaming, #pixelart) atingem comunidade específica e relevante; branded hashtag (#NomeDoJogo) cria identidade e facilita encontrar UGC dos fãs."}, {"q": "Por que o Twitter/X é especialmente valioso para jogos em desenvolvimento?", "opts": ["Tem mais usuários que outras redes", "Cultura nativa de 'building in public' — devlogs em thread e GIFs de desenvolvimento geram comunidade antes do lançamento, com audiência altamente engajada", "Os anúncios são mais baratos", "É integrado ao Steam"], "c": 1, "xp": 10, "fb": "✅ Twitter/X tem uma comunidade de gamedev extremamente ativa (#screenshotsaturday, #indiedev, #gamedev) que ativamente busca e amplifica jogos em desenvolvimento. Um thread de devlog sincero sobre desafios técnicos frequentemente ganha mais tração que posts polidos de outros canais. É onde a comunidade de indie gaming mais discute e descobre novos projetos."}];
+let qC=0,qA={};
+(function(){
+  const c=document.getElementById('quiz');let h='';
+  QS.forEach((q,i)=>{
+    const op=q.opts.map((o,oi)=>'<button class="qo" onclick="aQ('+i+','+oi+')">'+String.fromCharCode(65+oi)+') '+o+'</button>').join('');
+    h+='<div class="qq '+(i===0?'on':'')+'" id="q'+i+'"><div class="qtx">Q'+(i+1)+'. '+q.q+'</div><div class="qop">'+op+'</div><div class="qfb" id="qf'+i+'"></div><div class="qnr" id="qn'+i+'"><button class="qnb" onclick="'+(i<QS.length-1?'nQ('+(i+1)+')':'shR()')+'">'+(i<QS.length-1?'Próxima →':'Ver Resultado ✨')+'</button></div></div>';
+  });
+  h+='<div class="qrs" id="qrs"><span class="qrb" id="qrb">0/10</span><div class="qrm" id="qrm"></div><div class="qrx" id="qrx"></div><button class="qrbn" onclick="rstQ()">↺ Tentar Novamente</button></div>';
+  c.innerHTML=h;
+}());
+function aQ(qi,ch){const q=QS[qi];const cd=document.getElementById('q'+qi);cd.querySelectorAll('.qo').forEach(b=>b.disabled=true);cd.querySelectorAll('.qo')[ch].classList.add(ch===q.c?'qok':'qno');if(ch!==q.c)cd.querySelectorAll('.qo')[q.c].classList.add('qok');const ok=ch===q.c;const fb=document.getElementById('qf'+qi);fb.textContent=ok?q.fb:'❌ '+q.fb;fb.className='qfb on '+(ok?'ok':'fail');document.getElementById('qn'+qi).classList.add('on');if(ok){qC++;gXP(q.xp,'🧠','Acertou!');stk++;}else{stk=Math.max(0,stk-1);uHUD();}qA[qi]=ok;document.getElementById('qpf').style.width=((qi+1)/QS.length*100)+'%';document.getElementById('qcnt').textContent=(qi+1)+'/'+QS.length;}
+function nQ(n){document.querySelector('.qq.on').classList.remove('on');document.getElementById('q'+n).classList.add('on');}
+function shR(){document.querySelector('.qq.on').classList.remove('on');document.getElementById('qrs').classList.add('on');document.getElementById('qrb').textContent=qC+'/10';const ms=['📚 Revise!','⚡ Progredindo!','🔥 Boa!','🏆 Expert!','💎 Perfeito!'];document.getElementById('qrm').textContent=ms[Math.min(Math.floor(qC/2),4)];const e=Object.keys(qA).filter(k=>qA[k]).reduce((s,k)=>s+QS[+k].xp,0);document.getElementById('qrx').textContent='+'+e+' XP!';if(qC>=8)ul('ach-quiz','Quiz Aprovado');if(qC===10)ul('ach-perf','Quiz Perfeito');acts++;uHUD();}
+function rstQ(){qC=0;qA={};document.getElementById('qrs').classList.remove('on');document.getElementById('qpf').style.width='0%';document.getElementById('qcnt').textContent='0/10';QS.forEach((_,i)=>{const c=document.getElementById('q'+i);c.classList.toggle('on',i===0);c.querySelectorAll('.qo').forEach(b=>{b.disabled=false;b.className='qo';});const fb=document.getElementById('qf'+i);fb.className='qfb';fb.textContent='';document.getElementById('qn'+i).classList.remove('on');});}
+const ACHS=[{"id": "ach-boot", "e": "🚀", "n": "Lab S16"}, {"id": "ach-fc", "e": "🃏", "n": "Mestre Flashcards"}, {"id": "ach-drag", "e": "🧩", "n": "Conexões Feitas"}, {"id": "ach-reader", "e": "📖", "n": "Leitor Dedicado"}, {"id": "ach-obj", "e": "🎯", "n": "Objetivos OK"}, {"id": "ach-a1", "e": "📅", "n": "Content Strategist"}, {"id": "ach-a2", "e": "🏘️", "n": "Community Builder"}, {"id": "ach-quiz", "e": "🎓", "n": "Quiz Aprovado"}, {"id": "ach-perf", "e": "💎", "n": "Quiz Perfeito"}];
+(function(){const g=document.getElementById('ag');ACHS.forEach(a=>{const d=document.createElement('div');d.className='ach';d.id=a.id;d.innerHTML='<span class="ae">'+a.e+'</span><div class="an">'+a.n+'</div>';g.appendChild(d);});}());
+setTimeout(()=>{ul('ach-boot','Lab S16');gXP(5,'🚀','Semana 16!');acts++;uHUD();},700);
+sA(1);
+</script>
+</body></html>
