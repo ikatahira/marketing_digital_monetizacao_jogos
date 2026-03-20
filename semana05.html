@@ -1,736 +1,910 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 5 - Marketing Digital e Monetização para Jogos</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 05 — Marketing 4.0 e Jogadores</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: #f0f2f5;
-        }
+:root {
+  --bg: #0d0812;
+  --bg2: #130e1a;
+  --surface: #1a1025;
+  --surface2: #211530;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --orange: #ff7043;
+  --orange2: #ffab40;
+  --purple: #9c27b0;
+  --purple2: #ce93d8;
+  --purple3: #e1bee7;
+  --pink: #e91e63;
+  --cyan: #00e5ff;
+  --green: #69f0ae;
+  --gold: #ffd740;
+  --rose: #ff4081;
+  --lime: #c6ff00;
+  --text: #f3e5f5;
+  --text-dim: #b39ddb;
+  --text-muted: #7e57c2;
+  --glow-o: 0 0 30px rgba(255,112,67,0.35);
+  --glow-r: 0 0 30px rgba(255,64,129,0.3);
+  --r: 14px;
+}
 
-        .header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+html { scroll-behavior: smooth; }
+body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+.bg-layer { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.bg-layer::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 40%, rgba(255,64,129,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 60%, rgba(255,112,67,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(156,39,176,0.04) 0%, transparent 60%);
+}
+.bg-layer::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,64,129,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,64,129,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
 
-        .header-content img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid white;
-            object-fit: cover;
-        }
+/* HEADER */
+.header { position: sticky; top: 0; z-index: 100; background: rgba(13,8,18,0.93); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,64,129,0.2); box-shadow: 0 0 40px rgba(255,64,129,0.06), 0 1px 0 rgba(255,112,67,0.08); }
+.header-inner { max-width: 1300px; margin: 0 auto; padding: 0 24px; height: 66px; display: flex; align-items: center; gap: 14px; }
+.logo-tag { font-family: 'Fira Code', monospace; font-size: 0.72rem; padding: 5px 12px; border-radius: 6px; background: linear-gradient(135deg, var(--rose), var(--orange)); color: #fff; font-weight: 700; white-space: nowrap; letter-spacing: 0.08em; flex-shrink: 0; }
+.header-titles { flex: 1; min-width: 0; }
+.header-titles h1 { font-weight: 900; font-size: clamp(0.85rem, 2vw, 1.1rem); background: linear-gradient(90deg, var(--purple3), var(--rose)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.header-titles p { font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); }
+.hud { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.hud-pill { background: var(--surface2); border: 1px solid rgba(255,64,129,0.15); border-radius: 8px; padding: 6px 12px; text-align: center; min-width: 58px; }
+.hud-pill .hv { font-family: 'Fira Code', monospace; font-size: 1.1rem; font-weight: 700; color: var(--rose); display: block; line-height: 1; }
+.hud-pill .hl { font-size: 0.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Fira Code', monospace; }
+.hud-wide { min-width: 145px; }
+.hud-wide-labels { display: flex; justify-content: space-between; font-family: 'Fira Code', monospace; font-size: 0.52rem; color: var(--text-muted); margin-bottom: 4px; }
+.hud-track { height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+.hud-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--orange)); border-radius: 100px; transition: width 0.8s ease; box-shadow: 0 0 8px rgba(255,64,129,0.4); }
+.a-btn { font-family: 'Fira Code', monospace; font-size: 0.68rem; color: var(--text-dim); text-decoration: none; background: var(--surface2); border: 1px solid rgba(255,64,129,0.15); padding: 6px 12px; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+.a-btn:hover { color: var(--rose); border-color: rgba(255,64,129,0.35); }
 
-        .header-text h1 {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-        }
+/* PROGRESS */
+.pbar-wrap { background: rgba(13,8,18,0.85); border-bottom: 1px solid var(--border); padding: 5px 24px; }
+.pbar-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.pbar-label { font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); white-space: nowrap; }
+.pbar-track { flex: 1; height: 3px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+.pbar-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--purple), var(--orange)); border-radius: 100px; transition: width 0.6s ease; }
 
-        .header-text p {
-            font-size: 0.9em;
-            opacity: 0.95;
-        }
+/* TOAST */
+.toast { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: var(--surface2); border: 1px solid rgba(255,64,129,0.4); border-radius: var(--r); padding: 14px 18px; display: flex; align-items: center; gap: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.7), var(--glow-r); transform: translateY(120px) scale(0.9); opacity: 0; transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 320px; }
+.toast.on { transform: translateY(0) scale(1); opacity: 1; }
+.t-ico { font-size: 1.5rem; }
+.t-title { font-family: 'Fira Code', monospace; font-size: 0.82rem; font-weight: 700; color: var(--rose); }
+.t-msg { font-size: 0.7rem; color: var(--text-dim); margin-top: 2px; }
 
-        .container {
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 0 20px;
-            display: flex;
-            gap: 20px;
-        }
+/* PAGE */
+.page { max-width: 1300px; margin: 0 auto; padding: 26px 24px; position: relative; z-index: 2; }
 
-        .sidebar {
-            width: 280px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            height: fit-content;
-            position: sticky;
-            top: 120px;
-        }
+/* HERO */
+.hero { background: var(--surface); border: 1px solid rgba(255,64,129,0.25); border-radius: 22px; padding: 44px; margin-bottom: 20px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--rose), var(--orange), transparent); }
+.hero-eyebrow { font-family: 'Fira Code', monospace; font-size: 0.62rem; color: var(--rose); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.hero-eyebrow::before { content: '//'; color: var(--text-muted); }
+.hero h2 { font-weight: 900; font-size: clamp(1.8rem, 5vw, 3.2rem); line-height: 1.08; margin-bottom: 12px; background: linear-gradient(135deg, #fff 20%, var(--rose) 60%, var(--orange2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 0.94rem; color: var(--text-dim); max-width: 620px; line-height: 1.75; margin-bottom: 22px; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: 'Fira Code', monospace; font-size: 0.67rem; padding: 5px 13px; border-radius: 100px; border: 1px solid; }
+.ch-p { color: var(--purple2); border-color: rgba(156,39,176,0.4); background: rgba(156,39,176,0.08); }
+.ch-o { color: var(--orange2); border-color: rgba(255,112,67,0.4); background: rgba(255,112,67,0.08); }
+.ch-c { color: var(--cyan); border-color: rgba(0,229,255,0.35); background: rgba(0,229,255,0.07); }
+.ch-g { color: var(--green); border-color: rgba(105,240,174,0.35); background: rgba(105,240,174,0.07); }
+.ch-gold { color: var(--gold); border-color: rgba(255,215,64,0.35); background: rgba(255,215,64,0.07); }
+.ch-r { color: var(--rose); border-color: rgba(255,64,129,0.4); background: rgba(255,64,129,0.08); }
+.hero-bg-num { position: absolute; right: 44px; top: 50%; transform: translateY(-50%); font-weight: 900; font-size: 9rem; color: rgba(255,64,129,0.04); pointer-events: none; user-select: none; }
 
-        .sidebar h2 {
-            color: #6a11cb;
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #2575fc;
-        }
+/* DUO */
+.duo { background: var(--surface); border: 1px solid rgba(255,64,129,0.2); border-radius: 20px; padding: 22px; margin-bottom: 20px; position: relative; overflow: hidden; }
+.duo::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--rose), var(--orange)); }
+.duo-header { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.duo-header::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+.duo-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; }
+.pslot { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); padding: 18px; cursor: pointer; transition: all 0.3s; position: relative; }
+.pslot.a1 { border-color: rgba(255,64,129,0.5); box-shadow: var(--glow-r); }
+.pslot.a2 { border-color: rgba(255,112,67,0.5); box-shadow: var(--glow-o); }
+.pslot::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; }
+.p1-s::before { background: linear-gradient(90deg, var(--rose), var(--purple2)); }
+.p2-s::before { background: linear-gradient(90deg, var(--orange), var(--orange2)); }
+.phead { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pav { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.p1-s .pav { background: rgba(255,64,129,0.12); }
+.p2-s .pav { background: rgba(255,112,67,0.15); }
+.pname { background: transparent; border: none; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 700; width: 100%; outline: none; }
+.pname::placeholder { color: var(--text-muted); }
+.pxp-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
+.pxp-val { font-family: 'Fira Code', monospace; font-size: 2rem; font-weight: 700; line-height: 1; }
+.p1-s .pxp-val { color: var(--rose); }
+.p2-s .pxp-val { color: var(--orange2); }
+.pxp-lbl { font-family: 'Fira Code', monospace; font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+.pbar-slot { height: 4px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; margin-bottom: 8px; }
+.pb-fill { height: 100%; border-radius: 100px; transition: width 0.6s ease; width: 0%; }
+.p1-s .pb-fill { background: var(--rose); }
+.p2-s .pb-fill { background: var(--orange); }
+.pbadges-txt { font-family: 'Fira Code', monospace; font-size: 0.6rem; color: var(--text-muted); }
+.pactivate { width: 100%; margin-top: 12px; padding: 8px; border: none; border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 0.68rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.06em; }
+.p1-s .pactivate { background: rgba(255,64,129,0.1); color: var(--rose); }
+.p1-s .pactivate:hover, .p1-s.a1 .pactivate { background: var(--rose); color: #fff; font-weight: 700; }
+.p2-s .pactivate { background: rgba(255,112,67,0.12); color: var(--orange2); }
+.p2-s .pactivate:hover, .p2-s.a2 .pactivate { background: var(--orange); color: #fff; font-weight: 700; }
+.vs-mid { text-align: center; font-weight: 900; font-size: 2rem; color: rgba(255,255,255,0.1); }
 
-        .week-menu {
-            list-style: none;
-        }
+/* CARD */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 20px; position: relative; overflow: hidden; }
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,64,129,0.35), transparent); }
+.ch { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+.ch-ico { font-size: 1.3rem; }
+.ch-tg { flex: 1; }
+.ch-title { font-weight: 900; font-size: 1rem; color: var(--text); letter-spacing: 0.02em; }
+.ch-sub { font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); margin-top: 3px; }
+.xp-tag { font-family: 'Fira Code', monospace; font-size: 0.66rem; color: var(--gold); background: rgba(255,215,64,0.1); border: 1px solid rgba(255,215,64,0.25); padding: 3px 10px; border-radius: 100px; margin-left: auto; white-space: nowrap; }
 
-        .week-menu li {
-            margin-bottom: 8px;
-        }
+/* OBJECTIVES */
+.objs { display: flex; flex-direction: column; gap: 8px; }
+.obj { display: flex; align-items: center; gap: 14px; padding: 13px 16px; background: rgba(255,255,255,0.015); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s; font-size: 0.88rem; font-weight: 500; }
+.obj:hover { background: rgba(255,64,129,0.04); border-color: rgba(255,64,129,0.2); }
+.obj.done { background: rgba(105,240,174,0.04); border-color: rgba(105,240,174,0.18); color: var(--text-muted); text-decoration: line-through; }
+.obj-ck { width: 22px; height: 22px; border: 2px solid var(--border2); border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; transition: all 0.25s; }
+.obj.done .obj-ck { background: var(--green); border-color: var(--green); color: #000; }
 
-        .week-menu a {
-            display: block;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            color: #6a11cb;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
-        }
+/* JOURNEY STAGES */
+.journey { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-bottom: 20px; }
+.jstage { background: var(--surface2); border: 1px solid var(--border); padding: 16px 14px; text-align: center; cursor: pointer; transition: all 0.3s; position: relative; }
+.jstage:first-child { border-radius: 12px 0 0 12px; }
+.jstage:last-child { border-radius: 0 12px 12px 0; }
+.jstage::after { content: '▶'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); color: var(--border2); font-size: 0.7rem; z-index: 2; }
+.jstage:last-child::after { display: none; }
+.jstage:hover { background: rgba(255,64,129,0.08); border-color: rgba(255,64,129,0.3); transform: translateY(-3px); }
+.jstage.clicked { border-color: rgba(255,64,129,0.45); background: rgba(255,64,129,0.06); }
+.js-ico { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+.js-name { font-weight: 700; font-size: 0.82rem; color: var(--rose); margin-bottom: 3px; }
+.js-desc { font-size: 0.68rem; color: var(--text-muted); line-height: 1.4; }
 
-        .week-menu a:hover {
-            background: #e3f2fd;
-            border-left-color: #2575fc;
-            transform: translateX(5px);
-        }
+/* SECTION LABEL */
+.slbl { font-family: 'Fira Code', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin: 20px 0 12px; display: flex; align-items: center; gap: 10px; }
+.slbl::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border2), transparent); }
 
-        .week-menu a.active {
-            background: #6a11cb;
-            color: white;
-            border-left-color: #2575fc;
-        }
+/* CALLOUT */
+.callout { border-radius: var(--r); padding: 14px 16px; font-size: 0.84rem; line-height: 1.7; margin: 12px 0; display: flex; gap: 10px; }
+.c-ico { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+.c-txt b { display: block; font-size: 0.82rem; margin-bottom: 3px; }
+.c-info { background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); color: #b2ebf2; }
+.c-info b { color: var(--cyan); }
+.c-warn { background: rgba(255,215,64,0.06); border: 1px solid rgba(255,215,64,0.2); color: #fff9c4; }
+.c-warn b { color: var(--gold); }
+.c-fire { background: rgba(255,112,67,0.07); border: 1px solid rgba(255,112,67,0.2); color: #ffe0b2; }
+.c-fire b { color: var(--orange2); }
+.c-magic { background: rgba(156,39,176,0.07); border: 1px solid rgba(156,39,176,0.25); color: var(--purple3); }
+.c-magic b { color: var(--purple2); }
+.c-rose { background: rgba(255,64,129,0.07); border: 1px solid rgba(255,64,129,0.25); color: #fce4ec; }
+.c-rose b { color: var(--rose); }
 
-        .week-badge {
-            background: #2575fc;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            margin-right: 8px;
-        }
+/* ACCORDION */
+.acc { display: flex; flex-direction: column; gap: 8px; }
+.ai { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: border-color 0.2s; }
+.ai.open { border-color: rgba(255,64,129,0.35); }
+.ai-head { display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; background: rgba(255,255,255,0.015); user-select: none; transition: background 0.2s; }
+.ai-head:hover { background: rgba(255,64,129,0.05); }
+.ai-n { font-family: 'Fira Code', monospace; font-size: 1rem; font-weight: 700; color: var(--rose); width: 28px; flex-shrink: 0; }
+.ai-name { flex: 1; font-weight: 700; font-size: 0.9rem; }
+.ai-meta { font-family: 'Fira Code', monospace; font-size: 0.6rem; color: var(--text-muted); }
+.ai-arrow { color: var(--text-muted); font-size: 0.7rem; transition: transform 0.3s; flex-shrink: 0; }
+.ai.open .ai-arrow { transform: rotate(180deg); }
+.ai-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.3s; }
+.ai.open .ai-body { max-height: 2000px; padding: 0 18px 20px; }
+.ai-cnt { font-size: 0.86rem; color: var(--text-dim); line-height: 1.85; }
+.ai-cnt h4 { font-family: 'Outfit', sans-serif; color: var(--rose); font-size: 0.88rem; margin: 14px 0 6px; font-weight: 700; }
+.ai-cnt ul { padding-left: 18px; }
+.ai-cnt li { margin-bottom: 6px; }
+.ai-cnt strong { color: var(--text); }
 
-        .content {
-            flex: 1;
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            min-height: 600px;
-        }
+/* ACTIVITIES */
+.act { background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s; }
+.act:hover { border-color: var(--border2); }
+.act-hdr { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: rgba(255,255,255,0.015); border-bottom: 1px solid var(--border); }
+.act-n { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, var(--rose), var(--orange)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; flex-shrink: 0; }
+.act-hi { flex: 1; }
+.act-title { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+.act-tgs { display: flex; gap: 6px; flex-wrap: wrap; }
+.at { font-family: 'Fira Code', monospace; font-size: 0.6rem; padding: 2px 8px; border-radius: 100px; border: 1px solid; }
+.at-p { color: var(--purple2); border-color: rgba(156,39,176,0.3); background: rgba(156,39,176,0.07); }
+.at-o { color: var(--orange2); border-color: rgba(255,112,67,0.3); background: rgba(255,112,67,0.07); }
+.at-c { color: var(--cyan); border-color: rgba(0,229,255,0.3); background: rgba(0,229,255,0.07); }
+.at-g { color: var(--gold); border-color: rgba(255,215,64,0.3); background: rgba(255,215,64,0.07); }
+.at-r { color: var(--rose); border-color: rgba(255,64,129,0.3); background: rgba(255,64,129,0.07); }
+.act-body { padding: 20px; }
+.act-obj { font-size: 0.87rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; padding: 12px 14px; background: rgba(255,64,129,0.04); border-left: 2px solid var(--rose); border-radius: 0 8px 8px 0; }
+.steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+.step { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; background: rgba(255,255,255,0.015); border-radius: 8px; font-size: 0.84rem; color: var(--text-dim); line-height: 1.6; }
+.sn { background: rgba(255,64,129,0.12); color: var(--rose); border-radius: 5px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.78rem; flex-shrink: 0; font-family: 'Fira Code', monospace; }
+.rub-title { font-family: 'Fira Code', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; }
+.rub { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 18px; }
+.rc { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-size: 0.78rem; color: var(--text-dim); line-height: 1.55; }
+.rlv { display: block; font-family: 'Fira Code', monospace; font-size: 0.66rem; font-weight: 700; margin-bottom: 5px; }
+.ri .rlv { color: #ef5350; }
+.rb .rlv { color: var(--text-muted); }
+.rp .rlv { color: var(--rose); }
+.re .rlv { color: var(--gold); }
+.cbtn { width: 100%; padding: 12px; background: rgba(255,64,129,0.08); border: 1px solid rgba(255,64,129,0.25); color: var(--rose); border-radius: 10px; font-family: 'Fira Code', monospace; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.25s; letter-spacing: 0.04em; }
+.cbtn:hover { background: rgba(255,64,129,0.16); }
+.cbtn:disabled { opacity: 0.5; cursor: default; }
 
-        .week-title {
-            color: #6a11cb;
-            font-size: 2em;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+/* QUIZ */
+.qpr-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.qpt { flex: 1; height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+.qpf { height: 100%; background: linear-gradient(90deg, var(--rose), var(--orange)); border-radius: 100px; transition: width 0.4s ease; }
+.qlbl { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: var(--text-muted); }
+.qq { display: none; }
+.qq.on { display: block; }
+.qtxt { font-weight: 700; font-size: 0.98rem; margin-bottom: 16px; line-height: 1.6; color: var(--text); }
+.qopts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.qo { background: rgba(255,255,255,0.02); border: 1px solid var(--border2); border-radius: 10px; padding: 12px 16px; text-align: left; font-family: 'Outfit', sans-serif; font-size: 0.85rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; }
+.qo:hover:not(:disabled) { background: rgba(255,64,129,0.06); border-color: rgba(255,64,129,0.3); color: var(--text); }
+.qo.correct { background: rgba(105,240,174,0.1); border-color: var(--green); color: var(--green); }
+.qo.wrong { background: rgba(239,83,80,0.08); border-color: #ef5350; color: #ef9a9a; }
+.qfb { display: none; border-radius: 10px; padding: 12px 14px; font-size: 0.82rem; line-height: 1.6; margin-bottom: 10px; }
+.qfb.on { display: block; }
+.qfb.ok { background: rgba(105,240,174,0.08); border: 1px solid rgba(105,240,174,0.25); color: #a5d6a7; }
+.qfb.fail { background: rgba(239,83,80,0.07); border: 1px solid rgba(239,83,80,0.2); color: #ef9a9a; }
+.qnrow { display: none; }
+.qnrow.on { display: flex; justify-content: flex-end; }
+.qnbtn { background: var(--rose); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Fira Code', monospace; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.qnbtn:hover { opacity: 0.85; }
+.qres { display: none; text-align: center; padding: 30px 0; }
+.qres.on { display: block; }
+.qres-big { font-family: 'Fira Code', monospace; font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--rose), var(--orange2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; margin-bottom: 10px; }
+.qres-msg { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 8px; }
+.qres-xp { font-family: 'Fira Code', monospace; font-size: 0.78rem; color: var(--gold); margin-bottom: 18px; }
+.qres-btn { font-family: 'Fira Code', monospace; font-size: 0.73rem; padding: 10px 24px; background: rgba(255,64,129,0.08); border: 1px solid rgba(255,64,129,0.3); color: var(--rose); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+.qres-btn:hover { background: rgba(255,64,129,0.15); }
 
-        .week-number {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
+/* ACHIEVEMENTS */
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 10px; }
+.ach { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 10px; text-align: center; filter: grayscale(1) opacity(0.28); transition: all 0.4s; }
+.ach.got { filter: none; border-color: rgba(255,215,64,0.4); background: rgba(255,215,64,0.05); box-shadow: 0 0 22px rgba(255,215,64,0.15); animation: achBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes achBounce { 0% { transform: scale(0.4) rotate(-10deg); } 60% { transform: scale(1.2) rotate(3deg); } 100% { transform: scale(1) rotate(0deg); } }
+.ach-e { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+.ach-n { font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); line-height: 1.4; }
+.ach.got .ach-n { color: var(--gold); }
 
-        .week-subtitle {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
-        }
+/* VIDEOS */
+.vid-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.vc { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: all 0.25s; }
+.vc:hover { transform: translateY(-3px); border-color: var(--border2); }
+.vt { background: linear-gradient(135deg, #1a0d1f, #2d1020); padding: 28px 20px; text-align: center; font-size: 2.2rem; border-bottom: 1px solid var(--border); }
+.vi { padding: 14px; }
+.vi h4 { font-weight: 700; font-size: 0.86rem; margin-bottom: 4px; }
+.vi p { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 12px; }
+.vbtn { display: inline-block; background: rgba(255,64,129,0.08); color: var(--rose); border: 1px solid rgba(255,64,129,0.3); padding: 6px 14px; border-radius: 6px; text-decoration: none; font-family: 'Fira Code', monospace; font-size: 0.68rem; font-weight: 600; transition: all 0.2s; }
+.vbtn:hover { background: rgba(255,64,129,0.15); }
 
-        .section {
-            margin-bottom: 30px;
-        }
+/* BIBLIO */
+.bib { display: flex; flex-direction: column; gap: 8px; }
+.bi { background: var(--surface2); border: 1px solid var(--border); border-left: 2px solid var(--rose); border-radius: 0 10px 10px 0; padding: 14px 16px; font-size: 0.83rem; color: var(--text-dim); line-height: 1.7; }
+.bi strong { color: var(--text); }
+.bi em { color: var(--rose); font-style: normal; }
 
-        .section h2 {
-            color: #2575fc;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+/* BOTTOM NAV */
+.bnav { display: flex; justify-content: space-between; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+.bnav-a { font-family: 'Fira Code', monospace; font-size: 0.73rem; padding: 12px 22px; background: var(--surface2); border: 1px solid var(--border2); color: var(--text-dim); text-decoration: none; border-radius: 10px; font-weight: 600; transition: all 0.25s; letter-spacing: 0.04em; }
+.bnav-a:hover { color: var(--rose); border-color: rgba(255,64,129,0.35); }
 
-        .section h3 {
-            color: #6a11cb;
-            font-size: 1.2em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .icon {
-            font-size: 1.2em;
-        }
-
-        .objectives-list, .topics-list {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #2575fc;
-        }
-
-        .objectives-list li, .topics-list li {
-            margin-bottom: 10px;
-            padding-left: 10px;
-        }
-
-        .video-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .video-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .video-thumbnail {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            font-size: 3em;
-        }
-
-        .video-info {
-            padding: 15px;
-        }
-
-        .video-info h4 {
-            color: #6a11cb;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .video-info p {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 12px;
-        }
-
-        .video-link {
-            display: inline-block;
-            background: #2575fc;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: background 0.3s;
-        }
-
-        .video-link:hover {
-            background: #6a11cb;
-        }
-
-        .activity-card {
-            background: #fff;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .activity-card:hover {
-            border-color: #2575fc;
-            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.1);
-        }
-
-        .activity-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .activity-number {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .activity-title {
-            color: #6a11cb;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-
-        .activity-card p {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        .activity-card ul {
-            margin-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .activity-card li {
-            margin-bottom: 5px;
-        }
-
-        .materials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .material-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .material-card:hover {
-            border-color: #2575fc;
-            transform: translateY(-5px);
-        }
-
-        .material-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-
-        .material-card h4 {
-            color: #6a11cb;
-            margin-bottom: 10px;
-        }
-
-        .material-card p {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .material-link {
-            display: inline-block;
-            color: #2575fc;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .material-link:hover {
-            color: #6a11cb;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #2575fc;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-
-        .success-box {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-
-        .bibliography {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .bibliography-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: white;
-            border-radius: 5px;
-            border-left: 3px solid #2575fc;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .nav-button {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .nav-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
-        }
-
-        @media (max-width: 968px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-            }
-            
-            .video-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+@media (max-width: 768px) {
+  .hud { display: none; }
+  .page { padding: 16px; }
+  .hero { padding: 28px 20px; }
+  .duo-grid { grid-template-columns: 1fr 1fr; }
+  .vs-mid { display: none; }
+  .rub { grid-template-columns: 1fr 1fr; }
+  .hero-bg-num { display: none; }
+  .journey { grid-template-columns: 1fr 1fr; }
+}
+</style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <img src="foto_professor.png" alt="Professor Isaque Katahira">
-            <div class="header-text">
-                <h1>🎮 Marketing Digital e Monetização para Jogos</h1>
-                <p>Curso Superior de Tecnologia em Jogos Digitais - FATEC Ourinhos</p>
-                <p><strong>Professor Responsável:</strong> Isaque Katahira</p>
-            </div>
-        </div>
-    </header>
+<div class="bg-layer"></div>
 
-    <div class="container">
-        <aside class="sidebar">
-            <h2>📚 Semanas</h2>
-            <ul class="week-menu">
-                <li><a href="semana01.html"><span class="week-badge">01</span>Introdução ao Marketing Digital</a></li>
-                <li><a href="semana02.html"><span class="week-badge">02</span>Mercado de Jogos Nacional</a></li>
-                <li><a href="semana03.html"><span class="week-badge">03</span>Mercado de Jogos Internacional</a></li>
-                <li><a href="semana04.html"><span class="week-badge">04</span>Plataformas e Demografia</a></li>
-                <li><a href="semana05.html" class="active"><span class="week-badge">05</span>Marketing 4.0 e Jogadores</a></li>
-                <li><a href="semana06.html"><span class="week-badge">06</span>Free-to-Play</a></li>
-                <li><a href="semana07.html"><span class="week-badge">07</span>Paid Games e Premium</a></li>
-                <li><a href="semana08.html"><span class="week-badge">08</span>Modelos Híbridos</a></li>
-                <li><a href="semana09.html"><span class="week-badge">09</span>Battle Pass e Season Pass</a></li>
-                <li><a href="semana10.html"><span class="week-badge">10</span>Monetização e Game Design</a></li>
-                <li><a href="semana11.html"><span class="week-badge">11</span>SEO e ASO para Jogos</a></li>
-                <li><a href="semana12.html"><span class="week-badge">12</span>Google Analytics e Firebase</a></li>
-                <li><a href="semana13.html"><span class="week-badge">13</span>ROI, CAC e LTV</a></li>
-                <li><a href="semana14.html"><span class="week-badge">14</span>Facebook e Instagram Ads</a></li>
-                <li><a href="semana15.html"><span class="week-badge">15</span>Análise Competitiva</a></li>
-                <li><a href="semana16.html"><span class="week-badge">16</span>Redes Sociais para Jogos</a></li>
-                <li><a href="semana17.html"><span class="week-badge">17</span>Influenciadores e Streamers</a></li>
-                <li><a href="semana18.html"><span class="week-badge">18</span>Eventos e Festivais</a></li>
-                <li><a href="semana19.html"><span class="week-badge">19</span>Press Kit e Divulgação</a></li>
-                <li><a href="semana20.html"><span class="week-badge">20</span>Projeto Final</a></li>
-            </ul>
-        </aside>
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="t-ico" id="t-ico">📣</div>
+  <div><div class="t-title" id="t-title">+XP</div><div class="t-msg" id="t-msg"></div></div>
+</div>
 
-        <main class="content">
-            <div class="week-title">
-                <div class="week-number">05</div>
-                <div>Marketing 4.0 e o Consumidor de Jogos</div>
-            </div>
-            <p class="week-subtitle">Aplicando conceitos modernos de marketing aos jogos</p>
-
-            <section class="section">
-                <h2><span class="icon">🎯</span>Objetivos da Semana</h2>
-                <ul class="objectives-list">
-                    <li>Compreender Marketing 4.0</li>
-                    <li>Aplicar marketing orientado a dados</li>
-                    <li>Entender jornada do jogador</li>
-                    <li>Desenvolver estratégias customer-centric</li>
-                    <li>Criar experiências omnichannel</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">📖</span>Conteúdo Teórico</h2>
-                <div class="topics-list">
-                    <h3>1. Marketing 4.0 Conceitos</h3>
-                    <ul>
-                        <li>Tradicional ao digital</li>
-                        <li>Marketing centrado no cliente</li>
-                        <li>Conectividade e comunidade</li>
-                        <li>Personalização em escala</li>
-                    </ul>
-                    <h3>2. Jornada do Jogador</h3>
-                    <ul>
-                        <li>Awareness: descoberta</li>
-                        <li>Appeal: interesse e desejo</li>
-                        <li>Ask: busca informações</li>
-                        <li>Act: download/compra</li>
-                        <li>Advocate: recomendação</li>
-                    </ul>
-                    <h3>3. Data-Driven Marketing</h3>
-                    <ul>
-                        <li>Coleta e análise de dados</li>
-                        <li>Segmentação avançada</li>
-                        <li>Personalização comunicação</li>
-                        <li>Testes A/B e otimização</li>
-                    </ul>
-                    <h3>4. Construção de Comunidade</h3>
-                    <ul>
-                        <li>Discord e comunidades online</li>
-                        <li>User-generated content</li>
-                        <li>Programas embaixadores</li>
-                        <li>Feedback loop jogadores</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">🎬</span>Vídeos Recomendados</h2>
-                <div class="video-container">
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Marketing 4.0 Explained</h4>
-                            <p>Introdução Marketing 4.0</p>
-                            <a href="https://www.youtube.com/watch?v=JZqC8XHO_V4" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Customer Journey in Gaming</h4>
-                            <p>Jornada consumidor</p>
-                            <a href="https://www.youtube.com/watch?v=YBmD-jBCVKE" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Data-Driven Marketing Games</h4>
-                            <p>Marketing baseado dados</p>
-                            <a href="https://www.youtube.com/watch?v=5v7TFL8CwMQ" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Building Gaming Communities</h4>
-                            <p>Construindo comunidades</p>
-                            <a href="https://www.youtube.com/watch?v=oMB38KKRYek" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>Personalization Game Marketing</h4>
-                            <p>Personalização</p>
-                            <a href="https://www.youtube.com/watch?v=XvJ3lKZqPkU" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-thumbnail">▶️</div>
-                        <div class="video-info">
-                            <h4>User Generated Content Strategy</h4>
-                            <p>Estratégia UGC</p>
-                            <a href="https://www.youtube.com/watch?v=W8dBFnPq7sY" target="_blank" class="video-link">Assistir no YouTube</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">✏️</span>Atividades Práticas</h2>
-                
-                
-                <div class="activity-card">
-                    <div class="activity-header">
-                        <div class="activity-number">1</div>
-                        <div class="activity-title">Jornada do Jogador</div>
-                    </div>
-                    <p><strong>Objetivo:</strong> Criar customer journey map</p>
-                    <p><strong>Procedimento:</strong></p>
-                    <ul>
-                        <li>Escolher jogo exemplo</li>
-                        <li>Mapear etapas jornada</li>
-                        <li>Identificar touchpoints</li>
-                        <li>Definir ações marketing</li>
-                        <li>Criar diagrama</li>
-                    </ul>
-                    <p><strong>Duração:</strong> 45 minutos</p>
-                </div>
-
-                <div class="activity-card">
-                    <div class="activity-header">
-                        <div class="activity-number">2</div>
-                        <div class="activity-title">Estratégia Personalização</div>
-                    </div>
-                    <p><strong>Objetivo:</strong> Plano personalização</p>
-                    <p><strong>Procedimento:</strong></p>
-                    <ul>
-                        <li>Definir segmentos</li>
-                        <li>Criar mensagens personalizadas</li>
-                        <li>Planejar testes A/B</li>
-                        <li>Definir métricas</li>
-                        <li>Apresentar estratégia</li>
-                    </ul>
-                    <p><strong>Duração:</strong> 35 minutos</p>
-                </div>
-
-                <div class="activity-card">
-                    <div class="activity-header">
-                        <div class="activity-number">3</div>
-                        <div class="activity-title">Plano de Comunidade</div>
-                    </div>
-                    <p><strong>Objetivo:</strong> Estratégia community building</p>
-                    <p><strong>Procedimento:</strong></p>
-                    <ul>
-                        <li>Escolher plataformas</li>
-                        <li>Definir pilares conteúdo</li>
-                        <li>Calendário atividades</li>
-                        <li>Planejar moderadores</li>
-                        <li>Estabelecer KPIs</li>
-                    </ul>
-                    <p><strong>Duração:</strong> 25 minutos</p>
-                </div>
-
-            
-            </section>
-
-            <div class="info-box">
-                <strong>💡 DICA PROFISSIONAL</strong><br>
-                No marketing de jogos, autenticidade e conexão com a comunidade são mais importantes que grandes orçamentos. Jogadores valorizam desenvolvedores que se comunicam de forma transparente e genuína.
-            </div>
-
-            <section class="section">
-                <h2><span class="icon">📖</span>Material de Apoio</h2>
-                <div class="materials-grid">
-                    <div class="material-card">
-                        <div class="material-icon">📄</div>
-                        <h4>Guia de Marketing para Jogos Indie</h4>
-                        <p>eBook completo sobre estratégias indie</p>
-                        <a href="#" class="material-link">Download PDF →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">📊</div>
-                        <h4>Template de Persona</h4>
-                        <p>Modelo editável para criação de personas</p>
-                        <a href="#" class="material-link">Download →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">📈</div>
-                        <h4>Checklist de Pré-Lançamento</h4>
-                        <p>Lista completa de ações de marketing</p>
-                        <a href="#" class="material-link">Download PDF →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">🎯</div>
-                        <h4>Cases de Sucesso</h4>
-                        <p>Análise de 10 campanhas bem-sucedidas</p>
-                        <a href="#" class="material-link">Acessar →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">📚</div>
-                        <h4>Glossário de Marketing Digital</h4>
-                        <p>Termos essenciais do marketing de jogos</p>
-                        <a href="#" class="material-link">Download PDF →</a>
-                    </div>
-                    <div class="material-card">
-                        <div class="material-icon">🔗</div>
-                        <h4>Links Úteis</h4>
-                        <p>Comunidades e recursos online</p>
-                        <a href="#" class="material-link">Acessar Lista →</a>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2><span class="icon">📚</span>Bibliografia da Semana</h2>
-                <div class="bibliography">
-                    <div class="bibliography-item">
-                        <strong>KOTLER, Philip; KARTAJAYA, Hermawan; SETIAWAN, Iwan.</strong> Marketing 4.0: Moving from Traditional to Digital. 1. ed. New Jersey: John Wiley Trade, 2016.<br>
-                        <em>Capítulo 1: Power Shifts to the Connected Customers</em>
-                    </div>
-                    <div class="bibliography-item">
-                        <strong>GABRIEL, M.</strong> Marketing Na Era Digital - Conceitos, Plataformas e Estratégias. São Paulo: Novatec, 2010.<br>
-                        <em>Capítulo 1: A Revolução Digital</em>
-                    </div>
-                    <div class="bibliography-item">
-                        <strong>CHANDLER, H. M.</strong> Manual de Produção de Jogos Digitais. 2ª Ed. Porto Alegre: Bookman, 2012.<br>
-                        <em>Capítulo 14: Marketing e Relações Públicas</em>
-                    </div>
-                    <div class="bibliography-item">
-                        <strong>MASTROCOLA, V. M.</strong> Game Design: Modelos de Negócio e Processos Criativos. 1 ed. São Paulo: Cengage Learning, 2015.<br>
-                        <em>Capítulo 3: Modelos de Negócio para Jogos Digitais</em>
-                    </div>
-                </div>
-            </section>
-
-            <div class="warning-box">
-                <strong>⚠️ Para a Próxima Aula:</strong><br>
-                • Pesquisar sobre o mercado brasileiro de jogos digitais<br>
-                • Levantar dados sobre faturamento e crescimento do setor no Brasil<br>
-                • Identificar os principais estúdios brasileiros<br>
-                • Trazer exemplos de jogos brasileiros de sucesso
-            </div>
-
-            <div class="success-box">
-                <strong>✅ Tarefa para Casa:</strong><br>
-                1. Assistir aos vídeos recomendados<br>
-                2. Ler o Capítulo 1 do Marketing 4.0<br>
-                3. Completar as atividades práticas propostas<br>
-                4. Criar uma conta no Google Analytics (gratuito)<br>
-                5. Seguir pelo menos 5 estúdios de jogos nas redes sociais
-            </div>
-
-            <div class="navigation">
-                <a href="semana04.html" class="nav-button">⬅️ Semana Anterior</a>
-                <a href="semana06.html" class="nav-button">Próxima Semana ➡️</a>
-            </div>
-        </main>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-tag">MKTG GAMES</div>
+    <div class="header-titles">
+      <h1>Marketing Digital e Monetização para Jogos</h1>
+      <p>Prof. Isaque Katahira · Jogos Digitais 6º Sem · FATEC Ourinhos</p>
     </div>
+    <a href="semana04.html" class="a-btn">← Sem 04</a>
+    <a href="index.html" class="a-btn">⌂ Índice</a>
+    <div class="hud">
+      <div class="hud-pill"><span class="hv" id="h-xp">0</span><span class="hl">XP</span></div>
+      <div class="hud-pill"><span class="hv" id="h-stk">0</span><span class="hl">Streak</span></div>
+      <div class="hud-pill hud-wide">
+        <div class="hud-wide-labels"><span id="h-lv">Novato</span><span id="h-pct">0%</span></div>
+        <div class="hud-track"><div class="hud-fill" id="h-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="pbar-wrap">
+  <div class="pbar-inner">
+    <span class="pbar-label">PROGRESSO S05</span>
+    <div class="pbar-track"><div class="pbar-fill" id="prog" style="width:0%"></div></div>
+    <span class="pbar-label" id="prog-txt">0/10</span>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">SEMANA 05 · MÓDULO 2 — MARKETING 4.0 E JOGADORES</div>
+  <h2>Marketing 4.0<br>Aplicado a Jogos</h2>
+  <p class="hero-sub">Na era da hiperconectividade, marketing não é mais sobre empurrar mensagens — é sobre criar <strong>comunidades, experiências e defensores</strong>. O Marketing 4.0 de Kotler, aplicado a games, transforma jogadores em embaixadores e comunidades em mecanismos de crescimento orgânico.</p>
+  <div class="hero-chips">
+    <span class="chip ch-r">⏱ 90 min</span>
+    <span class="chip ch-gold">⚡ 430 XP</span>
+    <span class="chip ch-o">✏️ 2 atividades práticas</span>
+    <span class="chip ch-p">🗺️ Jornada completa do jogador</span>
+    <span class="chip ch-g">💻 Notebook necessário</span>
+  </div>
+  <div class="hero-bg-num">05</div>
+</section>
+
+<!-- DUO -->
+<div class="duo">
+  <div class="duo-header">⚔️ MODO DUELO — CONTINUAÇÃO DA SEMANA 04</div>
+  <div class="duo-grid">
+    <div class="pslot p1-s" id="ps1">
+      <div class="phead">
+        <div class="pav">📣</div>
+        <input class="pname" id="p1n" type="text" value="Player 1" placeholder="Seu nome" maxlength="16">
+      </div>
+      <div class="pxp-row"><span class="pxp-val" id="p1xp">0</span><span class="pxp-lbl">XP Sem 05</span></div>
+      <div class="pbar-slot"><div class="pb-fill" id="p1pb"></div></div>
+      <div class="pbadges-txt" id="p1bdg">0 conquistas</div>
+      <button class="pactivate" onclick="setAct(1)">Jogar como P1</button>
+    </div>
+    <div class="vs-mid">VS</div>
+    <div class="pslot p2-s" id="ps2">
+      <div class="phead">
+        <div class="pav">🎯</div>
+        <input class="pname" id="p2n" type="text" value="Player 2" placeholder="Seu nome" maxlength="16">
+      </div>
+      <div class="pxp-row"><span class="pxp-val" id="p2xp">0</span><span class="pxp-lbl">XP Sem 05</span></div>
+      <div class="pbar-slot"><div class="pb-fill" id="p2pb"></div></div>
+      <div class="pbadges-txt" id="p2bdg">0 conquistas</div>
+      <button class="pactivate" onclick="setAct(2)">Jogar como P2</button>
+    </div>
+  </div>
+</div>
+
+<!-- OBJECTIVES -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🎯</span>
+    <div class="ch-tg"><div class="ch-title">OBJETIVOS DA SEMANA</div><div class="ch-sub">Clique para marcar — cada objetivo vale +5 XP</div></div>
+    <div class="xp-tag">+5 XP cada</div>
+  </div>
+  <div class="objs" id="objs"></div>
+</div>
+
+<!-- JORNADA DO JOGADOR -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🗺️</span>
+    <div class="ch-tg"><div class="ch-title">JORNADA DO JOGADOR — 5 ETAPAS</div><div class="ch-sub">Clique em cada etapa para explorar as estratégias — +6 XP cada</div></div>
+    <div class="xp-tag">+30 XP</div>
+  </div>
+
+  <div class="journey" id="journey"></div>
+
+  <div class="slbl">MARKETING 4.0 vs. MARKETING TRADICIONAL EM GAMES</div>
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
+      <thead>
+        <tr>
+          <th style="background:rgba(255,64,129,0.1);color:var(--rose);padding:10px 14px;border:1px solid var(--border2);text-align:left;font-family:'Fira Code',monospace;font-size:0.7rem">Dimensão</th>
+          <th style="background:rgba(255,64,129,0.1);color:var(--rose);padding:10px 14px;border:1px solid var(--border2);text-align:left;font-family:'Fira Code',monospace;font-size:0.7rem">Marketing Tradicional</th>
+          <th style="background:rgba(255,64,129,0.1);color:var(--rose);padding:10px 14px;border:1px solid var(--border2);text-align:left;font-family:'Fira Code',monospace;font-size:0.7rem">Marketing 4.0 em Games</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim);font-weight:700">Canal Principal</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim)">TV, revista, outdoor</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--rose);font-weight:600">Discord, Twitch, TikTok, Reddit</td></tr>
+        <tr><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim);font-weight:700">Direção da Comunicação</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim)">1→Muitos (broadcast)</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--rose);font-weight:600">Muitos→Muitos (conversação)</td></tr>
+        <tr><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim);font-weight:700">Medição de Sucesso</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim)">GRP, audiência, share of voice</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--rose);font-weight:600">DAU, retenção D30, NPS, LTV</td></tr>
+        <tr><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim);font-weight:700">Papel do Consumidor</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim)">Receptor passivo</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--rose);font-weight:600">Co-criador, defensor, influenciador</td></tr>
+        <tr><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim);font-weight:700">Tempo de Campanha</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--text-dim)">Campanhas pontuais (meses)</td><td style="padding:9px 14px;border:1px solid var(--border);color:var(--rose);font-weight:600">Live service contínuo (anos)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout c-rose" style="margin-top:14px">
+    <span class="c-ico">📣</span>
+    <div class="c-txt">
+      <b>O Paradoxo do Marketing 4.0 em Games</b>
+      Os melhores jogos gastam menos em publicidade tradicional e mais em experiência do produto. Quando o jogo é bom, os próprios jogadores fazem o marketing: criam conteúdo no TikTok, streamam no Twitch, recomendam no Discord. Marketing 4.0 não é uma campanha — é uma arquitetura de experiências.
+    </div>
+  </div>
+</div>
+
+<!-- CONTEÚDO TEÓRICO -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">📖</span>
+    <div class="ch-tg"><div class="ch-title">CONTEÚDO TEÓRICO</div><div class="ch-sub">Abra cada tópico para estudar — +5 XP por tópico</div></div>
+    <div class="xp-tag">+20 XP</div>
+  </div>
+  <div class="acc" id="acc"></div>
+</div>
+
+<!-- VÍDEOS -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🎬</span>
+    <div class="ch-tg"><div class="ch-title">VÍDEOS RECOMENDADOS</div><div class="ch-sub">Assista para aprofundar o conteúdo</div></div>
+  </div>
+  <div class="vid-grid" id="vid-grid"></div>
+</div>
+
+<!-- ATIVIDADES -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">✏️</span>
+    <div class="ch-tg"><div class="ch-title">ATIVIDADES PRÁTICAS — LABORATÓRIO</div><div class="ch-sub">Notebook requerido · rubricas completas · 50 XP cada</div></div>
+    <div class="xp-tag">+100 XP</div>
+  </div>
+  <div id="acts"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🧠</span>
+    <div class="ch-tg"><div class="ch-title">QUIZ — MARKETING 4.0 E JOGADORES</div><div class="ch-sub">10 questões · sem consulta · player ativo compete</div></div>
+    <div class="xp-tag">até +100 XP</div>
+  </div>
+  <div class="qpr-row">
+    <div class="qpt"><div class="qpf" id="qpf" style="width:0%"></div></div>
+    <span class="qlbl" id="qcnt">0 / 10</span>
+  </div>
+  <div id="quiz"></div>
+</div>
+
+<!-- CONQUISTAS -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🏆</span>
+    <div class="ch-tg"><div class="ch-title">CONQUISTAS DA SEMANA 05</div></div>
+  </div>
+  <div class="ach-grid" id="ach-grid"></div>
+</div>
+
+<!-- BIBLIO -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">📚</span>
+    <div class="ch-tg"><div class="ch-title">BIBLIOGRAFIA</div></div>
+  </div>
+  <div class="bib">
+    <div class="bi"><strong>KOTLER, P.; KARTAJAYA, H.; SETIAWAN, I.</strong> Marketing 4.0. New Jersey: Wiley, 2016. <em>Cap. 4: Marketing to the Human Spirit</em></div>
+    <div class="bi"><strong>KOTLER, P.; KARTAJAYA, H.; SETIAWAN, I.</strong> Marketing 5.0. New Jersey: Wiley, 2021. <em>Cap. 7: Community Marketing</em></div>
+    <div class="bi"><strong>GABRIEL, M.</strong> Marketing na Era Digital. São Paulo: Novatec, 2010. <em>Cap. 5: Estratégias Digitais</em></div>
+    <div class="bi"><strong>MASTROCOLA, V. M.</strong> Game Design: Modelos de Negócio e Processos Criativos. São Paulo: Cengage, 2015. <em>Cap. 5: Marketing e Comunidade</em></div>
+    <div class="bi"><strong>DISCORD / TWITCH REPORTS.</strong> Gaming Community Trends 2024. <em>Community Engagement Metrics</em></div>
+  </div>
+</div>
+
+<div class="callout c-warn" style="margin-bottom:20px">
+  <span class="c-ico">📌</span>
+  <div class="c-txt">
+    <b>Para a Próxima Aula (Semana 06):</b>
+    Estudar User Acquisition (UA) e Growth Hacking · Conceito de CAC vs. LTV · Canais pagos (Meta Ads, Google UAC, TikTok) vs. canais orgânicos · ASO (App Store Optimization) para jogos mobile · Viral loops e K-factor em games.
+  </div>
+</div>
+
+<div class="bnav">
+  <a href="semana04.html" class="bnav-a">← Semana 04</a>
+  <a href="semana06.html" class="bnav-a">Semana 06 →</a>
+</div>
+
+</main>
+
+<script>
+// ===========================
+//  STATE
+// ===========================
+let xp=0, streak=0, acts=0;
+let ap=1;
+let p1x=0, p2x=0, p1b=0, p2b=0;
+const MAX=430;
+let jClicks=0, accSet=new Set(), objArr=[];
+
+// ===========================
+//  PLAYERS
+// ===========================
+function setAct(n) {
+  ap = n;
+  document.getElementById('ps1').classList.toggle('a1', n===1);
+  document.getElementById('ps2').classList.toggle('a2', n===2);
+  const nm = document.getElementById(`p${n}n`).value || `Player ${n}`;
+  toast('🎮', `${nm} — ATIVO`, 'Sua vez!');
+}
+function addPXP(v) {
+  if(ap===1){ p1x+=v; document.getElementById('p1xp').textContent=p1x; document.getElementById('p1pb').style.width=Math.min(p1x/MAX*100,100)+'%'; }
+  else { p2x+=v; document.getElementById('p2xp').textContent=p2x; document.getElementById('p2pb').style.width=Math.min(p2x/MAX*100,100)+'%'; }
+}
+function updBdg() {
+  document.getElementById('p1bdg').textContent=p1b+' conquista'+(p1b!==1?'s':'');
+  document.getElementById('p2bdg').textContent=p2b+' conquista'+(p2b!==1?'s':'');
+}
+
+// ===========================
+//  CORE
+// ===========================
+function gainXP(v, ico, msg) {
+  xp += v; addPXP(v); updateHUD(); toast(ico, `+${v} XP`, msg);
+}
+function updateHUD() {
+  document.getElementById('h-xp').textContent = xp;
+  document.getElementById('h-stk').textContent = streak;
+  const lvls = ['Novato','Aprendiz','Marketer','Expert','Mestre','Lendário'];
+  const thrs = [0,60,150,250,350,430];
+  let lv = 0;
+  for(let i=0;i<thrs.length;i++) if(xp>=thrs[i]) lv=i;
+  document.getElementById('h-lv').textContent = lvls[lv];
+  const pct = Math.min(Math.round(xp/MAX*100),100);
+  document.getElementById('h-pct').textContent = pct+'%';
+  document.getElementById('h-bar').style.width = pct+'%';
+  const total = 10;
+  document.getElementById('prog').style.width = Math.min(acts/total*100,100)+'%';
+  document.getElementById('prog-txt').textContent = Math.min(acts,total)+'/'+total;
+}
+let toastT;
+function toast(ico, title, msg) {
+  const el=document.getElementById('toast');
+  document.getElementById('t-ico').textContent=ico;
+  document.getElementById('t-title').textContent=title;
+  document.getElementById('t-msg').textContent=msg;
+  el.classList.add('on');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>el.classList.remove('on'),2800);
+}
+function unlock(id, name) {
+  const el=document.getElementById(id);
+  if(el && !el.classList.contains('got')) {
+    el.classList.add('got');
+    if(ap===1) p1b++; else p2b++;
+    updBdg();
+    toast('🏆', 'Conquista!', name);
+  }
+}
+
+// ===========================
+//  OBJECTIVES
+// ===========================
+const OBJS = [
+  'Entender os princípios do Marketing 4.0 aplicados a games',
+  'Mapear as 5 etapas da jornada do jogador',
+  'Identificar as diferenças entre marketing tradicional e digital em games',
+  'Compreender estratégias de community building para games',
+  'Analisar como influencers e streamers atuam como canal de marketing',
+];
+(function(){
+  const c=document.getElementById('objs');
+  OBJS.forEach((o,i)=>{
+    const d=document.createElement('div');
+    d.className='obj';
+    d.id='obj'+i;
+    d.innerHTML=`<div class="obj-ck" id="ck${i}"></div><span>${o}</span>`;
+    d.onclick=()=>doneObj(i);
+    c.appendChild(d);
+    objArr.push(false);
+  });
+})();
+function doneObj(i){
+  if(objArr[i])return;
+  objArr[i]=true;
+  document.getElementById('obj'+i).classList.add('done');
+  document.getElementById('ck'+i).textContent='✓';
+  gainXP(5,'🎯','Objetivo marcado!');
+  acts++;updateHUD();
+  if(objArr.every(Boolean))unlock('ach-obj','Objetivos Completos');
+}
+
+// ===========================
+//  JOURNEY STAGES
+// ===========================
+const JOURNEY=[
+  {ico:'👀',name:'Awareness',desc:'Descoberta do jogo via anúncio, streamer ou indicação'},
+  {ico:'🔍',name:'Consideração',desc:'Pesquisa ativa, assistir gameplay, ler reviews'},
+  {ico:'🎮',name:'Aquisição',desc:'Download/compra — início da experiência'},
+  {ico:'🔄',name:'Retenção',desc:'Loop de jogo, progressão, eventos live'},
+  {ico:'📣',name:'Advocacia',desc:'Compartilha, indica, cria conteúdo sobre o jogo'},
+];
+(function(){
+  const g=document.getElementById('journey');
+  JOURNEY.forEach((j,i)=>{
+    const d=document.createElement('div');
+    d.className='jstage';
+    d.id='js'+i;
+    d.innerHTML=`<span class="js-ico">${j.ico}</span><div class="js-name">${j.name}</div><div class="js-desc">${j.desc}</div>`;
+    d.onclick=()=>{
+      if(d.classList.contains('clicked'))return;
+      d.classList.add('clicked');
+      jClicks++;gainXP(6,'🗺️',`${j.name} explorada!`);acts++;updateHUD();
+      if(jClicks===5)unlock('ach-journey','Mestre da Jornada');
+    };
+    g.appendChild(d);
+  });
+})();
+
+// ===========================
+//  ACCORDION
+// ===========================
+const ACC=[
+  {n:'01',name:'Marketing 4.0 — O Conceito Central',meta:'Kotler 2016 · Connected Customers · Human Spirit',body:`
+    <h4>O que mudou com o Marketing 4.0</h4>
+    Philip Kotler define Marketing 4.0 como a transição do marketing tradicional para o digital, mas com um elemento central: a <strong>humanização das marcas</strong>. Em um mundo onde consumidores se conectam horizontalmente entre si, a marca precisa ser autêntica, transparente e parte da conversa — não acima dela.
+    <ul>
+      <li><strong>Marketing 1.0:</strong> produto-cêntrico (era industrial)</li>
+      <li><strong>Marketing 2.0:</strong> consumidor-cêntrico (era da informação)</li>
+      <li><strong>Marketing 3.0:</strong> valor-cêntrico (era dos valores)</li>
+      <li><strong>Marketing 4.0:</strong> humano-cêntrico + digital (era da conectividade)</li>
+    </ul>
+    <h4>Aplicação em Games</h4>
+    Em jogos, Marketing 4.0 significa: <strong>o jogo em si é o maior canal de marketing</strong>. Quando é bom, jogadores criam conteúdo, fazem streams, indicam para amigos — o loop viral acontece organicamente. O papel do marketing é criar condições para esse loop se iniciar e se sustentar.
+  `},
+  {n:'02',name:'Jornada do Jogador e Touchpoints',meta:'Awareness → Consideração → Aquisição → Retenção → Advocacia',body:`
+    <h4>As 5 Etapas da Jornada</h4>
+    Baseada no modelo de Customer Journey de Kotler, a jornada do jogador tem particularidades únicas:
+    <ul>
+      <li><strong>Awareness:</strong> TikTok/YouTube Shorts, Twitch clips, Meta Ads, boca-a-boca no Discord</li>
+      <li><strong>Consideração:</strong> Trailer oficial, reviews no Steam, Metacritic, vídeos de gameplay longo</li>
+      <li><strong>Aquisição:</strong> Landing page, app store listing (ASO), demo gratuita, promoção de lançamento</li>
+      <li><strong>Retenção:</strong> Onboarding, daily quests, eventos ao vivo, battle pass, patch notes</li>
+      <li><strong>Advocacia:</strong> Sistema de indicação, ferramentas de sharing, programa de criadores, competitive scene</li>
+    </ul>
+    <h4>Métricas por Etapa</h4>
+    Awareness → <strong>Impressões, CPM</strong> | Consideração → <strong>Wishlists, CTR</strong> | Aquisição → <strong>CPI, CVR</strong> | Retenção → <strong>D1/D7/D30, DAU</strong> | Advocacia → <strong>K-factor, NPS, UGC</strong>
+  `},
+  {n:'03',name:'Community Building para Games',meta:'Discord · Reddit · Twitch · TikTok · Twitter/X',body:`
+    <h4>Por Que Comunidade É Marketing</h4>
+    No contexto de games ao vivo (live service), a comunidade é um ativo tão importante quanto o próprio jogo. Uma comunidade ativa: reduz custos de UA (usuários chegam por indicação), aumenta retenção (jogadores ficam por conta das relações sociais), fornece feedback de produto em tempo real e cria conteúdo orgânico que atrai novos jogadores.
+    <ul>
+      <li><strong>Discord:</strong> hub central de comunidade — canais temáticos, acesso direto à dev team</li>
+      <li><strong>Reddit (r/[NomeDoJogo]):</strong> memes, fan art, teorias, reclamações públicas</li>
+      <li><strong>Twitch:</strong> descoberta orgânica — streamers são o canal de awareness mais eficiente</li>
+      <li><strong>TikTok:</strong> viralização de momentos — clips de gameplay, "o jogo que todo mundo está jogando"</li>
+    </ul>
+    <h4>Estratégia de Community Manager</h4>
+    O CM não é apenas moderador — é <strong>embaixador da marca dentro da comunidade</strong>. Responde a críticas com transparência, celebra fan art, comunica roadmap de desenvolvimento, e converte críticos em defensores através de atendimento de qualidade.
+  `},
+  {n:'04',name:'Influenciadores e Streamers como Canal',meta:'Twitch · YouTube · TikTok · Micro-influencers',body:`
+    <h4>O Funnel de Influência em Games</h4>
+    O ecossistema de criadores de conteúdo criou um funil de marketing paralelo ao tradicional:
+    <ul>
+      <li><strong>Mega influencers (1M+):</strong> awareness massivo, alto CPM, baixa autenticidade percebida</li>
+      <li><strong>Macro influencers (100K-1M):</strong> equilíbrio entre alcance e engajamento</li>
+      <li><strong>Micro influencers (10K-100K):</strong> nicho específico, altíssima taxa de conversão, custo menor</li>
+      <li><strong>Nano influencers (<10K):</strong> comunidade próxima, confiança máxima, custo baixíssimo</li>
+    </ul>
+    <h4>Estratégia para Indie: Aposte em Micro</h4>
+    Para um estúdio indie com budget limitado, <strong>10 micro influencers de nicho</strong> geralmente superam 1 mega influencer genérico em CPI e conversão. Um streamer especializado em roguelikes com 15K seguidores fiéis vende muito mais cópias de um roguelike indie do que um influencer generalista com 2M seguidores.
+  `},
+];
+(function(){
+  const c=document.getElementById('acc');
+  ACC.forEach((a,i)=>{
+    const d=document.createElement('div');
+    d.className='ai';d.id='acc'+i;
+    d.innerHTML=`<div class="ai-head" onclick="togAcc(${i})"><span class="ai-n">${a.n}</span><span class="ai-name">${a.name}</span><span class="ai-meta">${a.meta}</span><span class="ai-arrow">▼</span></div><div class="ai-body"><div class="ai-cnt">${a.body}</div></div>`;
+    c.appendChild(d);
+  });
+})();
+function togAcc(i){
+  const el=document.getElementById('acc'+i);
+  const wasOpen=el.classList.contains('open');
+  el.classList.toggle('open');
+  if(!wasOpen && !accSet.has(i)){
+    accSet.add(i);gainXP(5,'📖','Tópico estudado!');acts++;updateHUD();
+    if(accSet.size===4)unlock('ach-reader','Leitor Dedicado');
+  }
+}
+
+// ===========================
+//  VIDEOS
+// ===========================
+const VIDS=[
+  {e:'📣',title:'Marketing 4.0 em Games — Na Prática',desc:'Como aplicar os conceitos de Kotler ao marketing de jogos digitais',url:'https://www.youtube.com/watch?v=52_QKodgM6U'},
+  {e:'🎮',title:'Community Building: Discord para Dev Teams',desc:'Estratégias para construir e gerenciar comunidades de jogos',url:'https://www.youtube.com/watch?v=SJi469BuU6g'},
+  {e:'📱',title:'TikTok e Viralizações em Games',desc:'Como jogos se tornam virais na era do TikTok',url:'https://www.youtube.com/watch?v=Z3Ua-hxiW5k'},
+  {e:'🎯',title:'Micro Influencers para Lançamentos Indie',desc:'GDC: estratégias de influencer marketing com budget reduzido',url:'https://www.youtube.com/watch?v=Eiji6B9mbCE'},
+];
+(function(){
+  const g=document.getElementById('vid-grid');
+  VIDS.forEach(v=>{
+    const d=document.createElement('div');
+    d.className='vc';
+    d.innerHTML=`<div class="vt">${v.e}</div><div class="vi"><h4>${v.title}</h4><p>${v.desc}</p><a class="vbtn" href="${v.url}" target="_blank">▶ Assistir</a></div>`;
+    g.appendChild(d);
+  });
+})();
+
+// ===========================
+//  ACTIVITIES
+// ===========================
+const ACTS=[
+  {num:'A1',title:'Jornada do Jogador — Customer Journey Map',
+   obj:'Escolha um jogo mobile ou PC que você ou alguém do grupo conhece bem. Mapeie a jornada completa do jogador nas 5 etapas (Awareness → Consideração → Aquisição → Retenção → Advocacia), identificando os touchpoints, as ações de marketing do desenvolvedor e as oportunidades de melhoria.',
+   tags:[{t:'Individual',c:'at-p'},{t:'45 min',c:'at-c'},{t:'Journey Map',c:'at-r'},{t:'+50 XP',c:'at-g'}],
+   steps:[
+     {t:'Escolha um jogo que você conheça a história de marketing (ex: Hollow Knight, Minecraft, Free Fire, Brawl Stars, Celeste)'},
+     {t:'Para cada etapa (Awareness, Consideração, Aquisição, Retenção, Advocacia): liste os touchpoints reais que o jogo usa, os canais de comunicação e as métricas que o time de marketing provavelmente acompanha'},
+     {t:'Identifique 2 pontos fortes da jornada deste jogo — o que eles fazem excepcionalmente bem — e 1 ponto fraco ou oportunidade não explorada'},
+     {t:'Crie um diagrama visual da jornada (pode ser feito no papel, Canva, FigJam ou qualquer ferramenta)'},
+     {t:'Apresente em 3 minutos para um colega — ele apresenta o dele — comparem os jogos escolhidos e as estratégias identificadas'},
+   ],
+   rub:[
+     {l:'Insuficiente',d:'Jornada incompleta, touchpoints genéricos sem referência ao jogo real',c:'ri'},
+     {l:'Básico',d:'5 etapas identificadas com touchpoints reais, mas análise superficial',c:'rb'},
+     {l:'Proficiente',d:'Jornada detalhada com touchpoints específicos, métricas por etapa, pontos fortes e fracos identificados',c:'rp'},
+     {l:'Excelente',d:'Análise profunda com dados reais (ex: reviews Steam, dados de comunidade Discord), comparação entre fase de lançamento e live service, recomendação concreta de melhoria com budget estimado',c:'re'},
+   ],xp:50,id:'a1',ach:'ach-a1',an:'Mestre da Jornada Mktg'},
+  {num:'A2',title:'Plano de Comunidade — Community Building',
+   obj:'Você é o Community Manager de um jogo indie brasileiro recém-lançado — puzzle narrativo com estética brasileira, gratuito no mobile. Crie um plano de community building para os primeiros 90 dias após o lançamento, definindo plataformas, pilares de conteúdo, cadência e KPIs.',
+   tags:[{t:'Dupla',c:'at-p'},{t:'25 min',c:'at-c'},{t:'Comunidade',c:'at-r'},{t:'+50 XP',c:'at-g'}],
+   steps:[
+     {t:'Defina as 2-3 plataformas de comunidade prioritárias e justifique cada escolha com base no perfil do público do jogo'},
+     {t:'Crie 3 pilares de conteúdo (ex: "Bastidores do Desenvolvimento", "Fan Art da Semana", "Lore do Jogo") com exemplos concretos de posts para cada pilar'},
+     {t:'Monte um calendário semanal de atividades de comunidade — quantos posts, em quais plataformas, com qual objetivo cada um'},
+     {t:'Defina 3 KPIs mensuráveis para os 90 dias (ex: 1.000 membros no Discord, NPS >50, 20 posts de UGC por semana)'},
+     {t:'Apresente o plano para a turma em formato de pitch de 2 minutos — como se apresentasse para o CEO do estúdio'},
+   ],
+   rub:[
+     {l:'Insuficiente',d:'Plataformas sem justificativa, conteúdo genérico, sem KPIs',c:'ri'},
+     {l:'Básico',d:'Plataformas definidas, pilares identificados, KPIs básicos',c:'rb'},
+     {l:'Proficiente',d:'Plano completo com justificativa, calendário semanal, KPIs mensuráveis e realistas',c:'rp'},
+     {l:'Excelente',d:'Plano detalhado com estimativa de budget (hora/semana do CM), benchmarks de comunidades similares, estratégia de crise (o que fazer se tiver review bombing), pitch apresentado com clareza e convicção',c:'re'},
+   ],xp:50,id:'a2',ach:'ach-a2',an:'Community Manager'},
+];
+(function(){
+  const c=document.getElementById('acts');
+  ACTS.forEach(a=>{
+    const tags=a.tags.map(t=>`<span class="at ${t.c}">${t.t}</span>`).join('');
+    const steps=a.steps.map((s,i)=>`<div class="step"><div class="sn">${i+1}</div><div>${s.t}</div></div>`).join('');
+    const rub=a.rub.map(r=>`<div class="rc ${r.c}"><span class="rlv">${r.l}</span><p>${r.d}</p></div>`).join('');
+    const d=document.createElement('div');
+    d.className='act';
+    d.innerHTML=`<div class="act-hdr"><div class="act-n">${a.num}</div><div class="act-hi"><div class="act-title">${a.title}</div><div class="act-tgs">${tags}</div></div></div>
+    <div class="act-body">
+      <div class="act-obj">${a.obj}</div>
+      <div class="slbl">PASSO A PASSO</div>
+      <div class="steps">${steps}</div>
+      <div class="rub-title">RUBRICA DE AVALIAÇÃO</div>
+      <div class="rub">${rub}</div>
+      <button class="cbtn" id="cb-${a.id}" onclick="doneAct('${a.id}','${a.ach}','${a.an}',${a.xp},this)">✅ CONCLUÍDA — +${a.xp} XP</button>
+    </div>`;
+    c.appendChild(d);
+  });
+})();
+function doneAct(id,ach,an,v,btn){
+  if(btn.disabled)return;
+  btn.disabled=true;btn.textContent='✅ Concluída!';
+  gainXP(v,'✏️','Atividade concluída!');unlock(ach,an);acts++;updateHUD();
+}
+
+// ===========================
+//  QUIZ
+// ===========================
+const QS=[
+  {q:'Segundo Kotler, o Marketing 4.0 é definido principalmente pela:',opts:['Massificação da publicidade em TV','Transição do marketing tradicional para o digital com foco na humanização das marcas e conectividade entre consumidores','Automação completa do marketing via IA','Substituição de vendedores por chatbots'],c:1,xp:10,fb:'✅ Marketing 4.0 (Kotler, 2016) marca a transição do marketing offline para o online, mas com ênfase na humanização: marcas precisam ser autênticas, transparentes e participar de conversas horizontais com consumidores. Em games, isso significa que o próprio jogo e sua comunidade são os maiores ativos de marketing.'},
+  {q:'O que é o K-factor em marketing de jogos?',opts:['Taxa de conversão de jogadores F2P em pagantes','Coeficiente viral — quantos novos jogadores cada jogador ativo converte (K>1 = crescimento orgânico exponencial)','Custo por instalação em campanhas do Google','Métrica de satisfação (semelhante ao NPS)'],c:1,xp:10,fb:'✅ K-factor (ou coeficiente viral) mede a viralidade orgânica: se cada jogador convida em média 1,2 amigos que ficam ativos, K=1,2. Com K>1, o jogo cresce de forma exponencial sem custo de UA. Jogos como Among Us tiveram K altíssimo — cresceram quase sem budget de marketing.'},
+  {q:'Na jornada do jogador, qual etapa corresponde ao "D1/D7/D30 retention"?',opts:['Awareness — quando o jogador descobre o jogo','Consideração — quando pesquisa reviews','Aquisição — momento do download','Retenção — pós-instalação, manutenção do engajamento'],c:3,xp:10,fb:'✅ D1/D7/D30 são métricas da etapa de Retenção — medem que % dos jogadores volta ao jogo 1, 7 e 30 dias após instalar. Um D1>40% indica bom onboarding; D30>10% indica loop de gameplay saudável. Baixa retenção torna qualquer investimento em UA antieconômico.'},
+  {q:'Por que micro influencers são geralmente mais eficientes que mega influencers para jogos indie?',opts:['Porque cobram menos e isso é o que importa','Porque têm audiências de nicho com alta fidelidade e taxas de conversão maiores para o gênero específico do jogo','Porque mega influencers não jogam jogos indie','Micro influencers têm mais seguidores no total somados'],c:1,xp:10,fb:'✅ Um streamer de 15K seguidores especializado em roguelikes converte muito mais cópias de um roguelike indie do que um generalista com 2M seguidores. A especificidade da audiência + a confiança que a audiência tem no criador + o menor CPM criam uma combinação superior em ROI para jogos de nicho.'},
+  {q:'Community building em jogos é considerado marketing porque:',opts:['Reduz custos legais do jogo','Comunidades ativas reduzem CAC (usuários chegam por indicação), aumentam retenção (relações sociais), fornecem feedback de produto e criam conteúdo orgânico que atrai novos jogadores','É exigido pela Apple App Store','Comunidades pagam assinatura mensal ao desenvolvedor'],c:1,xp:10,fb:'✅ Uma comunidade ativa é um ativo de marketing: ela distribui o custo de aquisição (word-of-mouth reduz CAC), retém jogadores através de vínculos sociais (não apenas do gameplay), gera UGC que funciona como publicidade orgânica e fornece dados de produto em tempo real. Jogos como World of Warcraft sobreviveram décadas principalmente pela força de comunidade.'},
+  {q:'O que é UGC no contexto de marketing de games?',opts:['Update Game Content — atualizações de conteúdo do jogo','User Generated Content — conteúdo criado pelos próprios jogadores (fan art, vídeos, mods, streams)','Uma taxa cobrada pela Unity para jogos F2P','Um tipo de campanha de anúncios do Google'],c:1,xp:10,fb:'✅ UGC (User Generated Content) é qualquer conteúdo criado por jogadores: fan art, vídeos no TikTok/YouTube, streams no Twitch, mods, posts no Reddit, cosplays. É a forma mais autêntica e barata de marketing — e estudos mostram que consumidores confiam muito mais em UGC do que em publicidade paga.'},
+  {q:'Em Marketing 4.0, qual é a principal diferença entre comunicação "1→muitos" e "muitos→muitos"?',opts:['1→muitos é mais barato','Na comunicação muitos→muitos, consumidores falam entre si horizontalmente, e a marca precisa participar dessa conversa em vez de apenas transmitir mensagens','1→muitos usa redes sociais, muitos→muitos usa TV','Não há diferença prática para games'],c:1,xp:10,fb:'✅ Marketing tradicional é "1 para muitos" — marca transmite mensagem para consumidores passivos. Marketing 4.0 é "muitos para muitos" — consumidores conversam entre si, avaliam produtos publicamente, criam conteúdo e se influenciam mutuamente. A marca precisa participar dessa conversa com autenticidade, não apenas transmitir.'},
+  {q:'O que é "review bombing" e como um Community Manager deve responder?',opts:['Review bombing é quando o jogo tem muitas avaliações positivas pagas','Campanha organizada de avaliações negativas — o CM deve responder com transparência, endereçar as críticas legítimas publicamente e comunicar ações concretas','O CM deve deletar todas as reviews negativas imediatamente','Review bombing não existe em plataformas sérias como Steam'],c:1,xp:10,fb:'✅ Review bombing é quando uma comunidade organiza avaliações negativas massivas — pode ser por decisão polêmica do estúdio (ex: remoção de recursos, mudança de preço, controvérsia política). A resposta correta é transparência radical: reconhecer o problema, comunicar o que será feito e executar. Tentar suprimir ou ignorar geralmente amplifica a crise.'},
+  {q:'Qual ferramenta é considerada o "hub central de comunidade" para a maioria dos jogos ao vivo?',opts:['Twitter/X — por ter mais usuários no mundo','Facebook Groups — pela demografa de 25-44 anos','Discord — por permitir comunidades estruturadas com canais temáticos, voz, bots e acesso direto à equipe de desenvolvimento','Steam Forums — por estar integrado à loja'],c:2,xp:10,fb:'✅ Discord se tornou o hub padrão de comunidades de games. Sua estrutura de canais permite separar discussões por tópico (suporte, lore, competitive, fan art), integrar bots de automação, realizar eventos de voz, e criar um canal direto entre devs e jogadores. Praticamente todo jogo com live service ativo tem um servidor oficial no Discord.'},
+  {q:'Um jogo indie mobile é lançado e não consegue tracionar — poucos downloads, quase zero UGC e comunidade inativa. Qual é a estratégia mais eficiente de marketing para recuperar o crescimento?',opts:['Dobrar o budget de Meta Ads imediatamente','Contratar um celebrity endorser','Fazer uma atualização gratuita significativa + comunicar o roadmap futuro + enviar chaves para 20-30 micro influencers de nicho + criar um desafio no TikTok','Baixar o preço para zero permanentemente'],c:2,xp:10,fb:'✅ A estratégia mais eficiente combina: (1) conteúdo novo que justifique nova cobertura da mídia, (2) transparência sobre o futuro do jogo via roadmap público, (3) micro influencers de nicho que autenticamente se identifiquem com o jogo, e (4) um desafio ou momento viral no TikTok. Esta combinação reinicia o funil de Awareness sem custar muito, e as conversões orgânicas sustentam o crescimento.'},
+];
+let qCur=0,qCor=0,qAns={};
+(function(){
+  const c=document.getElementById('quiz');
+  let h='';
+  QS.forEach((q,i)=>{
+    const opts=q.opts.map((o,oi)=>`<button class="qo" onclick="ansQ(${i},${oi})">${String.fromCharCode(65+oi)}) ${o}</button>`).join('');
+    h+=`<div class="qq ${i===0?'on':''}" id="q${i}"><div class="qtxt">Q${i+1}. ${q.q}</div><div class="qopts">${opts}</div><div class="qfb" id="qfb${i}"></div><div class="qnrow" id="qnr${i}"><button class="qnbtn" onclick="${i<QS.length-1?`nxtQ(${i+1})`:'showRes()'}">${i<QS.length-1?'Próxima →':'Ver Resultado ✨'}</button></div></div>`;
+  });
+  h+=`<div class="qres" id="qres"><span class="qres-big" id="qrb">0/10</span><div class="qres-msg" id="qrm"></div><div class="qres-xp" id="qrx"></div><button class="qres-btn" onclick="rstQ()">↺ Tentar Novamente</button></div>`;
+  c.innerHTML=h;
+})();
+function ansQ(qi,ch){
+  const q=QS[qi];
+  const card=document.getElementById(`q${qi}`);
+  card.querySelectorAll('.qo').forEach(b=>b.disabled=true);
+  card.querySelectorAll('.qo')[ch].classList.add(ch===q.c?'correct':'wrong');
+  if(ch!==q.c)card.querySelectorAll('.qo')[q.c].classList.add('correct');
+  const ok=ch===q.c;
+  const fb=document.getElementById(`qfb${qi}`);
+  fb.textContent=ok?q.fb:'❌ Incorreto. '+q.fb;
+  fb.className='qfb on '+(ok?'ok':'fail');
+  document.getElementById(`qnr${qi}`).classList.add('on');
+  if(ok){qCor++;gainXP(q.xp,'🧠','Resposta correta!');streak++;}
+  else{streak=Math.max(0,streak-1);updateHUD();}
+  qAns[qi]=ok;
+  document.getElementById('qpf').style.width=((qi+1)/QS.length*100)+'%';
+  document.getElementById('qcnt').textContent=`${qi+1} / ${QS.length}`;
+}
+function nxtQ(n){document.querySelector('.qq.on').classList.remove('on');document.getElementById(`q${n}`).classList.add('on');}
+function showRes(){
+  document.querySelector('.qq.on').classList.remove('on');
+  document.getElementById('qres').classList.add('on');
+  document.getElementById('qrb').textContent=`${qCor}/10`;
+  const msgs=['📚 Revise o conteúdo!','⚡ Progredindo!','🔥 Boa performance!','🏆 Especialista!','💎 Perfeito!'];
+  document.getElementById('qrm').textContent=msgs[Math.min(Math.floor(qCor/2),4)];
+  const earned=Object.keys(qAns).filter(k=>qAns[k]).reduce((s,k)=>s+QS[+k].xp,0);
+  const nm=document.getElementById(`p${ap}n`).value||`Player ${ap}`;
+  document.getElementById('qrx').textContent=`+${earned} XP para ${nm}!`;
+  if(qCor>=8)unlock('ach-quiz','Quiz Aprovado');
+  if(qCor===10)unlock('ach-perfect','Quiz Perfeito!');
+  acts++;updateHUD();
+}
+function rstQ(){
+  qCor=0;qAns={};
+  document.getElementById('qres').classList.remove('on');
+  document.getElementById('qpf').style.width='0%';
+  document.getElementById('qcnt').textContent='0 / 10';
+  QS.forEach((_,i)=>{
+    const c=document.getElementById(`q${i}`);
+    c.classList.toggle('on',i===0);
+    c.querySelectorAll('.qo').forEach(b=>{b.disabled=false;b.className='qo';});
+    const fb=document.getElementById(`qfb${i}`);fb.className='qfb';fb.textContent='';
+    document.getElementById(`qnr${i}`).classList.remove('on');
+  });
+}
+
+// ===========================
+//  ACHIEVEMENTS
+// ===========================
+const ACHS=[
+  {id:'ach-boot',e:'🚀',n:'Lab Online S05'},
+  {id:'ach-journey',e:'🗺️',n:'Mestre da Jornada'},
+  {id:'ach-reader',e:'📖',n:'Leitor Dedicado'},
+  {id:'ach-obj',e:'🎯',n:'Objetivos Completos'},
+  {id:'ach-a1',e:'🗺️',n:'Mestre da Jornada Mktg'},
+  {id:'ach-a2',e:'💬',n:'Community Manager'},
+  {id:'ach-quiz',e:'🎓',n:'Quiz Aprovado'},
+  {id:'ach-perfect',e:'💎',n:'Quiz Perfeito'},
+];
+(function(){
+  const g=document.getElementById('ach-grid');
+  ACHS.forEach(a=>{const d=document.createElement('div');d.className='ach';d.id=a.id;d.innerHTML=`<span class="ach-e">${a.e}</span><div class="ach-n">${a.n}</div>`;g.appendChild(d);});
+})();
+
+// ===========================
+//  INIT
+// ===========================
+setTimeout(()=>{unlock('ach-boot','Lab Online S05');gainXP(5,'🚀','Semana 05 iniciada!');acts++;updateHUD();},700);
+setAct(1);
+</script>
 </body>
 </html>
