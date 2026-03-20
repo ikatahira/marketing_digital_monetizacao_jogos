@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 02 — Mercado Brasileiro de Jogos</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0e1a;
+  --surface: #111827;
+  --surface2: #1a2236;
+  --border: rgba(255,255,255,0.07);
+  --border-bright: rgba(255,255,255,0.15);
+  --green: #00ff88;
+  --green-dim: rgba(0,255,136,0.12);
+  --green-glow: 0 0 30px rgba(0,255,136,0.3);
+  --orange: #ff6b35;
+  --orange-dim: rgba(255,107,53,0.12);
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --gold: #fbbf24;
+  --gold-dim: rgba(251,191,36,0.12);
+  --text: #f1f5f9;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --r: 12px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === GRID BACKGROUND === */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -40%;
+  left: -20%;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(ellipse, rgba(0,255,136,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* === SCANLINE === */
+.scanline {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.05) 3px,
+    rgba(0,0,0,0.05) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* === HEADER === */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,14,26,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-bright);
+  box-shadow: 0 0 40px rgba(0,255,136,0.06);
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-pill {
+  background: var(--green);
+  color: #000;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.header-titles { flex: 1; min-width: 0; }
+.header-titles h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  letter-spacing: 0.08em;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-titles p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.hud {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hud-stat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  text-align: center;
+  min-width: 56px;
+}
+.hud-stat .val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--green);
+  display: block;
+  line-height: 1;
+}
+.hud-stat .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.48rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hud-level {
+  min-width: 140px;
+}
+.hud-level-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.hud-track {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.hud-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), #00ccff);
+  border-radius: 100px;
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 8px rgba(0,255,136,0.5);
+}
+
+.nav-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--green); border-color: rgba(0,255,136,0.3); }
+
+/* === PROGRESS BAR === */
+.progress-bar-wrap {
+  background: rgba(10,14,26,0.8);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 24px;
+}
+.progress-bar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.progress-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.progress-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), #00ccff, var(--orange));
+  border-radius: 100px;
+  transition: width 0.6s ease;
+}
+
+/* === TOAST === */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: var(--surface2);
+  border: 1px solid rgba(0,255,136,0.4);
+  border-radius: var(--r);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), var(--green-glow);
+  transform: translateY(120px) scale(0.9);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 320px;
+}
+.toast.visible { transform: translateY(0) scale(1); opacity: 1; }
+.toast-icon { font-size: 1.6rem; }
+.toast-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--green);
+}
+.toast-msg {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* === LAYOUT === */
+.page { max-width: 1280px; margin: 0 auto; padding: 28px 24px; position: relative; z-index: 2; }
+
+/* === HERO SECTION === */
+.hero {
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  border-radius: 20px;
+  padding: 44px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+}
+.hero-week-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--green);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.hero-week-tag::before { content: '//'; opacity: 0.5; }
+.hero h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff 40%, var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-weight: 500;
+}
+.tag-green { color: var(--green); border-color: rgba(0,255,136,0.35); background: rgba(0,255,136,0.06); }
+.tag-orange { color: var(--orange); border-color: rgba(255,107,53,0.35); background: rgba(255,107,53,0.06); }
+.tag-blue { color: #60a5fa; border-color: rgba(59,130,246,0.35); background: rgba(59,130,246,0.06); }
+.tag-gold { color: var(--gold); border-color: rgba(251,191,36,0.35); background: rgba(251,191,36,0.06); }
+
+.hero-decoration {
+  position: absolute;
+  right: 44px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 8rem;
+  color: rgba(0,255,136,0.04);
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* === DUO BATTLE CARD === */
+.duo-card {
+  background: linear-gradient(135deg, var(--surface) 0%, #1a2236 100%);
+  border: 1px solid var(--border-bright);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.duo-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--orange));
+}
+.duo-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.duo-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-bright);
+}
+.duo-players {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+}
+.player-slot {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.player-slot:hover { transform: translateY(-2px); }
+.player-slot.p1-active {
+  border-color: rgba(0,255,136,0.5);
+  box-shadow: var(--green-glow);
+}
+.player-slot.p2-active {
+  border-color: rgba(255,107,53,0.5);
+  box-shadow: 0 0 30px rgba(255,107,53,0.3);
+}
+.player-slot::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+}
+.player-slot.p1 ::before { background: var(--green); }
+.player-slot.p2::before { background: var(--orange); }
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.player-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.p1 .player-avatar { background: var(--green-dim); }
+.p2 .player-avatar { background: var(--orange-dim); }
+.player-name-input {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 100%;
+  outline: none;
+}
+.player-name-input::placeholder { color: var(--text-muted); }
+.player-xp-display {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.player-xp-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+.p1 .player-xp-val { color: var(--green); }
+.p2 .player-xp-val { color: var(--orange); }
+.player-xp-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.player-bar-wrap {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.player-bar {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s ease;
+  width: 0%;
+}
+.p1 .player-bar { background: var(--green); box-shadow: 0 0 6px rgba(0,255,136,0.5); }
+.p2 .player-bar { background: var(--orange); box-shadow: 0 0 6px rgba(255,107,53,0.5); }
+.player-badges {
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+}
+.vs-badge {
+  text-align: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: rgba(255,255,255,0.15);
+  letter-spacing: 0.05em;
+}
+.active-player-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.p1 .active-player-btn { background: var(--green-dim); color: var(--green); }
+.p1 .active-player-btn:hover, .p1-active .active-player-btn { background: var(--green); color: #000; font-weight: 700; }
+.p2 .active-player-btn { background: var(--orange-dim); color: var(--orange); }
+.p2 .active-player-btn:hover, .p2-active .active-player-btn { background: var(--orange); color: #000; font-weight: 700; }
+
+/* === CARD === */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 20px;
+  transition: border-color 0.25s;
+  animation: fadeUp 0.4s ease both;
+}
+.card:hover { border-color: var(--border-bright); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.card-icon { font-size: 1.3rem; }
+.card-title-group { flex: 1; }
+.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+.card-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+}
+.xp-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid rgba(251,191,36,0.3);
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* === OBJECTIVES === */
+.obj-list { display: flex; flex-direction: column; gap: 8px; }
+.obj-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.obj-item:hover { background: rgba(0,255,136,0.04); border-color: rgba(0,255,136,0.25); }
+.obj-item.done {
+  background: rgba(0,255,136,0.05);
+  border-color: rgba(0,255,136,0.2);
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+.obj-check {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border-bright);
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  transition: all 0.25s;
+}
+.obj-item.done .obj-check {
+  background: var(--green);
+  border-color: var(--green);
+  color: #000;
+}
+
+/* === DATA PANEL === */
+.data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+}
+.stat-card.c-green::after { background: var(--green); }
+.stat-card.c-orange::after { background: var(--orange); }
+.stat-card.c-blue::after { background: var(--blue); }
+.stat-card.c-gold::after { background: var(--gold); }
+.stat-card:hover { transform: translateY(-4px); border-color: var(--border-bright); }
+.stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  display: block;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-card.c-green .stat-val { color: var(--green); }
+.stat-card.c-orange .stat-val { color: var(--orange); }
+.stat-card.c-blue .stat-val { color: #60a5fa; }
+.stat-card.c-gold .stat-val { color: var(--gold); }
+.stat-lbl { font-size: 0.76rem; color: var(--text-dim); line-height: 1.4; }
+.stat-src { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text-muted); margin-top: 6px; }
+
+/* === CHARTS === */
+.chart-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.chart-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-dim); width: 140px; flex-shrink: 0; }
+.chart-track { flex: 1; height: 20px; background: rgba(255,255,255,0.04); border-radius: 6px; overflow: hidden; position: relative; }
+.chart-fill {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #000;
+  transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+  width: 0;
+}
+.chart-pct { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); width: 42px; text-align: right; flex-shrink: 0; }
+
+/* === MAP GRID === */
+.map-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; border-radius: var(--r); overflow: hidden; margin-top: 12px; }
+.map-cell {
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+  position: relative;
+}
+.map-cell:hover { filter: brightness(1.4); transform: scale(1.03); z-index: 2; }
+.map-cell .flag { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+.map-cell .country { font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; font-weight: 600; color: #fff; }
+.map-cell .revenue { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+.map-cell .rank { position: absolute; top: 6px; right: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: rgba(255,255,255,0.4); }
+
+/* === ACCORDION === */
+.acc-list { display: flex; flex-direction: column; gap: 8px; }
+.acc-item { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: border-color 0.25s; }
+.acc-item.open { border-color: rgba(0,255,136,0.3); }
+.acc-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.02);
+  user-select: none;
+  transition: background 0.2s;
+}
+.acc-head:hover { background: rgba(0,255,136,0.04); }
+.acc-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--green);
+  width: 28px;
+  flex-shrink: 0;
+}
+.acc-name { flex: 1; font-weight: 600; font-size: 0.9rem; }
+.acc-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+}
+.acc-arrow { color: var(--text-muted); font-size: 0.7rem; transition: transform 0.3s; flex-shrink: 0; }
+.acc-item.open .acc-arrow { transform: rotate(180deg); }
+.acc-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.3s; }
+.acc-item.open .acc-body { max-height: 1600px; padding: 0 18px 20px; }
+.acc-content { font-size: 0.86rem; color: var(--text-dim); line-height: 1.85; }
+.acc-content h4 { font-family: 'Space Grotesk', sans-serif; color: var(--green); font-size: 0.88rem; margin: 14px 0 6px; font-weight: 700; }
+.acc-content ul { padding-left: 18px; }
+.acc-content li { margin-bottom: 6px; }
+.acc-content strong { color: var(--text); }
+
+/* === CALLOUT BOXES === */
+.callout {
+  border-radius: var(--r);
+  padding: 14px 16px;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  margin: 12px 0;
+  display: flex;
+  gap: 10px;
+}
+.callout-icon { flex-shrink: 0; font-size: 1rem; margin-top: 2px; }
+.callout-text b { display: block; margin-bottom: 3px; font-size: 0.82rem; }
+.callout-info { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); color: #93c5fd; }
+.callout-info b { color: #60a5fa; }
+.callout-warn { background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.2); color: #fde68a; }
+.callout-warn b { color: var(--gold); }
+.callout-success { background: rgba(0,255,136,0.06); border: 1px solid rgba(0,255,136,0.2); color: #6ee7b7; }
+.callout-success b { color: var(--green); }
+.callout-fire { background: rgba(255,107,53,0.07); border: 1px solid rgba(255,107,53,0.2); color: #fdba74; }
+.callout-fire b { color: var(--orange); }
+
+/* === ACTIVITIES === */
+.act-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: border-color 0.25s;
+}
+.act-card:hover { border-color: var(--border-bright); }
+.act-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border);
+}
+.act-num {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--green), #00ccff);
+  color: #000;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.act-header-info { flex: 1; }
+.act-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+.act-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.act-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid;
+}
+.at-green { color: var(--green); border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.07); }
+.at-orange { color: var(--orange); border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.07); }
+.at-blue { color: #60a5fa; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.07); }
+.at-gold { color: var(--gold); border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.07); }
+
+.act-body { padding: 20px; }
+.act-objective {
+  font-size: 0.87rem;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  line-height: 1.7;
+  padding: 12px 14px;
+  background: rgba(0,255,136,0.04);
+  border-left: 2px solid var(--green);
+  border-radius: 0 8px 8px 0;
+}
+.step-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+  font-size: 0.84rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.step-num {
+  background: rgba(0,255,136,0.15);
+  color: var(--green);
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-item strong { color: var(--text); }
+
+/* === RUBRICA === */
+.rubric-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rubric-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.rubric-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.rubric-cell { border-radius: 10px; padding: 12px; }
+.rubric-cell .r-level {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  display: block;
+}
+.rubric-cell p { font-size: 0.77rem; line-height: 1.5; }
+.rc-i { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); }
+.rc-i .r-level { color: #f87171; }
+.rc-i p { color: #fca5a5; }
+.rc-b { background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.2); }
+.rc-b .r-level { color: var(--gold); }
+.rc-b p { color: #fde68a; }
+.rc-p { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.2); }
+.rc-p .r-level { color: #60a5fa; }
+.rc-p p { color: #bfdbfe; }
+.rc-e { background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.2); }
+.rc-e .r-level { color: var(--green); }
+.rc-e p { color: #a7f3d0; }
+
+.complete-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid rgba(0,255,136,0.3);
+  background: rgba(0,255,136,0.07);
+  color: var(--green);
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.25s;
+}
+.complete-btn:hover:not(:disabled) {
+  background: rgba(0,255,136,0.15);
+  box-shadow: var(--green-glow);
+}
+.complete-btn:disabled {
+  background: rgba(0,255,136,0.1);
+  color: var(--green);
+  cursor: default;
+}
+.complete-btn.done-btn {
+  border-color: rgba(0,255,136,0.4);
+  background: rgba(0,255,136,0.1);
+  color: var(--green);
+}
+
+/* === QUIZ === */
+.quiz-q { display: none; }
+.quiz-q.active { display: block; }
+.q-progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.q-track { flex: 1; height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+.q-fill { height: 100%; background: linear-gradient(90deg, var(--green), #00ccff); border-radius: 100px; transition: width 0.5s ease; }
+.q-label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-muted); white-space: nowrap; }
+.q-text { font-weight: 600; font-size: 0.92rem; margin-bottom: 16px; line-height: 1.6; color: var(--text); }
+.q-options { display: flex; flex-direction: column; gap: 8px; }
+.q-opt {
+  padding: 12px 16px;
+  border: 1px solid var(--border-bright);
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.84rem;
+  text-align: left;
+  transition: all 0.2s;
+}
+.q-opt:hover:not(:disabled) { border-color: rgba(0,255,136,0.4); background: rgba(0,255,136,0.06); color: var(--green); }
+.q-opt.correct { border-color: rgba(0,255,136,0.5); background: rgba(0,255,136,0.1); color: var(--green); font-weight: 700; }
+.q-opt.wrong { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.07); color: #f87171; }
+.q-opt:disabled { cursor: default; }
+.q-feedback {
+  display: none;
+  margin: 10px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  font-family: 'JetBrains Mono', monospace;
+}
+.q-feedback.show { display: block; }
+.q-feedback.ok { background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.2); color: #6ee7b7; }
+.q-feedback.fail { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+.q-next-row { display: none; justify-content: flex-end; margin-top: 10px; }
+.q-next-row.show { display: flex; }
+.q-next {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 8px 20px;
+  background: var(--green-dim);
+  border: 1px solid rgba(0,255,136,0.3);
+  color: var(--green);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.q-next:hover { background: rgba(0,255,136,0.18); }
+.q-result { display: none; text-align: center; padding: 32px 0; }
+.q-result.show { display: block; }
+.q-result-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--green), #00ccff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  margin-bottom: 10px;
+}
+.q-result-msg { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 8px; }
+.q-result-xp { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--gold); margin-bottom: 18px; }
+.q-restart-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 10px 24px;
+  background: var(--green-dim);
+  border: 1px solid rgba(0,255,136,0.3);
+  color: var(--green);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.q-restart-btn:hover { background: rgba(0,255,136,0.18); }
+
+/* === ACHIEVEMENTS === */
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+.ach-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 10px;
+  text-align: center;
+  filter: grayscale(1) opacity(0.3);
+  transition: all 0.4s;
+}
+.ach-item.got {
+  filter: none;
+  border-color: rgba(251,191,36,0.4);
+  background: rgba(251,191,36,0.05);
+  box-shadow: 0 0 20px rgba(251,191,36,0.15);
+  animation: achPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes achPop {
+  0% { transform: scale(0.5); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.ach-emoji { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+.ach-name { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text-muted); line-height: 1.4; }
+.ach-item.got .ach-name { color: var(--gold); }
+
+/* === VIDEO GRID === */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.video-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.video-card:hover { transform: translateY(-3px); border-color: var(--border-bright); }
+.video-thumb {
+  background: linear-gradient(135deg, #1a1a3e, #0a1628);
+  padding: 28px 20px;
+  text-align: center;
+  font-size: 2.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.video-info { padding: 14px; }
+.video-info h4 { font-weight: 700; font-size: 0.86rem; margin-bottom: 4px; }
+.video-info p { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 12px; }
+.video-btn {
+  display: inline-block;
+  background: var(--green-dim);
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,0.3);
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.video-btn:hover { background: rgba(0,255,136,0.14); }
+
+/* === BIBLIO === */
+.biblio-list { display: flex; flex-direction: column; gap: 8px; }
+.biblio-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--blue);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  font-size: 0.83rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.biblio-item strong { color: var(--text); }
+.biblio-item em { color: #60a5fa; font-style: normal; }
+
+/* === SECTION DIVIDER === */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin: 20px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+/* === NAV === */
+.bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.bnav-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 12px 24px;
+  background: var(--surface2);
+  border: 1px solid var(--border-bright);
+  color: var(--text-dim);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.25s;
+  letter-spacing: 0.04em;
+}
+.bnav-btn:hover { color: var(--green); border-color: rgba(0,255,136,0.35); background: rgba(0,255,136,0.04); }
+
+@media (max-width: 768px) {
+  .hud { display: none; }
+  .page { padding: 16px; }
+  .hero { padding: 28px 20px; }
+  .duo-players { grid-template-columns: 1fr 1fr; }
+  .vs-badge { display: none; }
+  .rubric-grid { grid-template-columns: 1fr 1fr; }
+  .hero-decoration { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon" id="toast-icon">⚡</div>
+  <div>
+    <div class="toast-title" id="toast-title">+XP</div>
+    <div class="toast-msg" id="toast-msg"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-pill">MKTG GAMES</div>
+    <div class="header-titles">
+      <h1>Marketing Digital e Monetização para Jogos</h1>
+      <p>Prof. Isaque Katahira · Jogos Digitais 6º Sem · FATEC Ourinhos</p>
+    </div>
+    <a href="index.html" class="nav-link">⌂ Índice</a>
+    <a href="semana03_guia.html" class="nav-link">Sem 03 →</a>
+    <div class="hud">
+      <div class="hud-stat"><span class="val" id="h-xp">0</span><span class="lbl">XP Total</span></div>
+      <div class="hud-stat"><span class="val" id="h-streak">0</span><span class="lbl">Streak</span></div>
+      <div class="hud-stat hud-level">
+        <div class="hud-level-label"><span id="h-level">Novato</span><span id="h-pct">0%</span></div>
+        <div class="hud-track"><div class="hud-fill" id="h-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="progress-bar-wrap">
+  <div class="progress-bar-inner">
+    <span class="progress-label">PROGRESSO S02</span>
+    <div class="progress-track"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <span class="progress-label" id="prog-txt">0/10</span>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-week-tag">SEMANA 02 · MÓDULO 1 — FUNDAMENTOS</div>
+  <h2>Mercado Brasileiro<br>de Jogos Digitais</h2>
+  <p class="hero-sub">O Brasil é o <strong>13º maior mercado de jogos</strong> do mundo e o <strong>1º da América Latina</strong>. Com 92 milhões de jogadores ativos, entender esse ecossistema único é a base de toda estratégia de marketing bem-sucedida no setor.</p>
+  <div class="hero-tags">
+    <span class="tag tag-green">⏱ 110 min</span>
+    <span class="tag tag-gold">⚡ 450 XP disponíveis</span>
+    <span class="tag tag-orange">✏️ 3 atividades práticas</span>
+    <span class="tag tag-blue">🏆 9 conquistas</span>
+    <span class="tag tag-green">💻 Notebook necessário</span>
+  </div>
+  <div class="hero-decoration">BR</div>
+</section>
+
+<!-- DUO BATTLE -->
+<div class="duo-card">
+  <div class="duo-title">⚔️ MODO DUELO — 2 JOGADORES</div>
+  <div class="duo-players">
+    <div class="player-slot p1" id="p1-slot">
+      <div class="player-header">
+        <div class="player-avatar">🟢</div>
+        <input class="player-name-input" id="p1-name" type="text" value="Player 1" placeholder="Seu nome aqui" maxlength="16">
+      </div>
+      <div class="player-xp-display">
+        <span class="player-xp-val" id="p1-xp">0</span>
+        <span class="player-xp-lbl">XP</span>
+      </div>
+      <div class="player-bar-wrap"><div class="player-bar" id="p1-bar"></div></div>
+      <div class="player-badges" id="p1-badges">0 conquistas</div>
+      <button class="active-player-btn" onclick="setActive(1)">Jogar como P1</button>
+    </div>
+    <div class="vs-badge">VS</div>
+    <div class="player-slot p2" id="p2-slot">
+      <div class="player-header">
+        <div class="player-avatar">🟠</div>
+        <input class="player-name-input" id="p2-name" type="text" value="Player 2" placeholder="Seu nome aqui" maxlength="16">
+      </div>
+      <div class="player-xp-display">
+        <span class="player-xp-val" id="p2-xp">0</span>
+        <span class="player-xp-lbl">XP</span>
+      </div>
+      <div class="player-bar-wrap"><div class="player-bar" id="p2-bar"></div></div>
+      <div class="player-badges" id="p2-badges">0 conquistas</div>
+      <button class="active-player-btn" onclick="setActive(2)">Jogar como P2</button>
+    </div>
+  </div>
+  <div class="callout callout-info" style="margin-top:14px;margin-bottom:0">
+    <span class="callout-icon">💡</span>
+    <div class="callout-text">
+      <b>Como funciona o duelo</b>
+      Alternem entre Player 1 e Player 2 ao responder o quiz — cada um responde por conta própria. Nas atividades, trabalhem juntos mas comparem as análises. Quem terminar com mais XP vence a semana!
+    </div>
+  </div>
+</div>
+
+<!-- OBJECTIVES -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">🎯</span>
+    <div class="card-title-group">
+      <div class="card-title">OBJETIVOS DA SEMANA</div>
+      <div class="card-sub">Clique para marcar conforme for dominando o conteúdo</div>
+    </div>
+    <div class="xp-chip">+5 XP cada</div>
+  </div>
+  <div class="obj-list" id="obj-list"></div>
+</div>
+
+<!-- MERCADO DATA -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">📊</span>
+    <div class="card-title-group">
+      <div class="card-title">O BRASIL NO MAPA GLOBAL</div>
+      <div class="card-sub">Dados reais — clique nos cards para explorar e ganhar XP</div>
+    </div>
+    <div class="xp-chip">+24 XP</div>
+  </div>
+
+  <div class="data-grid" id="data-grid"></div>
+
+  <div class="section-label">PLATAFORMAS — BRASIL 2024</div>
+  <div id="chart-bars"></div>
+
+  <div class="section-label">TOP MERCADOS LATAM</div>
+  <div class="map-grid">
+    <div class="map-cell" style="background:linear-gradient(135deg,#1e3a5f,#1a4080)" onclick="gainXP(3,'🌎','País explorado!')">
+      <span class="rank">#1</span><span class="flag">🇧🇷</span>
+      <div class="country">Brasil</div><div class="revenue">~$2.3B</div>
+    </div>
+    <div class="map-cell" style="background:linear-gradient(135deg,#3b1a1a,#5c2020)" onclick="gainXP(3,'🌎','País explorado!')">
+      <span class="rank">#2</span><span class="flag">🇲🇽</span>
+      <div class="country">México</div><div class="revenue">~$1.9B</div>
+    </div>
+    <div class="map-cell" style="background:linear-gradient(135deg,#1a3b2a,#1a5c3e)" onclick="gainXP(3,'🌎','País explorado!')">
+      <span class="rank">#3</span><span class="flag">🇦🇷</span>
+      <div class="country">Argentina</div><div class="revenue">~$0.4B</div>
+    </div>
+    <div class="map-cell" style="background:linear-gradient(135deg,#2a1a3b,#3e1a5c)" onclick="gainXP(3,'🌎','País explorado!')">
+      <span class="rank">#4</span><span class="flag">🇨🇴</span>
+      <div class="country">Colômbia</div><div class="revenue">~$0.35B</div>
+    </div>
+    <div class="map-cell" style="background:linear-gradient(135deg,#1a2a3b,#1a3e5c)" onclick="gainXP(3,'🌎','País explorado!')">
+      <span class="rank">#5</span><span class="flag">🇨🇱</span>
+      <div class="country">Chile</div><div class="revenue">~$0.25B</div>
+    </div>
+    <div class="map-cell" style="background:linear-gradient(135deg,#2a2a1a,#3b3b1a)" onclick="gainXP(3,'🌎','País explorado!')">
+      <span class="rank">#6</span><span class="flag">🇵🇪</span>
+      <div class="country">Peru</div><div class="revenue">~$0.15B</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-top:14px">
+    <span class="callout-icon">⚡</span>
+    <div class="callout-text">
+      <b>Por que o Brasil é único no mundo?</b>
+      Combinação rara: alto volume de jogadores + baixo poder aquisitivo + tributação elevada de hardware + cultura F2P consolidada. Isso cria um mercado que não se comporta como EUA nem como Ásia — exige estratégias 100% adaptadas.
+    </div>
+  </div>
+</div>
+
+<!-- CONTEÚDO TEÓRICO -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">📖</span>
+    <div class="card-title-group">
+      <div class="card-title">CONTEÚDO TEÓRICO</div>
+      <div class="card-sub">Abra cada tópico para estudar — +5 XP por tópico explorado</div>
+    </div>
+    <div class="xp-chip">+20 XP</div>
+  </div>
+  <div class="acc-list" id="acc-list"></div>
+</div>
+
+<!-- VÍDEOS -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">🎬</span>
+    <div class="card-title-group">
+      <div class="card-title">VÍDEOS RECOMENDADOS</div>
+      <div class="card-sub">Assista antes ou durante as atividades práticas</div>
+    </div>
+  </div>
+  <div class="video-grid" id="video-grid"></div>
+</div>
+
+<!-- ATIVIDADES -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">✏️</span>
+    <div class="card-title-group">
+      <div class="card-title">ATIVIDADES PRÁTICAS — LABORATÓRIO</div>
+      <div class="card-sub">Usando notebook · rubricas completas · 50 XP cada</div>
+    </div>
+    <div class="xp-chip">+150 XP total</div>
+  </div>
+  <div id="acts-container"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">🧠</span>
+    <div class="card-title-group">
+      <div class="card-title">QUIZ — MERCADO BRASILEIRO</div>
+      <div class="card-sub">10 questões · player ativo compete · sem consulta</div>
+    </div>
+    <div class="xp-chip">até +100 XP</div>
+  </div>
+  <div class="q-progress-row">
+    <div class="q-track"><div class="q-fill" id="q-fill" style="width:0%"></div></div>
+    <span class="q-label" id="q-count">0 / 10</span>
+  </div>
+  <div id="quiz-container"></div>
+</div>
+
+<!-- CONQUISTAS -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">🏆</span>
+    <div class="card-title-group">
+      <div class="card-title">CONQUISTAS DA SEMANA 02</div>
+    </div>
+  </div>
+  <div class="ach-grid" id="ach-grid"></div>
+</div>
+
+<!-- MATERIAL APOIO -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">📚</span>
+    <div class="card-title-group">
+      <div class="card-title">MATERIAL DE APOIO</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">📊</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Pesquisa Game Brasil</div>
+      <div style="font-size:0.76rem;color:var(--text-muted);margin-bottom:12px;">Relatório anual mais completo do mercado BR</div>
+      <a href="https://pesquisagamebrasil.com.br" target="_blank" style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.7rem;">pesquisagamebrasil.com.br →</a>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">🌐</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Newzoo Global Reports</div>
+      <div style="font-size:0.76rem;color:var(--text-muted);margin-bottom:12px;">Dados globais e LATAM do mercado de games</div>
+      <a href="https://newzoo.com" target="_blank" style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.7rem;">newzoo.com →</a>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">🏢</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Abragames</div>
+      <div style="font-size:0.76rem;color:var(--text-muted);margin-bottom:12px;">Associação Brasileira das Desenvolvedoras</div>
+      <a href="https://abragames.org" target="_blank" style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.7rem;">abragames.org →</a>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">🎪</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">BIG Festival</div>
+      <div style="font-size:0.76rem;color:var(--text-muted);margin-bottom:12px;">Maior festival de indie games da América Latina</div>
+      <a href="https://bigfestival.com.br" target="_blank" style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.7rem;">bigfestival.com.br →</a>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">🎨</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Canva</div>
+      <div style="font-size:0.76rem;color:var(--text-muted);margin-bottom:12px;">Para criar infográficos e personas (gratuito)</div>
+      <a href="https://canva.com" target="_blank" style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.7rem;">canva.com →</a>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">📈</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Google Sheets</div>
+      <div style="font-size:0.76rem;color:var(--text-muted);margin-bottom:12px;">Planilhas para análise de dados (gratuito)</div>
+      <a href="https://sheets.google.com" target="_blank" style="color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.7rem;">sheets.google.com →</a>
+    </div>
+  </div>
+</div>
+
+<!-- BIBLIO -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">📚</span>
+    <div class="card-title-group">
+      <div class="card-title">BIBLIOGRAFIA</div>
+    </div>
+  </div>
+  <div class="biblio-list">
+    <div class="biblio-item"><strong>KOTLER, P.; KARTAJAYA, H.; SETIAWAN, I.</strong> Marketing 4.0: Moving from Traditional to Digital. New Jersey: Wiley, 2016. <em>Cap. 1: Power Shifts to the Connected Customers</em></div>
+    <div class="biblio-item"><strong>GABRIEL, M.</strong> Marketing na Era Digital — Conceitos, Plataformas e Estratégias. São Paulo: Novatec, 2010. <em>Cap. 1: A Revolução Digital</em></div>
+    <div class="biblio-item"><strong>CHANDLER, H. M.</strong> Manual de Produção de Jogos Digitais. 2ª Ed. Porto Alegre: Bookman, 2012. <em>Cap. 14: Marketing e Relações Públicas</em></div>
+    <div class="biblio-item"><strong>MASTROCOLA, V. M.</strong> Game Design: Modelos de Negócio e Processos Criativos. São Paulo: Cengage, 2015. <em>Cap. 3: Modelos de Negócio para Jogos Digitais</em></div>
+    <div class="biblio-item"><strong>PGB — PESQUISA GAME BRASIL.</strong> Relatório Anual do Mercado Brasileiro de Games. Disponível em: pesquisagamebrasil.com.br</div>
+  </div>
+</div>
+
+<div class="callout callout-warn" style="margin-bottom:20px;">
+  <span class="callout-icon">📌</span>
+  <div class="callout-text">
+    <b>Para a Próxima Aula (Semana 03):</b>
+    Pesquisar sobre mercados internacionais · Comparar China, EUA, Japão e Brasil · Levantar 1 estratégia de internacionalização de jogos · Pensar: como um jogo brasileiro pode ser lançado globalmente?
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <a href="semana01.html" class="bnav-btn">← Semana 01</a>
+  <a href="semana03_guia.html" class="bnav-btn">Semana 03 →</a>
+</div>
+
+</main>
+
+<script>
+// ===========================
+//  STATE
+// ===========================
+let xp = 0, streak = 0, totalActs = 0;
+let activePlayer = 1;
+let p1xp = 0, p2xp = 0;
+let p1badges = 0, p2badges = 0;
+const MAX_XP = 450;
+const objDone = [];
+let dataClicks = 0, accOpened = 0;
+
+// ===========================
+//  PLAYERS
+// ===========================
+function setActive(n) {
+  activePlayer = n;
+  document.getElementById('p1-slot').classList.toggle('p1-active', n === 1);
+  document.getElementById('p2-slot').classList.toggle('p2-active', n === 2);
+  const name = document.getElementById(`p${n}-name`).value || `Player ${n}`;
+  showToast('🎮', `${name} — ATIVO`, 'Sua vez de responder!');
+}
+function addPlayerXP(amt) {
+  if (activePlayer === 1) {
+    p1xp += amt;
+    const max = Math.max(p1xp, p2xp, 1);
+    document.getElementById('p1-xp').textContent = p1xp;
+    document.getElementById('p1-bar').style.width = Math.min((p1xp / MAX_XP) * 100, 100) + '%';
+  } else {
+    p2xp += amt;
+    document.getElementById('p2-xp').textContent = p2xp;
+    document.getElementById('p2-bar').style.width = Math.min((p2xp / MAX_XP) * 100, 100) + '%';
+  }
+}
+function updatePlayerBadges() {
+  document.getElementById('p1-badges').textContent = p1badges + ' conquista' + (p1badges !== 1 ? 's' : '');
+  document.getElementById('p2-badges').textContent = p2badges + ' conquista' + (p2badges !== 1 ? 's' : '');
+}
+
+// ===========================
+//  GAMIFICATION
+// ===========================
+function gainXP(amt, icon, msg) {
+  xp += amt;
+  addPlayerXP(amt);
+  updateHUD();
+  showToast(icon || '⚡', `+${amt} XP`, msg || 'Bom trabalho!');
+}
+function showToast(icon, title, msg) {
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-title').textContent = title;
+  document.getElementById('toast-msg').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('visible');
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(() => t.classList.remove('visible'), 3200);
+}
+function unlock(id, name) {
+  const el = document.getElementById(id);
+  if (el && !el.classList.contains('got')) {
+    el.classList.add('got');
+    if (activePlayer === 1) p1badges++; else p2badges++;
+    updatePlayerBadges();
+    showToast('🏆', 'Badge Desbloqueado!', name);
+  }
+}
+function updateHUD() {
+  document.getElementById('h-xp').textContent = xp;
+  document.getElementById('h-streak').textContent = streak;
+  const pct = Math.min(Math.round((xp / MAX_XP) * 100), 100);
+  document.getElementById('h-bar').style.width = pct + '%';
+  document.getElementById('h-pct').textContent = pct + '%';
+  const levels = [[0,'Novato'],[60,'Aprendiz'],[150,'Analista'],[250,'Estrategista'],[380,'Especialista'],[450,'Game Marketer']];
+  let lv = levels[0][1];
+  for (const [t, n] of levels) { if (xp >= t) lv = n; }
+  document.getElementById('h-level').textContent = lv;
+  totalActs = Math.min(totalActs, 10);
+  document.getElementById('prog').style.width = (totalActs / 10 * 100) + '%';
+  document.getElementById('prog-txt').textContent = `${totalActs}/10`;
+}
+
+// ===========================
+//  OBJECTIVES
+// ===========================
+const OBJS = [
+  'Compreender o tamanho e posição do Brasil no mercado global de jogos',
+  'Identificar os principais estúdios brasileiros e seus modelos de negócio',
+  'Analisar dados de faturamento e crescimento do setor no Brasil',
+  'Entender o perfil demográfico e comportamento do jogador brasileiro',
+  'Mapear os desafios estruturais do mercado nacional (tributos, câmbio, pirataria)',
+  'Criar personas realistas baseadas nos dados da Pesquisa Game Brasil',
+];
+(function buildObjs() {
+  const list = document.getElementById('obj-list');
+  OBJS.forEach((o, i) => {
+    objDone.push(false);
+    const d = document.createElement('div');
+    d.className = 'obj-item';
+    d.innerHTML = `<div class="obj-check" id="oc${i}"></div><span>${o}</span>`;
+    d.onclick = () => {
+      d.classList.toggle('done');
+      objDone[i] = d.classList.contains('done');
+      const c = d.querySelector('.obj-check');
+      if (objDone[i]) {
+        c.textContent = '✓';
+        gainXP(5, '🎯', 'Objetivo marcado!');
+        streak++;
+      } else {
+        c.textContent = '';
+        streak = Math.max(0, streak - 1);
+      }
+      if (objDone.every(Boolean)) { gainXP(30, '🎯', 'Todos os objetivos!'); unlock('ach-obj', 'Objetivos Completos'); }
+      totalActs++;
+      updateHUD();
+    };
+    list.appendChild(d);
+  });
+})();
+
+// ===========================
+//  DATA GRID
+// ===========================
+const STATS = [
+  { val: '#13', lbl: 'No ranking mundial de jogadores', src: 'Newzoo Global 2024', cls: 'c-green' },
+  { val: '$2.3B', lbl: 'Faturamento anual estimado do mercado BR', src: 'PGB / Newzoo 2024', cls: 'c-orange' },
+  { val: '92M', lbl: 'Jogadores ativos no Brasil', src: 'Pesquisa Game Brasil 2024', cls: 'c-blue' },
+  { val: '73%', lbl: 'Usam smartphone como plataforma principal', src: 'PGB 2024', cls: 'c-gold' },
+  { val: '+500', lbl: 'Estúdios de desenvolvimento ativos no BR', src: 'Abragames 2024', cls: 'c-green' },
+  { val: '46%', lbl: 'Do público gamer BR é feminino', src: 'PGB 2024', cls: 'c-orange' },
+  { val: '28', lbl: 'Idade média do jogador brasileiro (anos)', src: 'PGB 2024', cls: 'c-blue' },
+  { val: 'R$8.5B', lbl: 'Volume total do setor em 2023', src: 'Abragames/BIG', cls: 'c-gold' },
+];
+(function buildData() {
+  const g = document.getElementById('data-grid');
+  STATS.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = `stat-card ${s.cls}`;
+    d.innerHTML = `<span class="stat-val">${s.val}</span><div class="stat-lbl">${s.lbl}</div><div class="stat-src">${s.src}</div>`;
+    d.onclick = () => {
+      dataClicks++;
+      gainXP(3, '📊', 'Dado explorado!');
+      if (dataClicks >= 8) unlock('ach-analyst', 'Analista de Dados BR');
+    };
+    g.appendChild(d);
+  });
+})();
+
+// ===========================
+//  BAR CHART
+// ===========================
+(function buildChart() {
+  const bars = [
+    { label: '📱 Mobile', pct: 73, color: 'linear-gradient(90deg, #00ff88, #00ccff)' },
+    { label: '💻 PC/Notebook', pct: 45, color: 'linear-gradient(90deg, #3b82f6, #60a5fa)' },
+    { label: '🎮 Console', pct: 22, color: 'linear-gradient(90deg, #ff6b35, #ff9a6c)' },
+    { label: '☁️ Cloud Gaming', pct: 8, color: 'linear-gradient(90deg, #fbbf24, #fde68a)' },
+    { label: '🥽 VR/AR', pct: 3, color: 'linear-gradient(90deg, #a78bfa, #c4b5fd)' },
+  ];
+  const c = document.getElementById('chart-bars');
+  c.innerHTML = bars.map(b => `
+    <div class="chart-row">
+      <div class="chart-label">${b.label}</div>
+      <div class="chart-track">
+        <div class="chart-fill" style="background:${b.color}" data-w="${b.pct}">${b.pct}%</div>
+      </div>
+      <div class="chart-pct">${b.pct}%</div>
+    </div>`).join('');
+  setTimeout(() => {
+    document.querySelectorAll('.chart-fill').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }, 400);
+})();
+
+// ===========================
+//  ACCORDION
+// ===========================
+const THEORY = [
+  {
+    num: '01', name: 'Panorama do Mercado Brasileiro', meta: '~12 min · dados PGB · crescimento e projeções',
+    content: `
+      <h4>Por que o Brasil é diferente de todo o resto?</h4>
+      <p>O Brasil combina um paradoxo único: é o 13º maior mercado de jogos do mundo em volume de jogadores, mas não está nem perto disso em receita per capita. Isso não é fraqueza — é a maior oportunidade estratégica do setor.</p>
+      <ul>
+        <li><strong>Tributação sobre hardware:</strong> Consoles chegam a custar 2-3× mais no Brasil do que nos EUA devido a impostos de importação que podem chegar a 100%. Um PS5 que nos EUA custa ~$500 pode custar R$4.500+ no BR. Isso jogou toda uma geração para o PC e mobile.</li>
+        <li><strong>Crescimento consistente:</strong> O mercado cresceu em média 12% ao ano nos últimos 5 anos, mesmo em períodos de recessão econômica. Games são considerados entretenimento essencial pela população.</li>
+        <li><strong>Posição LATAM:</strong> O Brasil representa ~40% do mercado de games de toda a América Latina. Se o BR vai bem, LATAM vai bem.</li>
+        <li><strong>Abragames e apoio institucional:</strong> A associação mapeia +500 estúdios ativos e pressiona por incentivos fiscais para desenvolvedoras nacionais — incluindo um projeto de lei específico em tramitação.</li>
+      </ul>
+      <h4>Crescimento do segmento de desenvolvimento nacional</h4>
+      <p>Em 2019, o Brasil exportou R$1,2B em jogos. Em 2023, esse número mais que dobrou. Jogos como <strong>Horizon Chase</strong> (Aquiris) já foram baixados mais de 30 milhões de vezes globalmente. A indústria nacional está amadurecendo rapidamente.</p>
+    `
+  },
+  {
+    num: '02', name: 'Principais Estúdios Brasileiros', meta: '~10 min · Wildlife · Aquiris · Hoplon · cases de sucesso',
+    content: `
+      <h4>Os grandes players nacionais</h4>
+      <ul>
+        <li><strong>Wildlife Studios (SP):</strong> O maior em receita. Fundada em 2011, hoje tem +1.000 funcionários. Portfólio inclui Tennis Clash, Top War e Zooba. Estratégia: hipercasual + casual + heavy UA (user acquisition) global. Em 2022 atingiu R$4B em receita.</li>
+        <li><strong>Aquiris Game Studio (RS):</strong> Criadores de Horizon Chase. Ganharam múltiplos prêmios internacionais. Master class em localização — criaram uma estética retrô universalmente acessível que não precisa de "tradução cultural".</li>
+        <li><strong>Hoplon (SC):</strong> Heavy Metal Machines — MOBA de carros com tema industrial. Foco em esports e monetização via battle pass. Prova que é possível fazer um MOBA competitivo saindo do Sul do Brasil.</li>
+        <li><strong>Afterverse (SP):</strong> Portfólio diversificado de jogos mobile casual. Forte em métricas e growth hacking.</li>
+        <li><strong>Behold Studios (PR):</strong> Knights of Pen & Paper. Indie criativo com forte identidade visual. Caso de nicho bem executado.</li>
+        <li><strong>Tapps Games (SP):</strong> Especialista em casual e hyper-casual. Mais de 300 jogos publicados, 400M downloads.</li>
+      </ul>
+      <h4>O que os casos de sucesso têm em comum?</h4>
+      <ul>
+        <li>Identidade visual forte que funciona além do Brasil</li>
+        <li>Modelo F2P ou preço acessível como entrada</li>
+        <li>Investimento early em UA (aquisição de usuários) global</li>
+        <li>Evitam temas políticamente sensíveis que criam barreiras culturais</li>
+        <li>Presente nas principais feiras: GDC, Gamescom, BIG Festival</li>
+      </ul>
+    `
+  },
+  {
+    num: '03', name: 'Perfil do Jogador Brasileiro', meta: '~10 min · 92M players · demografias · comportamento de compra',
+    content: `
+      <h4>Quem é o jogador brasileiro em 2024?</h4>
+      <ul>
+        <li><strong>Volume:</strong> ~92 milhões — aproximadamente 43% da população total do país</li>
+        <li><strong>Gênero:</strong> 54% homens, 46% mulheres. Uma das maiores representações femininas no gaming mundial. Isso importa muito para qualquer estratégia de marketing.</li>
+        <li><strong>Idade média:</strong> 28 anos. A geração que cresceu jogando está na fase economicamente ativa.</li>
+        <li><strong>Plataforma primária:</strong> 73% smartphones, 45% PC, 22% console, 8% cloud</li>
+        <li><strong>Tempo médio:</strong> 8-10h/semana jogando — próximo da média europeia</li>
+      </ul>
+      <h4>Segmentos-chave</h4>
+      <ul>
+        <li><strong>Casual (35-55 anos):</strong> Mobile F2P, puzzle, word games. Jogam no transporte, em momentos curtos. Sensíveis a preço, respondem bem a sistemas de recompensa diária.</li>
+        <li><strong>Mid-core (22-35 anos):</strong> RPG, Battle Royale, MOBA. Querem profundidade sem tempo infinito. Consumidores de passes sazonais e cosméticos.</li>
+        <li><strong>Hardcore (15-25 anos):</strong> FPS, fighting games, esports. Alta propensão a criar conteúdo (Twitch, TikTok). Influenciam os outros segmentos.</li>
+      </ul>
+      <h4>Comportamento de monetização</h4>
+      <p>A taxa de conversão de free para paid no BR é de <strong>1-5%</strong> (vs 8-12% no Japão). Isso exige estratégias específicas:</p>
+      <ul>
+        <li>Preços em reais, não convertidos de dólar (R$1,99 parece muito mais barato que $0,99)</li>
+        <li>Passes sazonais na faixa de R$10-25 têm a maior conversão</li>
+        <li>Conteúdo cosmético sem vantagem (o público BR é extremamente sensível a P2W)</li>
+        <li>Eventos de tempo limitado como gatilho de compra impulsiva</li>
+      </ul>
+    `
+  },
+  {
+    num: '04', name: 'Desafios e Oportunidades Estratégicas', meta: '~8 min · câmbio · pirataria · o que o mercado ainda precisa',
+    content: `
+      <h4>Os 5 desafios estruturais</h4>
+      <ul>
+        <li><strong>Câmbio:</strong> Estúdios recebem receita em USD/EUR mas pagam equipe e operações em BRL. Volatilidade do câmbio exige hedge financeiro desde o início.</li>
+        <li><strong>Infraestrutura desigual:</strong> Latência alta fora do eixo SP-RJ-Sul. Games online competitivos sofrem fora das capitais. Favorece jogos single-player ou com matchmaking assíncrono.</li>
+        <li><strong>Tributação:</strong> Não é só hardware. Software de jogos também tem alíquota de ISS sobre receita. Planejamento tributário é skill de negócio obrigatório.</li>
+        <li><strong>Escassez de talent senior:</strong> O mercado cresceu mais rápido que a formação de profissionais sênior de game design, programação e marketing especializado.</li>
+        <li><strong>Legacy da pirataria:</strong> Gerou expectativa de entretenimento gratuito que ainda existe. F2P quebrou parte disso, mas o premium ainda enfrenta resistência cultural forte.</li>
+      </ul>
+      <h4>Oportunidades que ainda estão abertas</h4>
+      <ul>
+        <li><strong>Conteúdo cultural brasileiro:</strong> Folclore, história, biomas — praticamente inexplorados em games. Alta receptividade do público nacional a conteúdo que "parece ser sobre nós".</li>
+        <li><strong>Mercado mid-core em crescimento:</strong> Jogadores migrando do casual para jogos com mais profundidade. Janela de oportunidade nos próximos 3-5 anos.</li>
+        <li><strong>Esports como vetor de marca:</strong> FURIA, LOUD — times brasileiros de elite criam audiências passionate. Marketing via esports tem ROI excepcional no BR comparado a outros países.</li>
+        <li><strong>Acessibilidade tecnológica:</strong> Smartphones de entrada <R$500 com boa GPU expandem a base de jogadores casuais continuamente.</li>
+        <li><strong>Exportação via mobile:</strong> Jogos brasileiros têm vantagem competitiva em outros mercados emergentes (India, Southeast Asia, Africa) porque entendem de escalar em ambientes de baixo poder aquisitivo.</li>
+      </ul>
+    `
+  },
+];
+(function buildAcc() {
+  const list = document.getElementById('acc-list');
+  THEORY.forEach((t, i) => {
+    const d = document.createElement('div');
+    d.className = 'acc-item';
+    d.innerHTML = `
+      <div class="acc-head" onclick="toggleAcc(this, ${i})">
+        <span class="acc-num">${t.num}</span>
+        <span class="acc-name">${t.name}</span>
+        <span class="acc-meta">${t.meta}</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">${t.content}</div></div>`;
+    list.appendChild(d);
+  });
+})();
+const accOpens = new Set();
+function toggleAcc(head, i) {
+  const item = head.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(a => a.classList.remove('open'));
+  if (!wasOpen) {
+    item.classList.add('open');
+    if (!accOpens.has(i)) {
+      accOpens.add(i);
+      gainXP(5, '📖', 'Tópico estudado!');
+      if (accOpens.size >= 4) { unlock('ach-reader', 'Leitor Completo'); totalActs++; updateHUD(); }
+    }
+  }
+}
+
+// ===========================
+//  VIDEOS
+// ===========================
+const VIDEOS = [
+  { thumb: '🎮', title: 'A Indústria de Jogos no Brasil', desc: 'Panorama completo do mercado nacional', url: 'https://www.youtube.com/watch?v=7L4re8Cd3eY' },
+  
+  { thumb: '🏢', title: 'Como Começar Estúdio no Brasil', desc: 'Dicas para empreender em games nacionais', url: 'https://www.youtube.com/watch?v=tsUZ1uL4lks&pp=ygUgQ29tbyBDb21lw6dhciBFc3TDumRpbyBubyBCcmFzaWw%3D' },
+  
+  { thumb: '🐆', title: 'Wildlife Studios Success Story', desc: 'Como se tornou o maior estúdio BR', url: 'https://www.youtube.com/watch?v=UiYU2lEoHiM&pp=ygUVbWFpb3IgZXN0w7pkaW8gYnJhc2ls' },
+  
+  { thumb: '📱', title: 'Mercado Mobile Gaming Brasil', desc: 'A dominância do mobile no mercado BR', url: 'https://www.youtube.com/watch?v=g_LMKGoVpeM&pp=ygUcTWVyY2FkbyBNb2JpbGUgR2FtaW5nIEJyYXNpbA%3D%3D' },
+  
+  { thumb: '🏆', title: 'BIG Festival — Indie Brasileiro', desc: 'Principais jogos indie nacionais', url: 'https://www.youtube.com/watch?v=PpxjypAtD5o&pp=ygWeASAgeyB0aHVtYjogJ_Cfj4YnLCB0aXRsZTogJ0JJRyBGZXN0aXZhbCDigJQgSW5kaWUgQnJhc2lsZWlybycsIGRlc2M6ICdQcmluY2lwYWlzIGpvZ29zIGluZGllIG5hY2lvbmFpcycsIHVybDogJ2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9VnZmTDBaaE5zWXMnIH0s' },
+  
+  { thumb: '🎬', title: 'Brazilian Game Studios Doc', desc: 'Documentário sobre estúdios BR', url: 'https://www.youtube.com/watch?v=bGCNiZXkoSQ&pp=ygUaQnJhemlsaWFuIEdhbWUgU3R1ZGlvcyBEb2M%3D' },
+];
+(function buildVideos() {
+  const g = document.getElementById('video-grid');
+  VIDEOS.forEach(v => {
+    const d = document.createElement('div');
+    d.className = 'video-card';
+    d.innerHTML = `
+      <div class="video-thumb">${v.thumb}</div>
+      <div class="video-info">
+        <h4>${v.title}</h4>
+        <p>${v.desc}</p>
+        <a href="${v.url}" target="_blank" class="video-btn">▶ Assistir</a>
+      </div>`;
+    g.appendChild(d);
+  });
+})();
+
+// ===========================
+//  ACTIVITIES
+// ===========================
+const ACTS = [
+  {
+    num: '01',
+    title: 'Mapeamento do Mercado Nacional',
+    tags: [{ t: '⏱ 40 min', cls: 'at-green' }, { t: '💻 Sheets + Canva', cls: 'at-blue' }, { t: '⚡ 50 XP', cls: 'at-gold' }],
+    obj: 'Criar um panorama visual e quantitativo do mercado brasileiro de jogos usando dados reais da PGB e fontes complementares.',
+    steps: [
+      { t: 'Acesse <strong>pesquisagamebrasil.com.br</strong> e identifique os 5 dados mais relevantes do relatório mais recente (ou use os dados desta aula se o site estiver fora do ar)' },
+      { t: 'Crie uma planilha no <strong>Google Sheets</strong> com as colunas: Plataforma / Receita estimada / % de jogadores / Gênero Top 3 para cada plataforma' },
+      { t: 'Pesquise no Google: <em>"top jogos mais baixados Brasil 2024"</em> e liste os 10 primeiros separados por plataforma (iOS, Android, PC)' },
+      { t: 'Identifique <strong>3 estúdios brasileiros</strong> — para cada um: nome, cidade, principal jogo, modelo de monetização, receita aproximada' },
+      { t: 'No <strong>Canva</strong> (canva.com), crie um infográfico de 1 página com os dados coletados — busque "infographic template" e adapte' },
+      { t: 'Adicione um insight próprio: <em>por que o Brasil tem esse perfil de plataformas?</em> — escreva 3-4 frases com sua análise' },
+    ],
+    rubric: [
+      { level: 'Insuficiente', desc: 'Dados sem fonte, sem estrutura visual, sem diferenciação por plataforma', cls: 'rc-i' },
+      { level: 'Básico', desc: 'Planilha simples com dados parciais, infográfico genérico, poucos estúdios', cls: 'rc-b' },
+      { level: 'Proficiente', desc: 'Dados completos com fontes, infográfico claro e organizado, 3+ estúdios com modelo de negócio identificado', cls: 'rc-p' },
+      { level: 'Excelente', desc: 'Análise aprofundada com dados cruzados, visual profissional, insight original sobre tendências, comparação com outros mercados', cls: 'rc-e' },
+    ],
+    xp: 50, id: 'act1', achId: 'ach-act1', achName: 'Mapeador do Mercado BR',
+  },
+  {
+    num: '02',
+    title: 'Análise de Estúdio Brasileiro',
+    tags: [{ t: '⏱ 35 min', cls: 'at-orange' }, { t: '💻 Pesquisa + Slides', cls: 'at-blue' }, { t: '⚡ 50 XP', cls: 'at-gold' }],
+    obj: 'Analisar profundamente as estratégias de marketing e modelo de negócios de um estúdio brasileiro de sucesso, apresentando para o colega.',
+    steps: [
+      { t: 'Cada um escolhe um estúdio diferente: <strong>Wildlife Studios</strong>, <strong>Aquiris</strong>, <strong>Hoplon</strong>, <strong>Tapps Games</strong> ou <strong>Behold Studios</strong>' },
+      { t: 'Pesquise: data de fundação, cidade sede, número de funcionários, principais jogos e histórico de crescimento' },
+      { t: 'Analise as <strong>redes sociais</strong> do estúdio (Instagram, TikTok, LinkedIn) — capture 2-3 prints do tipo de conteúdo que publicam' },
+      { t: 'Instale 1 jogo do estúdio e jogue por <strong>10 minutos</strong> — identifique: o modelo de monetização, onde aparecem as ofertas, qual emoção é explorada para converter' },
+      { t: 'Crie uma apresentação de <strong>4-5 slides</strong> no Google Slides: Quem são → O que fazem → Como monetizam → Por que funcionou → O que você faria diferente' },
+      { t: '<strong>Apresente em 5 minutos</strong> para o colega — depois ouça a apresentação dele e façam comparações entre os dois estúdios' },
+    ],
+    rubric: [
+      { level: 'Insuficiente', desc: 'Apenas copiou informações do site oficial, sem análise própria nem exploração do jogo', cls: 'rc-i' },
+      { level: 'Básico', desc: 'Histórico levantado, modelo de monetização identificado superficialmente, apresentação com dados básicos', cls: 'rc-b' },
+      { level: 'Proficiente', desc: 'Análise de marketing com evidências das redes sociais, monetização detalhada com exemplos do jogo, apresentação clara', cls: 'rc-p' },
+      { level: 'Excelente', desc: 'Análise crítica incluindo pontos fracos do estúdio, comparação com concorrentes internacionais, proposta de melhoria fundamentada', cls: 'rc-e' },
+    ],
+    xp: 50, id: 'act2', achId: 'ach-act2', achName: 'Analista de Estúdio',
+  },
+  {
+    num: '03',
+    title: 'Criação de 3 Personas do Jogador Brasileiro',
+    tags: [{ t: '⏱ 35 min', cls: 'at-blue' }, { t: '💻 Canva', cls: 'at-blue' }, { t: '⚡ 50 XP', cls: 'at-gold' }],
+    obj: 'Desenvolver 3 personas realistas do jogador brasileiro com base nos dados da PGB, segmentadas por perfil e com estratégias de marketing específicas.',
+    steps: [
+      { t: 'Com base nos dados desta aula, defina 3 perfis: <strong>Casual Adulto</strong> (35-50 anos, mobile) / <strong>Mid-Core</strong> (22-30 anos, PC+mobile) / <strong>Hardcore</strong> (15-22 anos, PC+console)' },
+      { t: 'Para cada persona, preencha: nome fictício, idade, cidade, profissão, renda mensal aproximada, dispositivos que usa' },
+      { t: 'Defina: jogos favoritos (pesquise os mais jogados por esse segmento), horas/semana, motivação principal para jogar, maior barreira para pagar' },
+      { t: 'Identifique: quais redes sociais usa, streamers/criadores que assiste, quanto gasta com jogos por mês, onde descobre jogos novos' },
+      { t: 'No <strong>Canva</strong>, busque "persona template" e crie um card visual por persona — coloque foto (do Unsplash ou ilustração), todos os dados e uma frase que representa esse jogador' },
+      { t: 'Para cada persona, escreva <strong>1 estratégia de marketing específica</strong>: canal, mensagem, formato, call-to-action — baseada no comportamento dessa persona' },
+    ],
+    rubric: [
+      { level: 'Insuficiente', desc: 'Personas genéricas sem dados reais do mercado BR, sem diferenciação entre elas', cls: 'rc-i' },
+      { level: 'Básico', desc: '3 personas com dados básicos preenchidos, estratégias vagas e intercambiáveis', cls: 'rc-b' },
+      { level: 'Proficiente', desc: 'Personas detalhadas com dados reais, estratégias de marketing específicas e justificadas por comportamento', cls: 'rc-p' },
+      { level: 'Excelente', desc: 'Personas com jornada do jogador mapeada, dados cruzados demográficos e psicográficos, estratégia de funil completo por persona', cls: 'rc-e' },
+    ],
+    xp: 50, id: 'act3', achId: 'ach-act3', achName: 'Designer de Personas',
+  },
+];
+(function buildActs() {
+  const container = document.getElementById('acts-container');
+  ACTS.forEach(a => {
+    const tags = a.tags.map(t => `<span class="act-tag ${t.cls}">${t.t}</span>`).join('');
+    const steps = a.steps.map((s, i) => `<div class="step-item"><div class="step-num">${i + 1}</div><div>${s.t}</div></div>`).join('');
+    const rubric = a.rubric.map(r => `<div class="rubric-cell ${r.cls}"><span class="r-level">${r.level}</span><p>${r.desc}</p></div>`).join('');
+    const d = document.createElement('div');
+    d.className = 'act-card';
+    d.innerHTML = `
+      <div class="act-header">
+        <div class="act-num">${a.num}</div>
+        <div class="act-header-info">
+          <div class="act-title">${a.title}</div>
+          <div class="act-tags">${tags}</div>
+        </div>
+      </div>
+      <div class="act-body">
+        <div class="act-objective">${a.obj}</div>
+        <div class="section-label">PASSO A PASSO</div>
+        <div class="step-list">${steps}</div>
+        <div class="rubric-title">RUBRICA DE AVALIAÇÃO</div>
+        <div class="rubric-grid">${rubric}</div>
+        <button class="complete-btn" id="btn-${a.id}" onclick="completeAct('${a.id}','${a.achId}','${a.achName}',${a.xp},this)">
+          ✅ MARCAR COMO CONCLUÍDA — GANHAR +${a.xp} XP
+        </button>
+      </div>`;
+    container.appendChild(d);
+  });
+})();
+function completeAct(id, achId, achName, xpAmt, btn) {
+  if (btn.disabled) return;
+  btn.disabled = true;
+  btn.textContent = '✅ Concluída! XP creditado.';
+  btn.classList.add('done-btn');
+  gainXP(xpAmt, '✏️', `Atividade "${id}" concluída!`);
+  unlock(achId, achName);
+  totalActs++;
+  updateHUD();
+}
+
+// ===========================
+//  QUIZ
+// ===========================
+const QUESTIONS = [
+  { q: 'Qual é a posição do Brasil no ranking global de maiores mercados de jogos (Newzoo 2024)?', opts: ['5º lugar', '8º lugar', '13º lugar', '20º lugar'], c: 2, xp: 10, fb: '✅ O Brasil é o 13º maior mercado do mundo e o 1º da América Latina. Apesar disso, em receita per capita está muito mais abaixo, o que explica toda a dinâmica de preços e modelos de negócio do mercado nacional.' },
+  { q: 'Por que o mobile domina com 73% no Brasil, enquanto nos EUA o console tem muito mais peso?', opts: ['Brasileiros preferem telas menores', 'Tributação de importação de consoles pode chegar a 100%, tornando-os inacessíveis para a maioria', 'Qualidade do WiFi brasileiro é melhor para mobile', 'Não há diferença significativa'], c: 1, xp: 10, fb: '✅ Os impostos de importação no Brasil sobre hardware podem chegar a 100%, fazendo com que um console de última geração custe 2-3× mais que no país de origem. Isso direcionou historicamente o público para PC (com pirataria legacy) e mobile (gratuito ou acessível).' },
+  { q: 'Qual estúdio brasileiro é atualmente o maior em receita global, com jogos como Tennis Clash e Top War?', opts: ['Aquiris Game Studio', 'Hoplon Entertainment', 'Behold Studios', 'Wildlife Studios'], c: 3, xp: 10, fb: '✅ Wildlife Studios (SP) é o maior estúdio brasileiro em receita, com foco em jogos mobile hipercasual/casual e investimento massivo em user acquisition global. Em 2022 atingiu R$4 bilhões em receita.' },
+  { q: 'O jogo "Horizon Chase" da Aquiris é um case de internacionalização. Qual foi o diferencial estratégico principal?', opts: ['Jogabilidade com controles de voz', 'Estética retrô universalmente familiar que não precisa de tradução cultural', 'Parceria exclusiva com a Apple', 'Marketing agressivo no TikTok brasileiro'], c: 1, xp: 10, fb: '✅ Horizon Chase usou uma estética visual retrô (anos 80) que gera nostalgia positiva em qualquer cultura do mundo. Não há barreiras culturais específicas do Brasil — qualquer jogador global entende a linguagem visual imediatamente. Isso é internacionalização inteligente.' },
+  { q: 'Qual é a taxa de conversão de free para paid que estúdios brasileiros costumam trabalhar?', opts: ['15-25%', '8-12%', '1-5%', 'Menos de 0,5%'], c: 2, xp: 10, fb: '✅ A conversão de free to paid no Brasil é de apenas 1-5% (vs 8-12% no Japão). Isso exige estratégias específicas: preços baixos em reais, passes sazonais acessíveis (R$10-25), conteúdo cosmético sem pay-to-win, e eventos de tempo limitado como gatilho.' },
+  { q: 'Segundo a PGB 2024, qual é a divisão de gênero do público gamer brasileiro?', opts: ['85% homens, 15% mulheres', '70% homens, 30% mulheres', '54% homens, 46% mulheres', '50% homens, 50% mulheres'], c: 2, xp: 10, fb: '✅ O Brasil tem 46% do público gamer feminino — uma das maiores representações do mundo. Isso impacta diretamente toda a estratégia de marketing: personagens, narrativas, canais de comunicação e modelos de monetização precisam considerar esse público.' },
+  { q: 'O que é a Abragames e qual seu papel no ecossistema brasileiro?', opts: ['Um jogo brasileiro famoso nos anos 90', 'A maior plataforma de streaming de games do Brasil', 'Associação das Desenvolvedoras de Games, que representa o setor e negocia políticas públicas', 'O nome do award de melhores jogos nacionais'], c: 2, xp: 10, fb: '✅ Abragames (Associação Brasileira das Desenvolvedoras de Games) mapeia +500 estúdios ativos, negocia incentivos fiscais, representa a indústria em feiras internacionais e promove a BIG Festival — principal evento indie da América Latina.' },
+  { q: 'Um estúdio brasileiro quer lançar um jogo no mercado nacional com o maior potencial de conversão. Qual estratégia é mais eficaz?', opts: ['Console exclusivo a R$300', 'Mobile F2P + preço de passes ≤ R$15 + sem pay-to-win + conteúdo localizado', 'PC single-player a R$149,99 apenas em inglês', 'Assinatura mensal a R$79,90'], c: 1, xp: 10, fb: '✅ No BR, a combinação vencedora combina: acessibilidade máxima via mobile, entrada gratuita, preços baixos em reais (não convertidos do dólar), cultura de jogo justo (sem pay-to-win — o público é extremamente sensível), e identificação cultural.' },
+  { q: 'Qual oportunidade de mercado ainda está amplamente inexplorada no Brasil?', opts: ['Jogos de futebol simulados', 'Jogos com conteúdo cultural brasileiro autêntico (folclore, história, biomas)', 'Jogos mobile casuales com puzzle', 'Jogos de corrida'], c: 1, xp: 10, fb: '✅ Conteúdo cultural brasileiro — folclore, história, biomas, personagens históricos — está praticamente inexplorado em jogos. O público nacional tem alta receptividade a conteúdo que "parece ser sobre nós", e isso também cria uma proposta única para exportação.' },
+  { q: 'Você está desenvolvendo a estratégia de marketing de um jogo mobile casual para o Brasil. Qual ação de user acquisition tem maior ROI no mercado brasileiro atualmente?', opts: ['Anúncios em TV aberta', 'Campanhas em TikTok e Instagram Reels + parcerias com micro-influenciadores de games', 'Outdoor em grandes capitais', 'Anúncios em rádio FM'], c: 1, xp: 10, fb: '✅ TikTok e Instagram Reels têm o maior custo por instalação (CPI) competitivo no Brasil atualmente, especialmente com micro-influenciadores de games (10K-100K seguidores) que têm audiências muito engajadas e taxas de conversão maiores que mega-influencers.' },
+];
+
+let qCurrent = 0, qCorrect = 0, qAnswers = {};
+(function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  let html = '';
+  QUESTIONS.forEach((q, i) => {
+    const opts = q.opts.map((o, oi) => `<button class="q-opt" onclick="answerQ(${i}, ${oi})">${String.fromCharCode(65 + oi)}) ${o}</button>`).join('');
+    html += `
+      <div class="quiz-q ${i === 0 ? 'active' : ''}" id="qq${i}">
+        <div class="q-text">Q${i + 1}. ${q.q}</div>
+        <div class="q-options">${opts}</div>
+        <div class="q-feedback" id="qfb${i}"></div>
+        <div class="q-next-row" id="qnr${i}">
+          <button class="q-next" onclick="${i < QUESTIONS.length - 1 ? `nextQ(${i + 1})` : 'showResult()'}">${i < QUESTIONS.length - 1 ? 'Próxima →' : 'Ver Resultado ✨'}</button>
+        </div>
+      </div>`;
+  });
+  html += `
+    <div class="q-result" id="q-result">
+      <span class="q-result-big" id="q-score">0/10</span>
+      <div class="q-result-msg" id="q-msg"></div>
+      <div class="q-result-xp" id="q-xp-msg"></div>
+      <button class="q-restart-btn" onclick="restartQuiz()">↺ Tentar Novamente</button>
+    </div>`;
+  container.innerHTML = html;
+})();
+
+function answerQ(qi, chosen) {
+  const q = QUESTIONS[qi];
+  const card = document.getElementById(`qq${qi}`);
+  card.querySelectorAll('.q-opt').forEach(b => b.disabled = true);
+  card.querySelectorAll('.q-opt')[chosen].classList.add(chosen === q.c ? 'correct' : 'wrong');
+  if (chosen !== q.c) card.querySelectorAll('.q-opt')[q.c].classList.add('correct');
+  const ok = chosen === q.c;
+  const fb = document.getElementById(`qfb${qi}`);
+  fb.textContent = ok ? q.fb : '❌ Incorreto. ' + q.fb;
+  fb.className = 'q-feedback show ' + (ok ? 'ok' : 'fail');
+  document.getElementById(`qnr${qi}`).classList.add('show');
+  if (ok) { qCorrect++; gainXP(q.xp, '🧠', 'Resposta correta!'); streak++; }
+  else { streak = Math.max(0, streak - 1); updateHUD(); }
+  qAnswers[qi] = ok;
+  document.getElementById('q-fill').style.width = ((qi + 1) / QUESTIONS.length * 100) + '%';
+  document.getElementById('q-count').textContent = `${qi + 1} / ${QUESTIONS.length}`;
+}
+function nextQ(n) {
+  document.querySelector('.quiz-q.active').classList.remove('active');
+  document.getElementById(`qq${n}`).classList.add('active');
+}
+function showResult() {
+  document.querySelector('.quiz-q.active').classList.remove('active');
+  document.getElementById('q-result').classList.add('show');
+  document.getElementById('q-score').textContent = `${qCorrect}/10`;
+  const msgs = ['📚 Revise o conteúdo!', '⚡ Progredindo bem!', '🔥 Bom domínio!', '🏆 Especialista!', '💎 Perfeito!'];
+  document.getElementById('q-msg').textContent = msgs[Math.min(Math.floor(qCorrect / 2), 4)];
+  const earned = Object.keys(qAnswers).filter(k => qAnswers[k]).reduce((s, k) => s + QUESTIONS[+k].xp, 0);
+  const pname = document.getElementById(`p${activePlayer}-name`).value || `Player ${activePlayer}`;
+  document.getElementById('q-xp-msg').textContent = `+${earned} XP para ${pname}!`;
+  if (qCorrect >= 8) unlock('ach-quiz', 'Quiz Aprovado');
+  if (qCorrect === 10) unlock('ach-perfect', 'Quiz Perfeito!');
+  totalActs++;
+  updateHUD();
+}
+function restartQuiz() {
+  qCorrect = 0; qAnswers = {};
+  document.getElementById('q-result').classList.remove('show');
+  document.getElementById('q-fill').style.width = '0%';
+  document.getElementById('q-count').textContent = '0 / 10';
+  QUESTIONS.forEach((_, i) => {
+    const c = document.getElementById(`qq${i}`);
+    c.classList.toggle('active', i === 0);
+    c.querySelectorAll('.q-opt').forEach(b => { b.disabled = false; b.className = 'q-opt'; });
+    const fb = document.getElementById(`qfb${i}`); fb.className = 'q-feedback'; fb.textContent = '';
+    document.getElementById(`qnr${i}`).classList.remove('show');
+  });
+  updateHUD();
+}
+
+// ===========================
+//  ACHIEVEMENTS
+// ===========================
+const ACHS = [
+  { id: 'ach-boot', emoji: '🚀', name: 'Lab Online' },
+  { id: 'ach-analyst', emoji: '📊', name: 'Analista de Dados BR' },
+  { id: 'ach-reader', emoji: '📖', name: 'Leitor Completo' },
+  { id: 'ach-obj', emoji: '🎯', name: 'Objetivos Completos' },
+  { id: 'ach-act1', emoji: '🗺️', name: 'Mapeador do Mercado' },
+  { id: 'ach-act2', emoji: '🏢', name: 'Analista de Estúdio' },
+  { id: 'ach-act3', emoji: '👤', name: 'Designer de Personas' },
+  { id: 'ach-quiz', emoji: '🎓', name: 'Quiz Aprovado' },
+  { id: 'ach-perfect', emoji: '💎', name: 'Quiz Perfeito' },
+];
+(function buildAchs() {
+  const g = document.getElementById('ach-grid');
+  ACHS.forEach(a => {
+    const d = document.createElement('div');
+    d.className = 'ach-item';
+    d.id = a.id;
+    d.innerHTML = `<span class="ach-emoji">${a.emoji}</span><div class="ach-name">${a.name}</div>`;
+    g.appendChild(d);
+  });
+})();
+
+// ===========================
+//  INIT
+// ===========================
+setTimeout(() => {
+  unlock('ach-boot', 'Lab Online');
+  gainXP(5, '🚀', 'Semana 02 iniciada!');
+  totalActs++;
+  updateHUD();
+}, 800);
+setActive(1);
+</script>
+</body>
+</html>

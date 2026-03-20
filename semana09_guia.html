@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Estudo - Semana 09</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; border-radius: 15px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .header h1 { color: #6a11cb; font-size: 2.2em; margin-bottom: 10px; }
+        .header .week-info { color: #666; font-size: 1.1em; }
+        .nav-buttons { display: flex; gap: 15px; margin-top: 20px; }
+        .nav-btn { padding: 12px 24px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: all 0.3s; }
+        .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4); }
+        .nav-btn.disabled { opacity: 0.5; pointer-events: none; }
+        .section { background: white; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .section h2 { color: #6a11cb; font-size: 1.8em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #2575fc; }
+        .exercise-block { background: #f8f9fa; border-left: 5px solid #6a11cb; padding: 25px; margin-bottom: 30px; border-radius: 8px; }
+        .exercise-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .exercise-number { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: bold; }
+        .exercise-title { flex: 1; color: #6a11cb; font-size: 1.4em; font-weight: bold; }
+        .rubric-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+        .rubric-table th { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; padding: 15px; text-align: left; font-weight: bold; }
+        .rubric-table td { padding: 12px 15px; border-bottom: 1px solid #e0e0e0; }
+        .rubric-table tr:last-child td { border-bottom: none; }
+        .rubric-table tr:hover { background: #f5f5f5; }
+        .criterion { font-weight: bold; color: #6a11cb; }
+        .solution-box { background: linear-gradient(to right, #e8f5e9, #f1f8e9); border-left: 5px solid #4caf50; padding: 25px; margin: 20px 0; border-radius: 8px; }
+        .solution-box h3 { color: #2e7d32; margin-bottom: 15px; font-size: 1.3em; }
+        .solution-box h4 { color: #2e7d32; margin-top: 20px; margin-bottom: 10px; }
+        .example-box { background: #fff3e0; border-left: 5px solid #ff9800; padding: 20px; margin: 15px 0; border-radius: 8px; }
+        .example-box h4 { color: #e65100; margin-bottom: 10px; }
+        .tip-box { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 20px; margin: 15px 0; border-radius: 8px; }
+        .tip-box strong { color: #1976d2; }
+        ul, ol { margin-left: 20px; margin-top: 10px; margin-bottom: 10px; }
+        li { margin-bottom: 8px; }
+        .game-example { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border: 2px solid #e0e0e0; }
+        .game-example strong { color: #6a11cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Guia de Estudo - Semana 09</h1>
+            <p class="week-info">Battle Pass e Season Pass</p>
+            <p style="color: #888; margin-top: 5px;">Sistemas de progressão e monetização</p>
+            <div class="nav-buttons">
+                <a href="semana08_guia.html" class="nav-btn ">⬅️ Semana Anterior</a>
+                <a href="index.html" class="nav-btn">📚 Índice</a>
+                <a href="semana10_guia.html" class="nav-btn ">Próxima Semana ➡️</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✏️ Exercício 1: Análise Battle Pass</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    <div class="exercise-number">1</div>
+                    <div class="exercise-title">Análise Battle Pass</div>
+                </div>
+
+                <p><strong>📋 Objetivo:</strong> Estudar Battle Pass existente</p>
+                <p><strong>⏱️ Duração:</strong> 40 minutos</p>
+                
+                <h3 style="color: #6a11cb; margin-top: 25px; margin-bottom: 15px;">📊 Rubrica de Avaliação</h3>
+                
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th>Insuficiente (0-5)</th>
+                            <th>Básico (6-7)</th>
+                            <th>Proficiente (8-9)</th>
+                            <th>Excelente (10)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criterion">Pesquisa e Fontes</td>
+                            <td>Dados ausentes ou incorretos</td>
+                            <td>Fontes básicas consultadas</td>
+                            <td>Múltiplas fontes confiáveis</td>
+                            <td>Pesquisa profunda com fontes primárias</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Profundidade da Análise</td>
+                            <td>Análise superficial ou ausente</td>
+                            <td>Análise básica presente</td>
+                            <td>Análise detalhada com insights</td>
+                            <td>Análise crítica com perspectivas únicas</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Aplicação Prática</td>
+                            <td>Não relacionado ao mercado real</td>
+                            <td>Aplicação genérica</td>
+                            <td>Exemplos práticos relevantes</td>
+                            <td>Soluções diretamente aplicáveis</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Dados e Métricas</td>
+                            <td>Sem dados quantitativos</td>
+                            <td>Alguns números mencionados</td>
+                            <td>Dados relevantes incluídos</td>
+                            <td>Métricas detalhadas com análise</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Apresentação</td>
+                            <td>Desorganizado, difícil de ler</td>
+                            <td>Organização básica</td>
+                            <td>Bem estruturado e claro</td>
+                            <td>Profissional com elementos visuais</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Originalidade</td>
+                            <td>Conteúdo copiado</td>
+                            <td>Informações padrão</td>
+                            <td>Algumas ideias originais</td>
+                            <td>Perspectiva única e criativa</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+                <div class="solution-box">
+                    <h3>💡 Solução Detalhada do Exercício 1</h3>
+                    
+                    <h4>📝 Estrutura Recomendada</h4>
+                    <ol>
+                        <li>Escolher jogo com BP</li><li>Mapear todas recompensas</li><li>Analisar curva progressão</li><li>Avaliar valor percebido</li><li>Calcular ROI player</li>
+                    </ol>
+                    
+                    <div class="example-box">
+                        <h4>🎯 Exemplo Prático</h4>
+                        <p>Para realizar este exercício com excelência:</p>
+                        <ul>
+                            <li><strong>Pesquisa:</strong> Utilize fontes confiáveis como relatórios da indústria, dados oficiais e estudos de caso</li>
+                            <li><strong>Organização:</strong> Estruture seu trabalho de forma clara com introdução, desenvolvimento e conclusão</li>
+                            <li><strong>Dados:</strong> Inclua números, percentuais e métricas sempre que possível</li>
+                            <li><strong>Exemplos:</strong> Reference jogos reais e campanhas de mercado</li>
+                            <li><strong>Análise:</strong> Não apenas descreva, mas analise criticamente os dados apresentados</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>💡 DICA PROFISSIONAL:</strong> Documente suas fontes e mantenha um arquivo de referências. Isso facilita atualizações futuras e demonstra profissionalismo no trabalho.
+                    </div>
+                    
+                    <h4>🔗 Recursos Úteis</h4>
+                    <ul>
+                        <li>Newzoo - Dados de mercado global</li>
+                        <li>GDC Vault - Talks e apresentações da indústria</li>
+                        <li>Gamasutra - Artigos e análises</li>
+                        <li>Steam Stats - Dados de jogadores PC</li>
+                        <li>Sensor Tower - Analytics mobile</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✏️ Exercício 2: Design Battle Pass Próprio</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    <div class="exercise-number">2</div>
+                    <div class="exercise-title">Design Battle Pass Próprio</div>
+                </div>
+
+                <p><strong>📋 Objetivo:</strong> Criar BP completo</p>
+                <p><strong>⏱️ Duração:</strong> 45 minutos</p>
+                
+                <h3 style="color: #6a11cb; margin-top: 25px; margin-bottom: 15px;">📊 Rubrica de Avaliação</h3>
+                
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th>Insuficiente (0-5)</th>
+                            <th>Básico (6-7)</th>
+                            <th>Proficiente (8-9)</th>
+                            <th>Excelente (10)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criterion">Pesquisa e Fontes</td>
+                            <td>Dados ausentes ou incorretos</td>
+                            <td>Fontes básicas consultadas</td>
+                            <td>Múltiplas fontes confiáveis</td>
+                            <td>Pesquisa profunda com fontes primárias</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Profundidade da Análise</td>
+                            <td>Análise superficial ou ausente</td>
+                            <td>Análise básica presente</td>
+                            <td>Análise detalhada com insights</td>
+                            <td>Análise crítica com perspectivas únicas</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Aplicação Prática</td>
+                            <td>Não relacionado ao mercado real</td>
+                            <td>Aplicação genérica</td>
+                            <td>Exemplos práticos relevantes</td>
+                            <td>Soluções diretamente aplicáveis</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Dados e Métricas</td>
+                            <td>Sem dados quantitativos</td>
+                            <td>Alguns números mencionados</td>
+                            <td>Dados relevantes incluídos</td>
+                            <td>Métricas detalhadas com análise</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Apresentação</td>
+                            <td>Desorganizado, difícil de ler</td>
+                            <td>Organização básica</td>
+                            <td>Bem estruturado e claro</td>
+                            <td>Profissional com elementos visuais</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Originalidade</td>
+                            <td>Conteúdo copiado</td>
+                            <td>Informações padrão</td>
+                            <td>Algumas ideias originais</td>
+                            <td>Perspectiva única e criativa</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+                <div class="solution-box">
+                    <h3>💡 Solução Detalhada do Exercício 2</h3>
+                    
+                    <h4>📝 Estrutura Recomendada</h4>
+                    <ol>
+                        <li>Definir jogo fictício</li><li>Criar 50+ recompensas</li><li>Balancear free/premium</li><li>Definir duração</li><li>Estabelecer preço</li>
+                    </ol>
+                    
+                    <div class="example-box">
+                        <h4>🎯 Exemplo Prático</h4>
+                        <p>Para realizar este exercício com excelência:</p>
+                        <ul>
+                            <li><strong>Pesquisa:</strong> Utilize fontes confiáveis como relatórios da indústria, dados oficiais e estudos de caso</li>
+                            <li><strong>Organização:</strong> Estruture seu trabalho de forma clara com introdução, desenvolvimento e conclusão</li>
+                            <li><strong>Dados:</strong> Inclua números, percentuais e métricas sempre que possível</li>
+                            <li><strong>Exemplos:</strong> Reference jogos reais e campanhas de mercado</li>
+                            <li><strong>Análise:</strong> Não apenas descreva, mas analise criticamente os dados apresentados</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>💡 DICA PROFISSIONAL:</strong> Documente suas fontes e mantenha um arquivo de referências. Isso facilita atualizações futuras e demonstra profissionalismo no trabalho.
+                    </div>
+                    
+                    <h4>🔗 Recursos Úteis</h4>
+                    <ul>
+                        <li>Newzoo - Dados de mercado global</li>
+                        <li>GDC Vault - Talks e apresentações da indústria</li>
+                        <li>Gamasutra - Artigos e análises</li>
+                        <li>Steam Stats - Dados de jogadores PC</li>
+                        <li>Sensor Tower - Analytics mobile</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✏️ Exercício 3: Estratégia Temporadas</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    <div class="exercise-number">3</div>
+                    <div class="exercise-title">Estratégia Temporadas</div>
+                </div>
+
+                <p><strong>📋 Objetivo:</strong> Planejar conteúdo sazonal</p>
+                <p><strong>⏱️ Duração:</strong> 30 minutos</p>
+                
+                <h3 style="color: #6a11cb; margin-top: 25px; margin-bottom: 15px;">📊 Rubrica de Avaliação</h3>
+                
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th>Insuficiente (0-5)</th>
+                            <th>Básico (6-7)</th>
+                            <th>Proficiente (8-9)</th>
+                            <th>Excelente (10)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criterion">Pesquisa e Fontes</td>
+                            <td>Dados ausentes ou incorretos</td>
+                            <td>Fontes básicas consultadas</td>
+                            <td>Múltiplas fontes confiáveis</td>
+                            <td>Pesquisa profunda com fontes primárias</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Profundidade da Análise</td>
+                            <td>Análise superficial ou ausente</td>
+                            <td>Análise básica presente</td>
+                            <td>Análise detalhada com insights</td>
+                            <td>Análise crítica com perspectivas únicas</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Aplicação Prática</td>
+                            <td>Não relacionado ao mercado real</td>
+                            <td>Aplicação genérica</td>
+                            <td>Exemplos práticos relevantes</td>
+                            <td>Soluções diretamente aplicáveis</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Dados e Métricas</td>
+                            <td>Sem dados quantitativos</td>
+                            <td>Alguns números mencionados</td>
+                            <td>Dados relevantes incluídos</td>
+                            <td>Métricas detalhadas com análise</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Apresentação</td>
+                            <td>Desorganizado, difícil de ler</td>
+                            <td>Organização básica</td>
+                            <td>Bem estruturado e claro</td>
+                            <td>Profissional com elementos visuais</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Originalidade</td>
+                            <td>Conteúdo copiado</td>
+                            <td>Informações padrão</td>
+                            <td>Algumas ideias originais</td>
+                            <td>Perspectiva única e criativa</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+                <div class="solution-box">
+                    <h3>💡 Solução Detalhada do Exercício 3</h3>
+                    
+                    <h4>📝 Estrutura Recomendada</h4>
+                    <ol>
+                        <li>Criar calendário anual</li><li>Temas por temporada</li><li>Roadmap de conteúdo</li><li>Planejar eventos</li><li>Definir marketing</li>
+                    </ol>
+                    
+                    <div class="example-box">
+                        <h4>🎯 Exemplo Prático</h4>
+                        <p>Para realizar este exercício com excelência:</p>
+                        <ul>
+                            <li><strong>Pesquisa:</strong> Utilize fontes confiáveis como relatórios da indústria, dados oficiais e estudos de caso</li>
+                            <li><strong>Organização:</strong> Estruture seu trabalho de forma clara com introdução, desenvolvimento e conclusão</li>
+                            <li><strong>Dados:</strong> Inclua números, percentuais e métricas sempre que possível</li>
+                            <li><strong>Exemplos:</strong> Reference jogos reais e campanhas de mercado</li>
+                            <li><strong>Análise:</strong> Não apenas descreva, mas analise criticamente os dados apresentados</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>💡 DICA PROFISSIONAL:</strong> Documente suas fontes e mantenha um arquivo de referências. Isso facilita atualizações futuras e demonstra profissionalismo no trabalho.
+                    </div>
+                    
+                    <h4>🔗 Recursos Úteis</h4>
+                    <ul>
+                        <li>Newzoo - Dados de mercado global</li>
+                        <li>GDC Vault - Talks e apresentações da indústria</li>
+                        <li>Gamasutra - Artigos e análises</li>
+                        <li>Steam Stats - Dados de jogadores PC</li>
+                        <li>Sensor Tower - Analytics mobile</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="nav-buttons" style="margin-top: 30px;">
+            <a href="semana08_guia.html" class="nav-btn ">⬅️ Semana Anterior</a>
+            <a href="index.html" class="nav-btn">📚 Voltar ao Índice</a>
+            <a href="semana10_guia.html" class="nav-btn ">Próxima Semana ➡️</a>
+        </div>
+    </div>
+</body>
+</html>

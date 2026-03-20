@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Digital e Monetização para Jogos - FATEC Ourinhos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #6a11cb;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .header .course-info {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .week-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            border-left: 5px solid #6a11cb;
+        }
+
+        .week-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(106, 17, 203, 0.4);
+            border-left-color: #2575fc;
+        }
+
+        .week-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .week-number {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .week-title {
+            flex: 1;
+            color: #6a11cb;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .week-subtitle {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .week-badge {
+            background: #e3f2fd;
+            color: #2575fc;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .module-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .module-section h2 {
+            color: #6a11cb;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #2575fc;
+            padding-bottom: 10px;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer h3 {
+            color: #6a11cb;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .footer-link {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .footer-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .weeks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Marketing Digital e Monetização para Jogos</h1>
+            <p>Curso Superior de Tecnologia em Jogos Digitais</p>
+            <p><strong>FATEC Ourinhos - Centro Paula Souza</strong></p>
+            <div class="course-info">
+                📚 6º Semestre | ⏱️ 40 aulas | 💻 20 semanas
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>📌 Módulo 1: Fundamentos do Marketing Digital (Semanas 1-5)</h2>
+            <div class="weeks-grid">
+                <a href="semana01.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">01</div>
+                        <div class="week-title">Introdução ao Marketing Digital</div>
+                    </div>
+                    <p class="week-subtitle">Fundamentos do marketing digital aplicado à indústria de jogos</p>
+                    <span class="week-badge">FUNDAMENTOS</span>
+                </a>
+
+                <a href="semana02.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">02</div>
+                        <div class="week-title">Mercado de Jogos Digital Nacional</div>
+                    </div>
+                    <p class="week-subtitle">Panorama e oportunidades do mercado brasileiro de jogos</p>
+                    <span class="week-badge">MERCADO BR</span>
+                </a>
+
+                <a href="semana03.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">03</div>
+                        <div class="week-title">Mercado de Jogos Internacional</div>
+                    </div>
+                    <p class="week-subtitle">Análise dos principais mercados globais de jogos digitais</p>
+                    <span class="week-badge">MERCADO GLOBAL</span>
+                </a>
+
+                <a href="semana04.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">04</div>
+                        <div class="week-title">Plataformas e Demografia</div>
+                    </div>
+                    <p class="week-subtitle">Entendendo plataformas e o perfil dos jogadores</p>
+                    <span class="week-badge">PLATAFORMAS</span>
+                </a>
+
+                <a href="semana05.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">05</div>
+                        <div class="week-title">Marketing 4.0 e Jogadores</div>
+                    </div>
+                    <p class="week-subtitle">Aplicando conceitos modernos de marketing aos jogos</p>
+                    <span class="week-badge">MARKETING 4.0</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>💰 Módulo 2: Modelos de Monetização (Semanas 6-10)</h2>
+            <div class="weeks-grid">
+                <a href="semana06.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">06</div>
+                        <div class="week-title">Free-to-Play</div>
+                    </div>
+                    <p class="week-subtitle">Modelos F2P e estratégias de monetização via IAP</p>
+                    <span class="week-badge">F2P</span>
+                </a>
+
+                <a href="semana07.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">07</div>
+                        <div class="week-title">Paid Games e Premium</div>
+                    </div>
+                    <p class="week-subtitle">Estratégias para jogos pagos e modelo premium</p>
+                    <span class="week-badge">PREMIUM</span>
+                </a>
+
+                <a href="semana08.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">08</div>
+                        <div class="week-title">Modelos Híbridos</div>
+                    </div>
+                    <p class="week-subtitle">Combinando diferentes modelos de monetização</p>
+                    <span class="week-badge">HÍBRIDO</span>
+                </a>
+
+                <a href="semana09.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">09</div>
+                        <div class="week-title">Battle Pass e Season Pass</div>
+                    </div>
+                    <p class="week-subtitle">Sistemas de progressão e monetização por temporada</p>
+                    <span class="week-badge">BATTLE PASS</span>
+                </a>
+
+                <a href="semana10.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">10</div>
+                        <div class="week-title">Monetização e Game Design</div>
+                    </div>
+                    <p class="week-subtitle">Como monetização impacta o design de jogos</p>
+                    <span class="week-badge">GAME DESIGN</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>📊 Módulo 3: Ferramentas e Métricas (Semanas 11-15)</h2>
+            <div class="weeks-grid">
+                <a href="semana11.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">11</div>
+                        <div class="week-title">SEO e ASO para Jogos</div>
+                    </div>
+                    <p class="week-subtitle">Otimização para mecanismos de busca e app stores</p>
+                    <span class="week-badge">SEO/ASO</span>
+                </a>
+
+                <a href="semana12.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">12</div>
+                        <div class="week-title">Google Analytics e Firebase</div>
+                    </div>
+                    <p class="week-subtitle">Ferramentas de análise e métricas para jogos</p>
+                    <span class="week-badge">ANALYTICS</span>
+                </a>
+
+                <a href="semana13.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">13</div>
+                        <div class="week-title">ROI, CAC e LTV</div>
+                    </div>
+                    <p class="week-subtitle">Principais métricas de marketing e monetização</p>
+                    <span class="week-badge">MÉTRICAS</span>
+                </a>
+
+                <a href="semana14.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">14</div>
+                        <div class="week-title">Facebook e Instagram Ads</div>
+                    </div>
+                    <p class="week-subtitle">Publicidade paga em redes sociais para jogos</p>
+                    <span class="week-badge">ADS</span>
+                </a>
+
+                <a href="semana15.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">15</div>
+                        <div class="week-title">Análise Competitiva</div>
+                    </div>
+                    <p class="week-subtitle">Monitoramento e análise da concorrência</p>
+                    <span class="week-badge">COMPETITIVA</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>🚀 Módulo 4: Campanhas e Projeto Final (Semanas 16-20)</h2>
+            <div class="weeks-grid">
+                <a href="semana16.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">16</div>
+                        <div class="week-title">Redes Sociais para Jogos</div>
+                    </div>
+                    <p class="week-subtitle">Estratégias de presença e engajamento em redes sociais</p>
+                    <span class="week-badge">SOCIAL MEDIA</span>
+                </a>
+
+                <a href="semana17.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">17</div>
+                        <div class="week-title">Influenciadores e Streamers</div>
+                    </div>
+                    <p class="week-subtitle">Marketing de influência na indústria de jogos</p>
+                    <span class="week-badge">INFLUENCERS</span>
+                </a>
+
+                <a href="semana18.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">18</div>
+                        <div class="week-title">Eventos e Festivais</div>
+                    </div>
+                    <p class="week-subtitle">Presença e estratégias em eventos da indústria</p>
+                    <span class="week-badge">EVENTOS</span>
+                </a>
+
+                <a href="semana19.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">19</div>
+                        <div class="week-title">Press Kit e Divulgação</div>
+                    </div>
+                    <p class="week-subtitle">Criação de press kit e materiais profissionais</p>
+                    <span class="week-badge">PRESS KIT</span>
+                </a>
+
+                <a href="semana20.html" class="week-card">
+                    <div class="week-header">
+                        <div class="week-number">20</div>
+                        <div class="week-title">Projeto Final</div>
+                    </div>
+                    <p class="week-subtitle">Desenvolvimento e apresentação do projeto final</p>
+                    <span class="week-badge">PROJETO FINAL</span>
+                </a>
+            </div>
+        </div>
+
+                <div class="module-section" style="text-align: center;">
+            <h2>👨‍🏫 Professor Responsável</h2>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                <img src="foto_professor.png" alt="Professor Isaque Katahira" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 5px solid #6a11cb;">
+                <div style="text-align: left;">
+                    <h3 style="color: #6a11cb; margin-bottom: 10px;">Isaque Katahira</h3>
+                    <p style="font-size: 1.1em; color: #666;">Professor da disciplina Marketing Digital e Monetização para Jogos</p>
+                    <p style="color: #666;">FATEC Ourinhos - Centro Paula Souza</p>
+                </div>
+            </div>
+        </div>
+
+<div class="footer">
+            <h3>📚 Recursos Adicionais</h3>
+            <p>Acesse materiais complementares e recursos para o curso</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">📖 Bibliografia Completa</a>
+                <a href="#" class="footer-link">🎬 Playlist de Vídeos</a>
+                <a href="#" class="footer-link">🔧 Ferramentas</a>
+                <a href="#" class="footer-link">💼 Portfólio de Projetos</a>
+            </div>
+            <p style="margin-top: 30px; color: #666;">
+                <strong>FATEC Ourinhos</strong> | Curso Superior de Tecnologia em Jogos Digitais<br>
+                Marketing Digital e Monetização para Jogos | 6º Semestre
+            </p>
+        </div>
+    </div>
+</body>
+</html>

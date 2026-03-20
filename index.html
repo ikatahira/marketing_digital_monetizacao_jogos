@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guias de Estudo - Marketing Digital para Jogos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #6a11cb;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .info-badge {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px;
+            font-size: 1.1em;
+        }
+
+        .weeks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .week-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border-left: 5px solid #6a11cb;
+            cursor: pointer;
+        }
+
+        .week-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(106, 17, 203, 0.4);
+        }
+
+        .week-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .week-number {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .week-title {
+            flex: 1;
+            color: #6a11cb;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .week-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .exercise-count {
+            background: #e3f2fd;
+            color: #2575fc;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .module-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .module-section h2 {
+            color: #6a11cb;
+            font-size: 2em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2575fc;
+        }
+
+        .legend {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .legend h3 {
+            color: #6a11cb;
+            margin-bottom: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .legend-icon {
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Guias de Estudo Completos</h1>
+            <p class="subtitle">Marketing Digital e Monetização para Jogos</p>
+            <div>
+                <span class="info-badge">✅ Rubricas de Avaliação</span>
+                <span class="info-badge">💡 Soluções Detalhadas</span>
+                <span class="info-badge">📊 Exemplos Reais</span>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>📌 Módulo 1: Fundamentos do Marketing Digital</h2>
+            <div class="weeks-container">
+                <div class="week-card" onclick="window.location.href='semana01_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">01</div>
+                        <div class="week-title">Introdução ao Marketing Digital</div>
+                    </div>
+                    <p class="week-description">Fundamentos do marketing digital aplicado à indústria de jogos</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana02_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">02</div>
+                        <div class="week-title">Mercado Brasileiro de Jogos</div>
+                    </div>
+                    <p class="week-description">Análise do mercado nacional e oportunidades</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana03_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">03</div>
+                        <div class="week-title">Mercado de Jogos Internacional</div>
+                    </div>
+                    <p class="week-description">Análise dos principais mercados globais</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana04_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">04</div>
+                        <div class="week-title">Plataformas e Demografia</div>
+                    </div>
+                    <p class="week-description">Entendendo plataformas e perfil dos jogadores</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana05_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">05</div>
+                        <div class="week-title">Marketing 4.0 e Jogadores</div>
+                    </div>
+                    <p class="week-description">Conceitos modernos de marketing aplicados</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>💰 Módulo 2: Modelos de Monetização</h2>
+            <div class="weeks-container">
+                <div class="week-card" onclick="window.location.href='semana06_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">06</div>
+                        <div class="week-title">Free-to-Play</div>
+                    </div>
+                    <p class="week-description">Modelos F2P e estratégias de monetização via IAP</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana07_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">07</div>
+                        <div class="week-title">Paid Games e Premium</div>
+                    </div>
+                    <p class="week-description">Estratégias para jogos pagos</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana08_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">08</div>
+                        <div class="week-title">Modelos Híbridos</div>
+                    </div>
+                    <p class="week-description">Combinando diferentes modelos de monetização</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana09_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">09</div>
+                        <div class="week-title">Battle Pass e Season Pass</div>
+                    </div>
+                    <p class="week-description">Sistemas de progressão e monetização por temporada</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana10_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">10</div>
+                        <div class="week-title">Monetização e Game Design</div>
+                    </div>
+                    <p class="week-description">Impacto da monetização no design de jogos</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>📊 Módulo 3: Ferramentas e Métricas</h2>
+            <div class="weeks-container">
+                <div class="week-card" onclick="window.location.href='semana11_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">11</div>
+                        <div class="week-title">SEO e ASO para Jogos</div>
+                    </div>
+                    <p class="week-description">Otimização para mecanismos de busca e app stores</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana12_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">12</div>
+                        <div class="week-title">Google Analytics e Firebase</div>
+                    </div>
+                    <p class="week-description">Ferramentas de análise e métricas</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana13_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">13</div>
+                        <div class="week-title">ROI, CAC e LTV</div>
+                    </div>
+                    <p class="week-description">Principais métricas de marketing</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana14_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">14</div>
+                        <div class="week-title">Facebook e Instagram Ads</div>
+                    </div>
+                    <p class="week-description">Publicidade paga em redes sociais</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana15_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">15</div>
+                        <div class="week-title">Análise Competitiva</div>
+                    </div>
+                    <p class="week-description">Monitoramento e análise da concorrência</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <h2>🚀 Módulo 4: Campanhas e Projeto Final</h2>
+            <div class="weeks-container">
+                <div class="week-card" onclick="window.location.href='semana16_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">16</div>
+                        <div class="week-title">Redes Sociais para Jogos</div>
+                    </div>
+                    <p class="week-description">Estratégias de presença e engajamento</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana17_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">17</div>
+                        <div class="week-title">Influenciadores e Streamers</div>
+                    </div>
+                    <p class="week-description">Marketing de influência na indústria</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana18_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">18</div>
+                        <div class="week-title">Eventos e Festivais</div>
+                    </div>
+                    <p class="week-description">Presença em eventos da indústria</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+
+                <div class="week-card" onclick="window.location.href='semana19_guia.html'">
+                    <div class="week-header">
+                        <div class="week-number">19</div>
+                        <div class="week-title">Press Kit e Divulgação</div>
+                    </div>
+                    <p class="week-description">Criação de press kit profissional</p>
+                    <span class="exercise-count">📝 3 Exercícios</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>📖 Legenda dos Guias de Estudo</h3>
+            <div class="legend-item">
+                <span class="legend-icon">📝</span>
+                <span><strong>Atividades Práticas:</strong> Exercícios com rubricas detalhadas de avaliação</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon">✅</span>
+                <span><strong>Rubricas:</strong> Critérios de avaliação com pontuações (Insuficiente, Básico, Proficiente, Excelente)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon">💡</span>
+                <span><strong>Soluções:</strong> Exemplos completos e detalhados de como realizar cada exercício</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon">📊</span>
+                <span><strong>Exemplos Reais:</strong> Cases e referências de jogos reais do mercado</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

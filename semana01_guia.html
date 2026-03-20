@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Estudo - Semana 01</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            color: #6a11cb;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header .week-info {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .section h2 {
+            color: #6a11cb;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2575fc;
+        }
+
+        .exercise-block {
+            background: #f8f9fa;
+            border-left: 5px solid #6a11cb;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .exercise-number {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .exercise-title {
+            flex: 1;
+            color: #6a11cb;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .rubric-table th {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .rubric-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .rubric-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rubric-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .criterion {
+            font-weight: bold;
+            color: #6a11cb;
+        }
+
+        .score {
+            background: #e3f2fd;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: #2575fc;
+            display: inline-block;
+        }
+
+        .solution-box {
+            background: linear-gradient(to right, #e8f5e9, #f1f8e9);
+            border-left: 5px solid #4caf50;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .solution-box h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .example-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        .tip-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .tip-box strong {
+            color: #1976d2;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fff9c4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .game-example {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .game-example strong {
+            color: #6a11cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Guia de Estudo - Semana 01</h1>
+            <p class="week-info">Introdução ao Marketing Digital para Jogos</p>
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-btn">⬅️ Voltar ao Índice</a>
+                <a href="semana02_guia.html" class="nav-btn">Próxima Semana ➡️</a>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO 1 -->
+        <div class="section">
+            <h2>✏️ Exercício 1: Análise de Campanhas de Sucesso</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    <div class="exercise-number">1</div>
+                    <div class="exercise-title">Análise de Campanhas de Sucesso</div>
+                </div>
+
+                <p><strong>📋 Objetivo:</strong> Identificar elementos-chave de campanhas bem-sucedidas</p>
+                <p><strong>⏱️ Duração:</strong> 45 minutos</p>
+                <p><strong>📄 Entregável:</strong> Relatório comparativo de 2-3 páginas</p>
+
+                <h3 style="color: #6a11cb; margin-top: 25px; margin-bottom: 15px;">📊 Rubrica de Avaliação</h3>
+                
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th>Insuficiente (0-5)</th>
+                            <th>Básico (6-7)</th>
+                            <th>Proficiente (8-9)</th>
+                            <th>Excelente (10)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criterion">Seleção de Jogos</td>
+                            <td>Jogos inadequados ou repetidos de categoria</td>
+                            <td>Jogos adequados mas pouco relevantes</td>
+                            <td>Jogos bem escolhidos e atuais</td>
+                            <td>Jogos exemplares com justificativa sólida</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Identificação de Canais</td>
+                            <td>Menos de 3 canais identificados</td>
+                            <td>3-4 canais listados sem detalhes</td>
+                            <td>5+ canais com descrição básica</td>
+                            <td>Análise completa de todos canais relevantes</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Análise de Conteúdo</td>
+                            <td>Descrições vagas e superficiais</td>
+                            <td>Listagem básica de conteúdos</td>
+                            <td>Análise detalhada com exemplos</td>
+                            <td>Análise profunda com prints e links</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Timing da Campanha</td>
+                            <td>Informações incompletas ou ausentes</td>
+                            <td>Datas básicas mencionadas</td>
+                            <td>Timeline clara com marcos importantes</td>
+                            <td>Timeline detalhada com análise estratégica</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Análise Comparativa</td>
+                            <td>Sem comparação entre jogos</td>
+                            <td>Comparação superficial</td>
+                            <td>Comparação estruturada com insights</td>
+                            <td>Análise comparativa profunda com conclusões</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Formatação e Apresentação</td>
+                            <td>Desorganizado, difícil de ler</td>
+                            <td>Organização básica</td>
+                            <td>Bem estruturado e visual</td>
+                            <td>Profissional com gráficos e imagens</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="solution-box">
+                    <h3>💡 Solução Detalhada do Exercício 1</h3>
+
+                    <h4 style="color: #2e7d32; margin-top: 20px;">📝 Estrutura do Relatório</h4>
+
+                    <p><strong>1. INTRODUÇÃO</strong></p>
+                    <p>Apresentar os 3 jogos selecionados e justificar a escolha. Mencionar critérios como: sucesso de vendas, impacto cultural, inovação no marketing.</p>
+
+                    <div class="example-box">
+                        <h4>🎮 Exemplo de Jogos Selecionados (2023-2025)</h4>
+                        <div class="game-example">
+                            <strong>AAA:</strong> Baldur's Gate 3 (Larian Studios, 2023)<br>
+                            <em>Justificativa:</em> RPG AAA que utilizou early access e community feedback como estratégia de marketing, alcançando 800 mil jogadores simultâneos no lançamento.
+                        </div>
+                        <div class="game-example">
+                            <strong>Indie:</strong> Lethal Company (Zeekerss, 2023)<br>
+                            <em>Justificativa:</em> Jogo indie que viralizou organicamente via Twitch/YouTube, atingindo 100 mil avaliações positivas no Steam em 2 meses.
+                        </div>
+                        <div class="game-example">
+                            <strong>Mobile:</strong> Honkai: Star Rail (HoYoverse, 2023)<br>
+                            <em>Justificativa:</em> Gacha mobile com campanha multiplataforma que gerou $268 milhões no primeiro mês.
+                        </div>
+                    </div>
+
+                    <p><strong>2. ANÁLISE POR JOGO</strong></p>
+
+                    <div class="example-box">
+                        <h4>📊 Baldur's Gate 3 - Análise Completa</h4>
+                        
+                        <p><strong>Canais Utilizados:</strong></p>
+                        <ul>
+                            <li><strong>YouTube:</strong> Panel From Hell (eventos de revelação ao vivo), trailers cinematográficos, behind-the-scenes</li>
+                            <li><strong>Twitch:</strong> Streams oficiais com desenvolvedores, programa de parceria com streamers</li>
+                            <li><strong>Twitter/X:</strong> Atualizações diárias, memes, interação com comunidade</li>
+                            <li><strong>Steam:</strong> Early Access (3 anos), atualizações constantes, community hub ativo</li>
+                            <li><strong>Reddit:</strong> Presença ativa no r/BaldursGate3 com desenvolvedores respondendo</li>
+                            <li><strong>Discord:</strong> Servidor oficial com 100k+ membros</li>
+                        </ul>
+
+                        <p><strong>Conteúdo Criado:</strong></p>
+                        <ul>
+                            <li><strong>Trailers:</strong> 5 trailers principais (reveal, gameplay, lançamento, cada classe, companheiros)</li>
+                            <li><strong>Panel From Hell:</strong> 8 eventos ao vivo mostrando mecânicas e novidades</li>
+                            <li><strong>Dev Diaries:</strong> Vídeos mensais durante Early Access explicando desenvolvimento</li>
+                            <li><strong>Press Kit:</strong> Completo com screenshots 4K, key art, logos vetorizados</li>
+                            <li><strong>Materiais de Imprensa:</strong> Comunicados regulares para mídia especializada</li>
+                        </ul>
+
+                        <p><strong>Timeline da Campanha:</strong></p>
+                        <ul>
+                            <li><strong>Fev 2020:</strong> Anúncio oficial no evento PAX East</li>
+                            <li><strong>Out 2020:</strong> Lançamento Early Access no Steam (início da campanha long-tail)</li>
+                            <li><strong>2020-2023:</strong> 3 anos de Early Access com patches regulares (marketing contínuo)</li>
+                            <li><strong>Jun 2023:</strong> Panel From Hell Release Showcase (3 meses antes do lançamento)</li>
+                            <li><strong>Ago 2023:</strong> Lançamento oficial + campanha intensiva em todas plataformas</li>
+                            <li><strong>Set-Dez 2023:</strong> Manutenção da conversa com conteúdo pós-lançamento</li>
+                        </ul>
+
+                        <p><strong>Resultados Mensuráveis:</strong></p>
+                        <ul>
+                            <li>875 mil jogadores simultâneos no Steam (pico)</li>
+                            <li>500+ prêmios "Jogo do Ano" em veículos especializados</li>
+                            <li>ROI estimado de 600% baseado em investimento vs vendas</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>📊 Lethal Company - Análise Completa</h4>
+                        
+                        <p><strong>Canais Utilizados:</strong></p>
+                        <ul>
+                            <li><strong>Steam:</strong> Único canal inicial de distribuição</li>
+                            <li><strong>YouTube:</strong> Marketing orgânico via creators (não pago)</li>
+                            <li><strong>Twitch:</strong> Viralização natural por streamers grandes</li>
+                            <li><strong>TikTok:</strong> Vídeos virais de momentos engraçados</li>
+                            <li><strong>Twitter:</strong> Conta pessoal do desenvolvedor (autêntica)</li>
+                        </ul>
+
+                        <p><strong>Estratégia de Marketing (Orgânica):</strong></p>
+                        <ul>
+                            <li><strong>Preço Acessível:</strong> $9.99 USD (barreira de entrada baixa)</li>
+                            <li><strong>Gameplay "Streamable":</strong> Momentos caóticos e engraçados perfeitos para clipes</li>
+                            <li><strong>Multiplayer Cooperativo:</strong> Incentiva jogos em grupo de amigos/streamers</li>
+                            <li><strong>Estética Low-Poly Única:</strong> Memorável e distinta</li>
+                            <li><strong>Sem Budget de Marketing:</strong> Todo crescimento foi orgânico</li>
+                        </ul>
+
+                        <p><strong>Timeline da Viralização:</strong></p>
+                        <ul>
+                            <li><strong>Out 2023:</strong> Lançamento silencioso no Steam</li>
+                            <li><strong>Nov 2023:</strong> Primeiros streamers pequenos descobrem o jogo</li>
+                            <li><strong>Dez 2023:</strong> Viralização no TikTok e YouTube Shorts</li>
+                            <li><strong>Jan 2024:</strong> Streamers grandes (xQc, Pokimane) jogam ao vivo</li>
+                            <li><strong>Fev 2024:</strong> Pico de 100 mil jogadores simultâneos</li>
+                        </ul>
+
+                        <p><strong>Lições Aprendidas:</strong></p>
+                        <ul>
+                            <li>Marketing orgânico via gameplay divertido pode superar campanhas pagas</li>
+                            <li>Preço acessível reduz fricção para viralização</li>
+                            <li>Multiplayer amplifica o alcance (cada jogador traz amigos)</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>📊 Honkai: Star Rail - Análise Completa</h4>
+                        
+                        <p><strong>Canais Utilizados:</strong></p>
+                        <ul>
+                            <li><strong>YouTube:</strong> Trailers cinematográficos de alta produção (milhões de views)</li>
+                            <li><strong>Twitter/X:</strong> Artwork oficial diário, character teasers, memes</li>
+                            <li><strong>TikTok/Instagram:</strong> Short-form content com personagens</li>
+                            <li><strong>Twitch/YouTube Gaming:</strong> Programa de creators com acesso antecipado</li>
+                            <li><strong>App Stores:</strong> Feature placement negociado (iOS e Google Play)</li>
+                            <li><strong>Outdoor/TV:</strong> Anúncios em mercados asiáticos chave</li>
+                        </ul>
+
+                        <p><strong>Conteúdo Criado:</strong></p>
+                        <ul>
+                            <li><strong>Trailers Cinematográficos:</strong> 12+ trailers de personagens com trilha sonora original</li>
+                            <li><strong>Animated Shorts:</strong> Mini-séries de anime promocionais</li>
+                            <li><strong>Character Demos:</strong> Vídeos mostrando cada personagem jogável</li>
+                            <li><strong>Behind-the-Scenes:</strong> Processo de desenvolvimento e voice acting</li>
+                            <li><strong>Colaborações:</strong> Parcerias com marcas (cafés temáticos, merchandise)</li>
+                        </ul>
+
+                        <p><strong>Timeline da Campanha:</strong></p>
+                        <ul>
+                            <li><strong>Out 2021:</strong> Primeiro anúncio oficial</li>
+                            <li><strong>2022:</strong> Testes beta fechados (hype building)</li>
+                            <li><strong>Fev 2023:</strong> Campanha de pré-registro (3 meses antes do launch)</li>
+                            <li><strong>Abr 2023:</strong> Lançamento global simultâneo</li>
+                            <li><strong>Mai-Jun 2023:</strong> Primeira atualização major (mantém engagement)</li>
+                        </ul>
+
+                        <p><strong>Investimento Estimado em Marketing:</strong></p>
+                        <ul>
+                            <li>$50-100 milhões USD em marketing global</li>
+                            <li>Retorno: $268 milhões no primeiro mês (ROI de ~300%)</li>
+                            <li>User Acquisition Cost (UAC) estimado: $15-25 por usuário</li>
+                        </ul>
+                    </div>
+
+                    <p><strong>3. ANÁLISE COMPARATIVA</strong></p>
+
+                    <table class="rubric-table">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>Baldur's Gate 3</th>
+                                <th>Lethal Company</th>
+                                <th>Honkai: Star Rail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="criterion">Budget de Marketing</td>
+                                <td>~$10-20M (estimado)</td>
+                                <td>~$0 (orgânico)</td>
+                                <td>~$50-100M</td>
+                            </tr>
+                            <tr>
+                                <td class="criterion">Duração da Campanha</td>
+                                <td>3+ anos (Early Access)</td>
+                                <td>3 meses (viralização)</td>
+                                <td>18 meses (anúncio a lançamento)</td>
+                            </tr>
+                            <tr>
+                                <td class="criterion">Canal Principal</td>
+                                <td>Steam + YouTube</td>
+                                <td>Twitch/YouTube (orgânico)</td>
+                                <td>Multiplataforma global</td>
+                            </tr>
+                            <tr>
+                                <td class="criterion">Estratégia Core</td>
+                                <td>Community building</td>
+                                <td>Viralização orgânica</td>
+                                <td>Marketing tradicional massivo</td>
+                            </tr>
+                            <tr>
+                                <td class="criterion">Público-Alvo</td>
+                                <td>RPG hardcore fans</td>
+                                <td>Gamers casuais/streamers</td>
+                                <td>Anime/gacha enthusiasts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p><strong>4. CONCLUSÕES E INSIGHTS</strong></p>
+                    <ul>
+                        <li><strong>Não existe fórmula única:</strong> Cada jogo requer estratégia adaptada ao gênero, orçamento e público</li>
+                        <li><strong>Early Access funciona:</strong> BG3 usou 3 anos de EA para construir hype e refinar produto</li>
+                        <li><strong>Viralização é possível:</strong> Lethal Company prova que jogo bem-feito pode viralizar com $0</li>
+                        <li><strong>Mobile exige investimento:</strong> Honkai mostra que mobile competitivo requer budget significativo</li>
+                        <li><strong>Autenticidade importa:</strong> Todos os 3 jogos tiveram comunicação genuína com players</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO 2 -->
+        <div class="section">
+            <h2>✏️ Exercício 2: Mapeamento de Público-Alvo</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    <div class="exercise-number">2</div>
+                    <div class="exercise-title">Mapeamento de Público-Alvo</div>
+                </div>
+
+                <p><strong>📋 Objetivo:</strong> Criar personas para diferentes tipos de jogos</p>
+                <p><strong>⏱️ Duração:</strong> 30 minutos</p>
+                <p><strong>📄 Entregável:</strong> Documento de personas com imagens e descrições</p>
+
+                <h3 style="color: #6a11cb; margin-top: 25px; margin-bottom: 15px;">📊 Rubrica de Avaliação</h3>
+                
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th>Insuficiente (0-5)</th>
+                            <th>Básico (6-7)</th>
+                            <th>Proficiente (8-9)</th>
+                            <th>Excelente (10)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criterion">Dados Demográficos</td>
+                            <td>Informações incompletas</td>
+                            <td>Dados básicos presentes</td>
+                            <td>Perfil demográfico completo</td>
+                            <td>Perfil detalhado com estatísticas reais</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Hábitos de Jogo</td>
+                            <td>Descrição vaga ou genérica</td>
+                            <td>Alguns hábitos listados</td>
+                            <td>Hábitos específicos e realistas</td>
+                            <td>Padrões comportamentais profundos</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Motivações</td>
+                            <td>Não identificadas</td>
+                            <td>Motivações superficiais</td>
+                            <td>Motivações claras e relevantes</td>
+                            <td>Análise psicográfica profunda</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Pain Points</td>
+                            <td>Ausentes ou irrelevantes</td>
+                            <td>Problemas genéricos</td>
+                            <td>Pain points específicos</td>
+                            <td>Barreiras detalhadas com soluções</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Canais de Consumo</td>
+                            <td>Menos de 3 canais</td>
+                            <td>3-4 canais listados</td>
+                            <td>5+ canais com preferências</td>
+                            <td>Mapeamento completo de jornada digital</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Apresentação Visual</td>
+                            <td>Sem imagem ou mal formatado</td>
+                            <td>Imagem genérica, formatação básica</td>
+                            <td>Boa apresentação visual</td>
+                            <td>Design profissional e atraente</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="solution-box">
+                    <h3>💡 Solução Detalhada do Exercício 2</h3>
+
+                    <p><strong>Gênero Escolhido:</strong> RPG de Ação (estilo Souls-like)</p>
+
+                    <div class="example-box">
+                        <h4>🎭 PERSONA 1: Lucas "HardcoreGamer" Silva</h4>
+                        
+                        <p><strong>📊 DADOS DEMOGRÁFICOS</strong></p>
+                        <ul>
+                            <li><strong>Idade:</strong> 28 anos</li>
+                            <li><strong>Gênero:</strong> Masculino</li>
+                            <li><strong>Localização:</strong> São Paulo, SP - Brasil</li>
+                            <li><strong>Ocupação:</strong> Desenvolvedor de Software</li>
+                            <li><strong>Estado Civil:</strong> Solteiro</li>
+                            <li><strong>Renda Mensal:</strong> R$ 8.000 - 12.000</li>
+                            <li><strong>Escolaridade:</strong> Superior Completo (Ciência da Computação)</li>
+                        </ul>
+
+                        <p><strong>🎮 HÁBITOS DE JOGO</strong></p>
+                        <ul>
+                            <li><strong>Tempo de Jogo Semanal:</strong> 20-25 horas (após trabalho e fins de semana)</li>
+                            <li><strong>Horário Preferido:</strong> Noites (20h-2h) e fins de semana inteiros</li>
+                            <li><strong>Plataformas:</strong> PC (principal - RTX 3070) e PS5 (exclusivos)</li>
+                            <li><strong>Gêneros Favoritos:</strong> RPG de ação, Souls-like, roguelike, metroidvania</li>
+                            <li><strong>Jogos Atuais:</strong> Elden Ring (300h), Lies of P, Dead Cells, Hollow Knight</li>
+                            <li><strong>Estilo de Jogo:</strong> Completionista, busca platinar jogos, gosta de desafio extremo</li>
+                            <li><strong>Gastos Mensais:</strong> R$ 300-500 em jogos, DLCs e hardware</li>
+                        </ul>
+
+                        <p><strong>🎯 MOTIVAÇÕES (Por que joga?)</strong></p>
+                        <ul>
+                            <li><strong>Desafio e Maestria:</strong> Busca superar dificuldades e melhorar habilidades</li>
+                            <li><strong>Senso de Conquista:</strong> Satisfação em derrotar bosses difíceis após múltiplas tentativas</li>
+                            <li><strong>Exploração e Descoberta:</strong> Adora encontrar segredos, áreas escondidas, lore profundo</li>
+                            <li><strong>Comunidade:</strong> Gosta de discutir builds, estratégias, teorias em fóruns</li>
+                            <li><strong>Escape e Imersão:</strong> Jogos são forma de relaxar do trabalho estressante</li>
+                            <li><strong>Colecionismo:</strong> Quer completar 100%, ter todas conquistas/troféus</li>
+                        </ul>
+
+                        <p><strong>😤 PAIN POINTS (Frustrações e Barreiras)</strong></p>
+                        <ul>
+                            <li><strong>Falta de Tempo:</strong> Trabalho demandante limita tempo disponível para jogos longos</li>
+                            <li><strong>Jogos Casuais Demais:</strong> Frustra-se com jogos sem desafio real</li>
+                            <li><strong>Preços Altos:</strong> Jogos AAA custam R$ 250-350 no Brasil (considera caro)</li>
+                            <li><strong>Performance Ruim:</strong> Otimização fraca em portes de PC o irrita profundamente</li>
+                            <li><strong>Conteúdo Superficial:</strong> Detesta "filler content" e open world genérico</li>
+                            <li><strong>Microtransações Pay-to-Win:</strong> Rejeita jogos com monetização predatória</li>
+                        </ul>
+
+                        <p><strong>📱 CANAIS DE CONSUMO DE CONTEÚDO</strong></p>
+                        <ul>
+                            <li><strong>YouTube:</strong> Assiste boss fights, speedruns, lore videos (FightinCowboy, VaatiVidya)</li>
+                            <li><strong>Twitch:</strong> Assiste streams de desafios (no-hit runs, level 1 runs)</li>
+                            <li><strong>Reddit:</strong> Participa ativamente de r/Eldenring, r/darksouls, r/metroidvania</li>
+                            <li><strong>Discord:</strong> Membro de 5+ servidores de jogos Souls-like</li>
+                            <li><strong>Steam:</strong> Lê reviews, participa de discussões da comunidade</li>
+                            <li><strong>Twitter/X:</strong> Segue desenvolvedores indie, game directors (Miyazaki, Yoko Taro)</li>
+                            <li><strong>Podcast:</strong> Escuta podcasts sobre game design enquanto vai ao trabalho</li>
+                        </ul>
+
+                        <p><strong>💬 CITAÇÃO REPRESENTATIVA</strong></p>
+                        <p style="font-style: italic; background: #f5f5f5; padding: 15px; border-radius: 5px;">
+                            "Não quero que o jogo me segure pela mão. Quero morrer 50 vezes para o mesmo boss e sentir que a vitória foi por pura habilidade. Se não tem desafio, não tem graça."
+                        </p>
+
+                        <p><strong>📈 COMO ALCANÇÁ-LO</strong></p>
+                        <ul>
+                            <li>Enfatizar dificuldade e curva de aprendizado íngreme no marketing</li>
+                            <li>Criar conteúdo detalhado sobre mecânicas, sistemas, builds</li>
+                            <li>Parcerias com YouTubers especializados em Souls-like</li>
+                            <li>Beta test exclusivo para comunidade hardcore</li>
+                            <li>Discord ativo com desenvolvedores respondendo sobre game design</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>🎭 PERSONA 2: Mariana "CasualExplorer" Oliveira</h4>
+                        
+                        <p><strong>📊 DADOS DEMOGRÁFICOS</strong></p>
+                        <ul>
+                            <li><strong>Idade:</strong> 35 anos</li>
+                            <li><strong>Gênero:</strong> Feminino</li>
+                            <li><strong>Localização:</strong> Porto Alegre, RS - Brasil</li>
+                            <li><strong>Ocupação:</strong> Professora de Inglês</li>
+                            <li><strong>Estado Civil:</strong> Casada, 1 filho (8 anos)</li>
+                            <li><strong>Renda Mensal:</strong> R$ 5.000 - 7.000</li>
+                            <li><strong>Escolaridade:</strong> Pós-graduação (Letras)</li>
+                        </ul>
+
+                        <p><strong>🎮 HÁBITOS DE JOGO</strong></p>
+                        <ul>
+                            <li><strong>Tempo de Jogo Semanal:</strong> 6-8 horas (noites após filho dormir)</li>
+                            <li><strong>Horário Preferido:</strong> 21h-23h durante semana, algumas horas no sábado à tarde</li>
+                            <li><strong>Plataformas:</strong> Nintendo Switch (principal - portabilidade) e PC (jogos indie)</li>
+                            <li><strong>Gêneros Favoritos:</strong> RPG narrativo, puzzle, adventure, cozy games</li>
+                            <li><strong>Jogos Atuais:</strong> Stardew Valley, Hollow Knight, Celeste, Animal Crossing</li>
+                            <li><strong>Estilo de Jogo:</strong> Aprecia narrativa, exploração calma, não gosta de pressão temporal</li>
+                            <li><strong>Gastos Mensais:</strong> R$ 100-150 em jogos (aproveita promoções)</li>
+                        </ul>
+
+                        <p><strong>🎯 MOTIVAÇÕES (Por que joga?)</strong></p>
+                        <ul>
+                            <li><strong>Relaxamento:</strong> Jogos são momento de paz após dia corrido com trabalho e família</li>
+                            <li><strong>Narrativa Envolvente:</strong> Adora histórias bem contadas, personagens cativantes</li>
+                            <li><strong>Exploração sem Pressa:</strong> Gosta de descobrir em seu próprio ritmo</li>
+                            <li><strong>Senso de Progresso:</strong> Aprecia mecânicas de crafting, coleção, construção</li>
+                            <li><strong>Arte e Estética:</strong> Valoriza jogos visualmente bonitos e trilhas sonoras</li>
+                            <li><strong>Experiência Compartilhada:</strong> Às vezes joga com o filho ou marido</li>
+                        </ul>
+
+                        <p><strong>😤 PAIN POINTS (Frustrações e Barreiras)</strong></p>
+                        <ul>
+                            <li><strong>Tempo Limitado:</strong> Não consegue dedicar 40h+ para jogos longos</li>
+                            <li><strong>Dificuldade Extrema:</strong> Frustra-se com jogos punitivamenteHOME difíceis (Dark Souls)</li>
+                            <li><strong>Violência Excessiva:</strong> Prefere evitar jogos com gore/violência gráfica</li>
+                            <li><strong>Tutoriais Ruins:</strong> Precisa de onboarding claro sem ser condescendente</li>
+                            <li><strong>Save System Ruim:</strong> Quer poder pausar/salvar a qualquer momento (família interrompe)</li>
+                            <li><strong>Comunidade Tóxica:</strong> Evita jogos competitivos online por toxicidade</li>
+                        </ul>
+
+                        <p><strong>📱 CANAIS DE CONSUMO DE CONTEÚDO</strong></p>
+                        <ul>
+                            <li><strong>Instagram:</strong> Segue contas de jogos indie, screenshots bonitos</li>
+                            <li><strong>TikTok:</strong> Assiste vídeos curtos de gameplay relaxante</li>
+                            <li><strong>YouTube:</strong> Gameplays calmos sem comentário, walkthroughs quando travada</li>
+                            <li><strong>Pinterest:</strong> Procura fan art, wallpapers de jogos favoritos</li>
+                            <li><strong>Nintendo eShop:</strong> Navega promoções semanalmente</li>
+                            <li><strong>Spotify:</strong> Ouve trilhas sonoras de jogos</li>
+                            <li><strong>Blogs de Jogos Indie:</strong> Lê recomendações de hidden gems</li>
+                        </ul>
+
+                        <p><strong>💬 CITAÇÃO REPRESENTATIVA</strong></p>
+                        <p style="font-style: italic; background: #f5f5f5; padding: 15px; border-radius: 5px;">
+                            "Jogo para relaxar, não para me estressar. Quero uma história bonita, um mundo para explorar no meu ritmo, e poder pausar quando meu filho precisa de mim."
+                        </p>
+
+                        <p><strong>📈 COMO ALCANÇÁ-LA</strong></p>
+                        <ul>
+                            <li>Enfatizar narrativa, arte, música no marketing</li>
+                            <li>Mostrar modo de dificuldade ajustável/assistido</li>
+                            <li>Marketing no Instagram com screenshots estéticos</li>
+                            <li>Destacar portabilidade no Switch e pausabilidade</li>
+                            <li>Reviews em sites focados em jogos narrativos/indie</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>💡 DICA PRO:</strong> Personas devem ser baseadas em dados reais sempre que possível. Use ferramentas como Steam Stats, Newzoo, GDC Surveys para embasar demográficos. O objetivo é criar perfis que representam segmentos reais do seu público, não estereótipos.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO 3 -->
+        <div class="section">
+            <h2>✏️ Exercício 3: Brainstorming de Campanha</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    <div class="exercise-number">3</div>
+                    <div class="exercise-title">Brainstorming de Campanha</div>
+                </div>
+
+                <p><strong>📋 Objetivo:</strong> Desenvolver ideias criativas para marketing de jogo</p>
+                <p><strong>🎮 Cenário:</strong> Jogo indie de puzzle narrativo sobre viagem no tempo</p>
+                <p><strong>⏱️ Duração:</strong> 25 minutos</p>
+
+                <h3 style="color: #6a11cb; margin-top: 25px; margin-bottom: 15px;">📊 Rubrica de Avaliação</h3>
+                
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Critério</th>
+                            <th>Insuficiente (0-5)</th>
+                            <th>Básico (6-7)</th>
+                            <th>Proficiente (8-9)</th>
+                            <th>Excelente (10)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criterion">Ideias para Redes Sociais</td>
+                            <td>Menos de 5 ideias ou muito genéricas</td>
+                            <td>5 ideias básicas</td>
+                            <td>5 ideias criativas e específicas</td>
+                            <td>5+ ideias inovadoras com exemplos visuais</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Parcerias Propostas</td>
+                            <td>Menos de 3 ou irrelevantes</td>
+                            <td>3 parcerias genéricas</td>
+                            <td>3 parcerias estratégicas</td>
+                            <td>3+ parcerias com justificativa detalhada</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Eventos de Pré-Lançamento</td>
+                            <td>Menos de 2 ou muito vagos</td>
+                            <td>2 eventos básicos</td>
+                            <td>2 eventos criativos</td>
+                            <td>2+ eventos únicos com planejamento</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Canais de Divulgação</td>
+                            <td>Menos de 3 canais</td>
+                            <td>3 canais óbvios</td>
+                            <td>3 canais bem escolhidos</td>
+                            <td>3+ canais com estratégia integrada</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Alinhamento com Tema</td>
+                            <td>Ideias desconectadas do jogo</td>
+                            <td>Conexão superficial</td>
+                            <td>Bem alinhado ao tema</td>
+                            <td>Perfeitamente integrado ao conceito</td>
+                        </tr>
+                        <tr>
+                            <td class="criterion">Viabilidade e Criatividade</td>
+                            <td>Ideias impraticáveis ou sem criatividade</td>
+                            <td>Viáveis mas pouco criativas</td>
+                            <td>Equilíbrio entre viável e criativo</td>
+                            <td>Altamente criativo e executável</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="solution-box">
+                    <h3>💡 Solução Detalhada do Exercício 3</h3>
+
+                    <p><strong>🎮 Nome do Jogo (exemplo):</strong> "Echoes of Tomorrow"</p>
+                    <p><strong>📝 Pitch:</strong> Puzzle narrativo onde você manipula linha do tempo para resolver mistérios e salvar pessoas de eventos trágicos. Cada decisão altera o futuro de formas imprevisíveis.</p>
+
+                    <h4 style="color: #2e7d32; margin-top: 20px;">1️⃣ CINCO IDEIAS DE CONTEÚDO PARA REDES SOCIAIS</h4>
+
+                    <div class="example-box">
+                        <h4>💡 Ideia #1: "Temporal Tuesdays" (Terças Temporais)</h4>
+                        <p><strong>Conceito:</strong> Série semanal mostrando diferentes timelines alternativas do mesmo evento</p>
+                        <p><strong>Formato:</strong> GIF ou vídeo curto (15s) mostrando: "O que aconteceria se... você salvasse / não salvasse essa pessoa?"</p>
+                        <p><strong>Plataformas:</strong> Twitter, Instagram, TikTok</p>
+                        <p><strong>Engagement Hook:</strong> "Qual timeline você escolheria? 🕐 Comente abaixo"</p>
+                        <p><strong>Exemplo:</strong> Mostrar 3 versões do mesmo personagem em timelines diferentes: (A) Triste e sozinho, (B) Feliz com família, (C) Não existe (foi apagado da realidade)</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>💡 Ideia #2: "Puzzle of the Day" (Puzzle do Dia)</h4>
+                        <p><strong>Conceito:</strong> Mini-puzzle interativo diário no estilo do jogo</p>
+                        <p><strong>Formato:</strong> Imagem com puzzle visual de lógica temporal</p>
+                        <p><strong>Plataformas:</strong> Instagram Stories, Twitter</p>
+                        <p><strong>Engagement Hook:</strong> "Resolva em 60 segundos! Resposta nos comentários. Os primeiros 3 acertarem ganham um código beta."</p>
+                        <p><strong>Exemplo:</strong> "Se A aconteceu às 14h, e B aconteceu às 16h, mas você voltou no tempo e impediu A, o que acontece com B?"</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>💡 Ideia #3: "Character Paradox Stories" (Paradoxos dos Personagens)</h4>
+                        <p><strong>Conceito:</strong> Mini-histórias em quadrinhos mostrando paradoxos temporais dos personagens</p>
+                        <p><strong>Formato:</strong> Post carrossel (4-6 imagens) contando história curta</p>
+                        <p><strong>Plataformas:</strong> Instagram, Facebook</p>
+                        <p><strong>Engagement Hook:</strong> "Qual personagem você quer conhecer a história completa? Vote nos comentários!"</p>
+                        <p><strong>Exemplo:</strong> História de um cientista que tenta impedir sua própria invenção que causou desastre</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>💡 Ideia #4: "Behind the Timeline" (Por Trás da Linha do Tempo)</h4>
+                        <p><strong>Conceito:</strong> Série de devlogs mostrando como os puzzles são criados</p>
+                        <p><strong>Formato:</strong> Vídeo curto (30-60s) com desenvolvedores explicando design</p>
+                        <p><strong>Plataformas:</strong> YouTube, TikTok</p>
+                        <p><strong>Engagement Hook:</strong> "Você conseguiu resolver este puzzle? Veja como criamos ele!"</p>
+                        <p><strong>Exemplo:</strong> Desenvolvedor mostrando whiteboard com diagramas de causa-efeito temporal de um puzzle</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>💡 Ideia #5: "Timeline Your Life" (Linha do Tempo da Sua Vida)</h4>
+                        <p><strong>Conceito:</strong> Challenge interativo onde seguidores compartilham "e se" de suas vidas</p>
+                        <p><strong>Formato:</strong> Template para Stories com texto editável</p>
+                        <p><strong>Plataformas:</strong> Instagram Stories, TikTok</p>
+                        <p><strong>Engagement Hook:</strong> "Se você pudesse voltar no tempo e mudar UMA decisão, qual seria? #EchoesOfTomorrow"</p>
+                        <p><strong>Exemplo:</strong> Template com 3 opções: "Mudaria: [Carreira] [Relacionamento] [Estudos]" + GIF do jogo</p>
+                    </div>
+
+                    <h4 style="color: #2e7d32; margin-top: 25px;">2️⃣ TRÊS PARCERIAS/COLABORAÇÕES POTENCIAIS</h4>
+
+                    <div class="example-box">
+                        <h4>🤝 Parceria #1: Science Communicators no YouTube</h4>
+                        <p><strong>Parceiros Específicos:</strong> Veritasium, Kurzgesagt, Physics Girl, Nerdologia (BR)</p>
+                        <p><strong>Justificativa:</strong> Jogo sobre viagem no tempo tem forte componente científico. Esses canais têm audiência curiosa e engajada que aprecia puzzles complexos.</p>
+                        <p><strong>Tipo de Colaboração:</strong></p>
+                        <ul>
+                            <li>Vídeo patrocinado explorando paradoxos temporais reais vs do jogo</li>
+                            <li>Challenge: "Físicos tentam resolver nossos puzzles temporais"</li>
+                            <li>Código de desconto exclusivo para audiência deles</li>
+                        </ul>
+                        <p><strong>Alcance Estimado:</strong> 2-5 milhões de visualizações combinadas</p>
+                        <p><strong>Investimento:</strong> $2.000-5.000 por vídeo patrocinado</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>🤝 Parceria #2: Streamers de Puzzle Games</h4>
+                        <p><strong>Parceiros Específicos:</strong> Aliensrock, GCN (Puzzle Gaming), The Backlogs</p>
+                        <p><strong>Justificativa:</strong> Comunidade de puzzle enthusiasts é nicho mas altamente engajado. Streamers de puzzle têm audiência qualificada que COMPRA jogos similares.</p>
+                        <p><strong>Tipo de Colaboração:</strong></p>
+                        <ul>
+                            <li>Early access de 1 semana antes do lançamento</li>
+                            <li>Acesso a puzzles exclusivos não disponíveis na demo pública</li>
+                            <li>Competição entre streamers: "Quem resolve o puzzle mais rápido?"</li>
+                        </ul>
+                        <p><strong>Alcance Estimado:</strong> 500k-1M visualizações, mas alta taxa de conversão</p>
+                        <p><strong>Investimento:</strong> Acesso antecipado (custo zero) + prêmios para competição ($500)</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>🤝 Parceria #3: Indie Game Bundles / Humble Bundle</h4>
+                        <p><strong>Parceiros Específicos:</strong> Humble Bundle, itch.io, Bundle for Racial Justice</p>
+                        <p><strong>Justificativa:</strong> Jogos puzzle narrativos performam extremamente bem em bundles. Público de bundles ADORA descobrir jogos indie únicos.</p>
+                        <p><strong>Tipo de Colaboração:</strong></p>
+                        <ul>
+                            <li>Incluir jogo em bundle temático (time travel, puzzle, narrative)</li>
+                            <li>Bundle exclusivo com outros jogos indie similares ("Mind-Bending Puzzles Bundle")</li>
+                            <li>Doar porcentagem para caridade (bom PR + alcance)</li>
+                        </ul>
+                        <p><strong>Alcance Estimado:</strong> 50k-200k compradores de bundle</p>
+                        <p><strong>Investimento:</strong> Custo de oportunidade (menor margem por venda, mas volume massivo)</p>
+                    </div>
+
+                    <h4 style="color: #2e7d32; margin-top: 25px;">3️⃣ DOIS EVENTOS/AÇÕES DE PRÉ-LANÇAMENTO</h4>
+
+                    <div class="example-box">
+                        <h4>🎪 Evento #1: "The 48-Hour Temporal Challenge" (ARG - Alternate Reality Game)</h4>
+                        <p><strong>Conceito:</strong> ARG imersivo de 48 horas envolvendo comunidade para resolver mistério temporal</p>
+                        
+                        <p><strong>Como Funciona:</strong></p>
+                        <p><strong>Sexta 18h:</strong> Post misterioso em todas redes sociais: "2043-11-15: Algo terrível vai acontecer. Você tem 48 horas para impedir. Primeira pista: [link]"</p>
+                        
+                        <p><strong>Sábado:</strong> Comunidade descobre pistas escondidas em:</p>
+                        <ul>
+                            <li>Website do jogo (easter eggs no código-fonte)</li>
+                            <li>Vídeos do YouTube (frames escondidos)</li>
+                            <li>Contas fake de "personagens do jogo" no Twitter</li>
+                            <li>QR codes em anúncios físicos (se tiver budget)</li>
+                        </ul>
+
+                        <p><strong>Domingo 18h:</strong> Revelação final: trailer do jogo + data de lançamento + desconto de 15% para quem participou</p>
+
+                        <p><strong>Prêmios:</strong></p>
+                        <ul>
+                            <li>Top 10 jogadores mais rápidos: Cópia gratuita + crédito especial no jogo</li>
+                            <li>Todos que resolveram: Wallpaper exclusivo + desconto</li>
+                        </ul>
+
+                        <p><strong>Budget Estimado:</strong> $500-1.000 (hospedagem de site, prêmios, publicidade para kickstart)</p>
+                        <p><strong>Objetivo:</strong> Gerar buzz orgânico, criar senso de comunidade antes do lançamento</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>🎪 Evento #2: "Developer Time Capsule" (Cápsula do Tempo dos Desenvolvedores)</h4>
+                        <p><strong>Conceito:</strong> Série de streams mostrando processo criativo desde conceito até lançamento</p>
+                        
+                        <p><strong>Formato:</strong> 4 livestreams semanais nas 4 semanas antes do lançamento</p>
+                        
+                        <p><strong>Semana 1:</strong> "2 Anos Atrás - O Começo"</p>
+                        <ul>
+                            <li>Mostrar concept art inicial, primeiros protótipos</li>
+                            <li>Contar história de como ideia surgiu</li>
+                            <li>Q&A sobre desenvolvimento de jogos</li>
+                        </ul>
+
+                        <p><strong>Semana 2:</strong> "1 Ano Atrás - Mudanças e Desafios"</p>
+                        <ul>
+                            <li>Mostrar features que foram cortadas e por quê</li>
+                            <li>Erros e bugs engraçados durante desenvolvimento</li>
+                            <li>Design de um puzzle do zero ao vivo</li>
+                        </ul>
+
+                        <p><strong>Semana 3:</strong> "6 Meses Atrás - Polimento"</p>
+                        <ul>
+                            <li>Processo de playtest e feedback</li>
+                            <li>Como música e arte foram criadas</li>
+                            <li>Jogadores beta compartilham experiências</li>
+                        </ul>
+
+                        <p><strong>Semana 4:</strong> "Hoje - Lançamento!"</p>
+                        <ul>
+                            <li>Release trailer reveal</li>
+                            <li>Anúncio de preço e plataformas</li>
+                            <li>Giveaway de 50 códigos para quem assistiu todas as semanas</li>
+                        </ul>
+
+                        <p><strong>Plataformas:</strong> Twitch (principal) + YouTube (upload depois)</p>
+                        <p><strong>Budget Estimado:</strong> $200 (prêmios/giveaways)</p>
+                        <p><strong>Objetivo:</strong> Transparência, humanizar desenvolvedores, educar audiência</p>
+                    </div>
+
+                    <h4 style="color: #2e7d32; margin-top: 25px;">4️⃣ TRÊS PRINCIPAIS CANAIS DE DIVULGAÇÃO</h4>
+
+                    <div class="example-box">
+                        <h4>📢 Canal #1: Steam + Wishlist Campaign</h4>
+                        <p><strong>Por quê é principal:</strong> Steam é a plataforma #1 para PC gaming. Wishlists se convertem em vendas no lançamento.</p>
+                        
+                        <p><strong>Estratégias Específicas:</strong></p>
+                        <ul>
+                            <li><strong>Steam Page Otimizada:</strong> Screenshots perfeitos, trailer impactante, descrição SEO-friendly</li>
+                            <li><strong>Demo Gratuita:</strong> Disponibilizar demo de 30-45 min para converter wishlists</li>
+                            <li><strong>Participar de Steam Festivals:</strong> Next Fest, Daily Deals, Themed Sales</li>
+                            <li><strong>Meta de Wishlists:</strong> 10.000 wishlists antes do lançamento (benchmark indie)</li>
+                            <li><strong>Comunicação Constante:</strong> Updates mensais na página para manter engajamento</li>
+                        </ul>
+
+                        <p><strong>Métricas de Sucesso:</strong></p>
+                        <ul>
+                            <li>Wishlist conversion rate: 15-25% (padrão indie)</li>
+                            <li>10k wishlists = 1.500-2.500 vendas no primeiro dia</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>📢 Canal #2: Reddit (Comunidades Nicho)</h4>
+                        <p><strong>Por quê é principal:</strong> Jogos puzzle narrativos têm comunidades MUITO engajadas no Reddit. Alto ROI em tempo investido.</p>
+                        
+                        <p><strong>Subreddits Alvo:</strong></p>
+                        <ul>
+                            <li>r/IndieGaming (2M+ membros) - showcase semanal</li>
+                            <li>r/GameDev (1.5M+) - postmortem, dev insights</li>
+                            <li>r/PuzzleGames (50k+) - público PERFEITO</li>
+                            <li>r/NarrativeGames (20k+) - nicho mas altamente qualificado</li>
+                            <li>r/PixelArt (1M+) - se o jogo tiver pixel art</li>
+                        </ul>
+
+                        <p><strong>Estratégia de Conteúdo:</strong></p>
+                        <ul>
+                            <li>Não fazer spam! Contribuir genuinamente primeiro</li>
+                            <li>Postar GIFs de mecânicas únicas (não só marketing)</li>
+                            <li>"I made this puzzle game about time travel, here's a mechanic I'm proud of" (autêntico)</li>
+                            <li>Responder TODO comentário (demonstra que dev se importa)</li>
+                            <li>Fazer AMA (Ask Me Anything) 1 semana antes do lançamento</li>
+                        </ul>
+
+                        <p><strong>Timing:</strong> Posts às 8-10am EST (quando Reddit está mais ativo)</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>📢 Canal #3: YouTube (Orgânico + Partnerships)</h4>
+                        <p><strong>Por quê é principal:</strong> YouTube é onde jogadores descobrem novos jogos. Puzzles são extremamente "watchable".</p>
+                        
+                        <p><strong>Estratégia Dupla:</strong></p>
+                        
+                        <p><strong>A) Canal Próprio do Jogo:</strong></p>
+                        <ul>
+                            <li><strong>Upload Regular:</strong> Trailer, devlogs mensais, puzzle teasers</li>
+                            <li><strong>SEO Optimization:</strong> Títulos como "Time Travel Puzzle Game - Mind-Bending Mechanics"</li>
+                            <li><strong>Playlist Estruturada:</strong> Organizar vídeos por tipo (trailers, gameplay, dev diaries)</li>
+                            <li><strong>Thumbnails Profissionais:</strong> Investir em design atraente</li>
+                        </ul>
+
+                        <p><strong>B) Influencer Partnerships:</strong></p>
+                        <ul>
+                            <li><strong>Micro-influencers (10k-100k subs):</strong> 10-15 creators, melhor ROI que grandes</li>
+                            <li><strong>Enviar Keys Antecipadas:</strong> 2 semanas antes do lançamento</li>
+                            <li><strong>Não Exigir Review Positivo:</strong> Autenticidade é mais importante</li>
+                            <li><strong>Fornecer Press Kit:</strong> Facilitar vida do creator (b-roll, assets, key art)</li>
+                        </ul>
+
+                        <p><strong>Canais Alvo (exemplos):</strong></p>
+                        <ul>
+                            <li>Aliensrock (puzzle specialist, 1M subs)</li>
+                            <li>Wanderbots (indie coverage, 300k)</li>
+                            <li>Splattercat (indie curator, 400k)</li>
+                            <li>IndieMaus PT-BR (200k, Brasil)</li>
+                        </ul>
+
+                        <p><strong>Investimento:</strong> $0-1.000 (maioria aceita só keys gratuitas, alguns cobram)</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>💡 DICA ESTRATÉGICA:</strong> Para jogos indie, os 3 canais acima formam um "funil" perfeito:
+                        <ol>
+                            <li><strong>YouTube:</strong> Awareness (conhecem o jogo)</li>
+                            <li><strong>Reddit:</strong> Consideração (pesquisam mais, discutem)</li>
+                            <li><strong>Steam:</strong> Conversão (wishlist → compra)</li>
+                        </ol>
+                        Cada canal alimenta o próximo. Medir tráfego entre eles é essencial.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons" style="margin-top: 30px;">
+            <a href="index.html" class="nav-btn">⬅️ Voltar ao Índice</a>
+            <a href="semana02_guia.html" class="nav-btn">Próxima Semana ➡️</a>
+        </div>
+    </div>
+</body>
+</html>

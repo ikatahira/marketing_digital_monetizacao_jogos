@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 03 — Mercado Internacional de Jogos</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0d0812;
+  --bg2: #130e1a;
+  --surface: #1a1025;
+  --surface2: #211530;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --orange: #ff7043;
+  --orange2: #ffab40;
+  --purple: #9c27b0;
+  --purple2: #ce93d8;
+  --purple3: #e1bee7;
+  --pink: #e91e63;
+  --cyan: #00e5ff;
+  --green: #69f0ae;
+  --gold: #ffd740;
+  --text: #f3e5f5;
+  --text-dim: #b39ddb;
+  --text-muted: #7e57c2;
+  --glow-o: 0 0 30px rgba(255,112,67,0.35);
+  --glow-p: 0 0 30px rgba(156,39,176,0.35);
+  --r: 14px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === ANIMATED BG === */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 30%, rgba(156,39,176,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 70%, rgba(255,112,67,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(0,229,255,0.03) 0%, transparent 60%);
+}
+.bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(156,39,176,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(156,39,176,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* === ORBIT PARTICLES === */
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(var(--r)) rotate(0deg); opacity: 0.6; }
+  100% { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); opacity: 0.2; }
+}
+
+/* === HEADER === */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,8,18,0.93);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(156,39,176,0.25);
+  box-shadow: 0 0 40px rgba(156,39,176,0.08), 0 1px 0 rgba(255,112,67,0.1);
+}
+.header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--purple), var(--orange));
+  color: #fff;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+.header-titles { flex: 1; min-width: 0; }
+.header-titles h1 {
+  font-weight: 900;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  background: linear-gradient(90deg, var(--purple3), var(--orange2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-titles p {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.58rem;
+  color: var(--text-muted);
+}
+.hud { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.hud-pill {
+  background: var(--surface2);
+  border: 1px solid rgba(156,39,176,0.2);
+  border-radius: 8px;
+  padding: 6px 12px;
+  text-align: center;
+  min-width: 58px;
+}
+.hud-pill .hv { font-family: 'Fira Code', monospace; font-size: 1.1rem; font-weight: 700; color: var(--orange2); display: block; line-height: 1; }
+.hud-pill .hl { font-size: 0.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Fira Code', monospace; }
+.hud-wide { min-width: 145px; }
+.hud-wide-labels { display: flex; justify-content: space-between; font-family: 'Fira Code', monospace; font-size: 0.52rem; color: var(--text-muted); margin-bottom: 4px; }
+.hud-track { height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+.hud-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--orange)); border-radius: 100px; transition: width 0.8s ease; box-shadow: 0 0 8px rgba(255,112,67,0.4); }
+.a-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  background: var(--surface2);
+  border: 1px solid rgba(156,39,176,0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.a-btn:hover { color: var(--orange2); border-color: rgba(255,112,67,0.35); }
+
+/* === PROGRESS === */
+.pbar-wrap {
+  background: rgba(13,8,18,0.85);
+  border-bottom: 1px solid var(--border);
+  padding: 5px 24px;
+}
+.pbar-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.pbar-label { font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); white-space: nowrap; }
+.pbar-track { flex: 1; height: 3px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+.pbar-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange)); border-radius: 100px; transition: width 0.6s ease; }
+
+/* === TOAST === */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: var(--surface2);
+  border: 1px solid rgba(255,112,67,0.4);
+  border-radius: var(--r);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), var(--glow-o);
+  transform: translateY(120px) scale(0.9);
+  opacity: 0;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 320px;
+}
+.toast.on { transform: translateY(0) scale(1); opacity: 1; }
+.t-ico { font-size: 1.5rem; }
+.t-title { font-family: 'Fira Code', monospace; font-size: 0.82rem; font-weight: 700; color: var(--orange2); }
+.t-msg { font-size: 0.7rem; color: var(--text-dim); margin-top: 2px; }
+
+/* === PAGE === */
+.page { max-width: 1300px; margin: 0 auto; padding: 26px 24px; position: relative; z-index: 2; }
+
+/* === HERO === */
+.hero {
+  background: var(--surface);
+  border: 1px solid rgba(156,39,176,0.3);
+  border-radius: 22px;
+  padding: 44px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--purple), var(--orange), transparent);
+}
+.hero-eyebrow {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.62rem;
+  color: var(--orange);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-eyebrow::before { content: '//'; color: var(--text-muted); }
+.hero h2 {
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  line-height: 1.08;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff 20%, var(--purple2) 60%, var(--orange2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub { font-size: 0.94rem; color: var(--text-dim); max-width: 600px; line-height: 1.75; margin-bottom: 22px; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: 'Fira Code', monospace; font-size: 0.67rem; padding: 5px 13px; border-radius: 100px; border: 1px solid; }
+.ch-p { color: var(--purple2); border-color: rgba(156,39,176,0.4); background: rgba(156,39,176,0.08); }
+.ch-o { color: var(--orange2); border-color: rgba(255,112,67,0.4); background: rgba(255,112,67,0.08); }
+.ch-c { color: var(--cyan); border-color: rgba(0,229,255,0.35); background: rgba(0,229,255,0.07); }
+.ch-g { color: var(--green); border-color: rgba(105,240,174,0.35); background: rgba(105,240,174,0.07); }
+.ch-gold { color: var(--gold); border-color: rgba(255,215,64,0.35); background: rgba(255,215,64,0.07); }
+.hero-bg-num {
+  position: absolute;
+  right: 44px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 900;
+  font-size: 9rem;
+  color: rgba(156,39,176,0.04);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* === DUO === */
+.duo {
+  background: var(--surface);
+  border: 1px solid rgba(156,39,176,0.25);
+  border-radius: 20px;
+  padding: 22px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.duo::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--orange));
+}
+.duo-header {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.duo-header::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+.duo-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; }
+.pslot {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+.pslot.a1 { border-color: rgba(156,39,176,0.5); box-shadow: var(--glow-p); }
+.pslot.a2 { border-color: rgba(255,112,67,0.5); box-shadow: var(--glow-o); }
+.pslot::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+}
+.p1-s::before { background: linear-gradient(90deg, var(--purple), var(--purple2)); }
+.p2-s::before { background: linear-gradient(90deg, var(--orange), var(--orange2)); }
+.phead { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pav {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.p1-s .pav { background: rgba(156,39,176,0.15); }
+.p2-s .pav { background: rgba(255,112,67,0.15); }
+.pname {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  width: 100%;
+  outline: none;
+}
+.pname::placeholder { color: var(--text-muted); }
+.pxp-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
+.pxp-val {
+  font-family: 'Fira Code', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.p1-s .pxp-val { color: var(--purple2); }
+.p2-s .pxp-val { color: var(--orange2); }
+.pxp-lbl { font-family: 'Fira Code', monospace; font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+.pbar-slot { height: 4px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; margin-bottom: 8px; }
+.pb-fill { height: 100%; border-radius: 100px; transition: width 0.6s ease; width: 0%; }
+.p1-s .pb-fill { background: var(--purple); }
+.p2-s .pb-fill { background: var(--orange); }
+.pbadges-txt { font-family: 'Fira Code', monospace; font-size: 0.6rem; color: var(--text-muted); }
+.pactivate {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.p1-s .pactivate { background: rgba(156,39,176,0.12); color: var(--purple2); }
+.p1-s .pactivate:hover, .p1-s.a1 .pactivate { background: var(--purple); color: #fff; font-weight: 700; }
+.p2-s .pactivate { background: rgba(255,112,67,0.12); color: var(--orange2); }
+.p2-s .pactivate:hover, .p2-s.a2 .pactivate { background: var(--orange); color: #fff; font-weight: 700; }
+.vs-mid { text-align: center; font-weight: 900; font-size: 2rem; color: rgba(255,255,255,0.1); }
+
+/* === CARD === */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 20px;
+  transition: border-color 0.2s;
+  animation: slideUp 0.4s ease both;
+}
+.card:hover { border-color: var(--border2); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.ch-ico { font-size: 1.3rem; }
+.ch-tg { flex: 1; }
+.ch-title { font-weight: 900; font-size: 1rem; color: var(--text); letter-spacing: 0.02em; }
+.ch-sub { font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); margin-top: 3px; }
+.xp-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.66rem;
+  color: var(--gold);
+  background: rgba(255,215,64,0.1);
+  border: 1px solid rgba(255,215,64,0.25);
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* === OBJECTIVES === */
+.objs { display: flex; flex-direction: column; gap: 8px; }
+.obj {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.obj:hover { background: rgba(156,39,176,0.05); border-color: rgba(156,39,176,0.25); }
+.obj.done { background: rgba(105,240,174,0.04); border-color: rgba(105,240,174,0.18); color: var(--text-muted); text-decoration: line-through; }
+.obj-ck {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border2);
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  transition: all 0.25s;
+}
+.obj.done .obj-ck { background: var(--green); border-color: var(--green); color: #000; }
+
+/* === WORLD MAP CARDS === */
+.world-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.wm-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.wm-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+}
+.wm-card:hover { transform: translateY(-4px); border-color: var(--border2); }
+.wm-flag { font-size: 2rem; display: block; margin-bottom: 8px; }
+.wm-name { font-weight: 900; font-size: 0.95rem; margin-bottom: 4px; }
+.wm-rev { font-family: 'Fira Code', monospace; font-size: 0.82rem; color: var(--orange2); margin-bottom: 2px; }
+.wm-plat { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 2px; }
+.wm-genre { font-size: 0.72rem; color: var(--text-dim); }
+.wm-rank { position: absolute; top: 10px; right: 12px; font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); background: var(--surface); padding: 2px 6px; border-radius: 4px; }
+
+/* === COMPARISON TABLE === */
+.comp-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.comp-table th { background: rgba(156,39,176,0.15); color: var(--purple2); padding: 10px 14px; border: 1px solid var(--border2); text-align: left; font-family: 'Fira Code', monospace; font-size: 0.7rem; letter-spacing: 0.05em; }
+.comp-table td { padding: 9px 14px; border: 1px solid var(--border); color: var(--text-dim); vertical-align: middle; line-height: 1.5; }
+.comp-table tr:hover td { background: rgba(156,39,176,0.03); }
+.ct-highlight { color: var(--orange2); font-weight: 700; }
+.ct-flag { font-size: 1.2rem; }
+
+/* === SECTION LABEL === */
+.slbl {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin: 20px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.slbl::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border2), transparent); }
+
+/* === CALLOUT === */
+.callout {
+  border-radius: var(--r);
+  padding: 14px 16px;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  margin: 12px 0;
+  display: flex;
+  gap: 10px;
+}
+.c-ico { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+.c-txt b { display: block; font-size: 0.82rem; margin-bottom: 3px; }
+.c-info { background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); color: #b2ebf2; }
+.c-info b { color: var(--cyan); }
+.c-warn { background: rgba(255,215,64,0.06); border: 1px solid rgba(255,215,64,0.2); color: #fff9c4; }
+.c-warn b { color: var(--gold); }
+.c-fire { background: rgba(255,112,67,0.07); border: 1px solid rgba(255,112,67,0.2); color: #ffe0b2; }
+.c-fire b { color: var(--orange2); }
+.c-magic { background: rgba(156,39,176,0.07); border: 1px solid rgba(156,39,176,0.25); color: var(--purple3); }
+.c-magic b { color: var(--purple2); }
+
+/* === ACCORDION === */
+.acc { display: flex; flex-direction: column; gap: 8px; }
+.ai { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: border-color 0.2s; }
+.ai.open { border-color: rgba(255,112,67,0.35); }
+.ai-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.015);
+  user-select: none;
+  transition: background 0.2s;
+}
+.ai-head:hover { background: rgba(156,39,176,0.06); }
+.ai-n {
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--orange2);
+  width: 28px;
+  flex-shrink: 0;
+}
+.ai-name { flex: 1; font-weight: 700; font-size: 0.9rem; }
+.ai-meta { font-family: 'Fira Code', monospace; font-size: 0.6rem; color: var(--text-muted); }
+.ai-arrow { color: var(--text-muted); font-size: 0.7rem; transition: transform 0.3s; flex-shrink: 0; }
+.ai.open .ai-arrow { transform: rotate(180deg); }
+.ai-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.3s; }
+.ai.open .ai-body { max-height: 1800px; padding: 0 18px 20px; }
+.ai-cnt { font-size: 0.86rem; color: var(--text-dim); line-height: 1.85; }
+.ai-cnt h4 { font-family: 'Outfit', sans-serif; color: var(--orange2); font-size: 0.88rem; margin: 14px 0 6px; font-weight: 700; }
+.ai-cnt ul { padding-left: 18px; }
+.ai-cnt li { margin-bottom: 6px; }
+.ai-cnt strong { color: var(--text); }
+
+/* === ACTIVITIES === */
+.act {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.act:hover { border-color: var(--border2); }
+.act-hdr {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.015);
+  border-bottom: 1px solid var(--border);
+}
+.act-n {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--purple), var(--orange));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.act-hi { flex: 1; }
+.act-title { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+.act-tgs { display: flex; gap: 6px; flex-wrap: wrap; }
+.at {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid;
+}
+.at-p { color: var(--purple2); border-color: rgba(156,39,176,0.3); background: rgba(156,39,176,0.07); }
+.at-o { color: var(--orange2); border-color: rgba(255,112,67,0.3); background: rgba(255,112,67,0.07); }
+.at-c { color: var(--cyan); border-color: rgba(0,229,255,0.3); background: rgba(0,229,255,0.07); }
+.at-g { color: var(--gold); border-color: rgba(255,215,64,0.3); background: rgba(255,215,64,0.07); }
+.act-body { padding: 20px; }
+.act-obj {
+  font-size: 0.87rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  background: rgba(255,112,67,0.04);
+  border-left: 2px solid var(--orange);
+  border-radius: 0 8px 8px 0;
+}
+.steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.015);
+  border-radius: 8px;
+  font-size: 0.84rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.sn {
+  background: rgba(255,112,67,0.15);
+  color: var(--orange2);
+  border-radius: 5px;
+  width: 24px; height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step strong { color: var(--text); }
+
+/* === RUBRIC === */
+.rub-title {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 16px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.rub { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.rc { border-radius: 10px; padding: 12px; }
+.rc .rlv { font-family: 'Fira Code', monospace; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 6px; }
+.rc p { font-size: 0.77rem; line-height: 1.5; }
+.ri { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); } .ri .rlv { color: #f87171; } .ri p { color: #fca5a5; }
+.rb { background: rgba(255,215,64,0.07); border: 1px solid rgba(255,215,64,0.2); } .rb .rlv { color: var(--gold); } .rb p { color: #fff9c4; }
+.rp { background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); } .rp .rlv { color: var(--cyan); } .rp p { color: #b2ebf2; }
+.re { background: rgba(105,240,174,0.06); border: 1px solid rgba(105,240,174,0.2); } .re .rlv { color: var(--green); } .re p { color: #ccfbf1; }
+
+.cbtn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid rgba(255,112,67,0.3);
+  background: rgba(255,112,67,0.08);
+  color: var(--orange2);
+  border-radius: 10px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.25s;
+}
+.cbtn:hover:not(:disabled) { background: rgba(255,112,67,0.16); box-shadow: var(--glow-o); }
+.cbtn:disabled { background: rgba(105,240,174,0.07); border-color: rgba(105,240,174,0.2); color: var(--green); cursor: default; }
+
+/* === QUIZ === */
+.qq { display: none; }
+.qq.on { display: block; }
+.qpr-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.qpt { flex: 1; height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; }
+.qpf { height: 100%; background: linear-gradient(90deg, var(--purple), var(--orange)); border-radius: 100px; transition: width 0.5s ease; }
+.qlbl { font-family: 'Fira Code', monospace; font-size: 0.6rem; color: var(--text-muted); white-space: nowrap; }
+.qtxt { font-weight: 700; font-size: 0.92rem; margin-bottom: 16px; line-height: 1.6; color: var(--text); }
+.qopts { display: flex; flex-direction: column; gap: 8px; }
+.qo {
+  padding: 12px 16px;
+  border: 1px solid var(--border2);
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.84rem;
+  text-align: left;
+  transition: all 0.2s;
+}
+.qo:hover:not(:disabled) { border-color: rgba(255,112,67,0.4); background: rgba(255,112,67,0.07); color: var(--orange2); }
+.qo.correct { border-color: rgba(105,240,174,0.5); background: rgba(105,240,174,0.1); color: var(--green); font-weight: 700; }
+.qo.wrong { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.07); color: #f87171; }
+.qo:disabled { cursor: default; }
+.qfb { display: none; margin: 10px 0; padding: 12px 14px; border-radius: 10px; font-size: 0.8rem; line-height: 1.6; font-family: 'Fira Code', monospace; }
+.qfb.on { display: block; }
+.qfb.ok { background: rgba(105,240,174,0.07); border: 1px solid rgba(105,240,174,0.2); color: #a7f3d0; }
+.qfb.fail { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+.qnrow { display: none; justify-content: flex-end; margin-top: 10px; }
+.qnrow.on { display: flex; }
+.qnbtn {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.73rem;
+  padding: 8px 20px;
+  background: rgba(255,112,67,0.1);
+  border: 1px solid rgba(255,112,67,0.3);
+  color: var(--orange2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.qnbtn:hover { background: rgba(255,112,67,0.2); }
+.qres { display: none; text-align: center; padding: 30px 0; }
+.qres.on { display: block; }
+.qres-big {
+  font-weight: 900;
+  font-size: 5rem;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--purple2), var(--orange2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  margin-bottom: 10px;
+}
+.qres-msg { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 8px; }
+.qres-xp { font-family: 'Fira Code', monospace; font-size: 0.78rem; color: var(--gold); margin-bottom: 18px; }
+.qres-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.73rem;
+  padding: 10px 24px;
+  background: rgba(255,112,67,0.1);
+  border: 1px solid rgba(255,112,67,0.3);
+  color: var(--orange2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.qres-btn:hover { background: rgba(255,112,67,0.2); }
+
+/* === ACHIEVEMENTS === */
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 10px; }
+.ach {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 10px;
+  text-align: center;
+  filter: grayscale(1) opacity(0.28);
+  transition: all 0.4s;
+}
+.ach.got {
+  filter: none;
+  border-color: rgba(255,215,64,0.4);
+  background: rgba(255,215,64,0.05);
+  box-shadow: 0 0 22px rgba(255,215,64,0.15);
+  animation: achBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes achBounce {
+  0% { transform: scale(0.4) rotate(-10deg); }
+  60% { transform: scale(1.2) rotate(3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.ach-e { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+.ach-n { font-family: 'Fira Code', monospace; font-size: 0.58rem; color: var(--text-muted); line-height: 1.4; }
+.ach.got .ach-n { color: var(--gold); }
+
+/* === VIDEOS === */
+.vid-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.vc {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.vc:hover { transform: translateY(-3px); border-color: var(--border2); }
+.vt { background: linear-gradient(135deg, #1a0d2e, #2d1444); padding: 28px 20px; text-align: center; font-size: 2.2rem; border-bottom: 1px solid var(--border); }
+.vi { padding: 14px; }
+.vi h4 { font-weight: 700; font-size: 0.86rem; margin-bottom: 4px; }
+.vi p { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 12px; }
+.vbtn {
+  display: inline-block;
+  background: rgba(255,112,67,0.1);
+  color: var(--orange2);
+  border: 1px solid rgba(255,112,67,0.3);
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.vbtn:hover { background: rgba(255,112,67,0.18); }
+
+/* === BIBLIO === */
+.bib { display: flex; flex-direction: column; gap: 8px; }
+.bi {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--orange);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  font-size: 0.83rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.bi strong { color: var(--text); }
+.bi em { color: var(--orange2); font-style: normal; }
+
+/* === BOTTOM NAV === */
+.bnav { display: flex; justify-content: space-between; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+.bnav-a {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.73rem;
+  padding: 12px 22px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text-dim);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.25s;
+  letter-spacing: 0.04em;
+}
+.bnav-a:hover { color: var(--orange2); border-color: rgba(255,112,67,0.35); }
+
+@media (max-width: 768px) {
+  .hud { display: none; }
+  .page { padding: 16px; }
+  .hero { padding: 28px 20px; }
+  .duo-grid { grid-template-columns: 1fr 1fr; }
+  .vs-mid { display: none; }
+  .rub { grid-template-columns: 1fr 1fr; }
+  .hero-bg-num { display: none; }
+  .comp-table { font-size: 0.72rem; }
+}
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="t-ico" id="t-ico">🌍</div>
+  <div><div class="t-title" id="t-title">+XP</div><div class="t-msg" id="t-msg"></div></div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-tag">MKTG GAMES</div>
+    <div class="header-titles">
+      <h1>Marketing Digital e Monetização para Jogos</h1>
+      <p>Prof. Isaque Katahira · Jogos Digitais 6º Sem · FATEC Ourinhos</p>
+    </div>
+    <a href="semana02_guia.html" class="a-btn">← Sem 02</a>
+    <a href="index.html" class="a-btn">⌂ Índice</a>
+    <div class="hud">
+      <div class="hud-pill"><span class="hv" id="h-xp">0</span><span class="hl">XP</span></div>
+      <div class="hud-pill"><span class="hv" id="h-stk">0</span><span class="hl">Streak</span></div>
+      <div class="hud-pill hud-wide">
+        <div class="hud-wide-labels"><span id="h-lv">Novato</span><span id="h-pct">0%</span></div>
+        <div class="hud-track"><div class="hud-fill" id="h-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="pbar-wrap">
+  <div class="pbar-inner">
+    <span class="pbar-label">PROGRESSO S03</span>
+    <div class="pbar-track"><div class="pbar-fill" id="prog" style="width:0%"></div></div>
+    <span class="pbar-label" id="prog-txt">0/10</span>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">SEMANA 03 · MÓDULO 1 — FUNDAMENTOS GLOBAIS</div>
+  <h2>Mercado Internacional<br>de Jogos Digitais</h2>
+  <p class="hero-sub">Com <strong>$184 bilhões</strong> em receita global (2024), a indústria de games ultrapassou cinema e música juntos. China, EUA, Japão, Europa e LATAM seguem dinâmicas completamente diferentes — e entender cada uma é o que diferencia um profissional de marketing de jogos.</p>
+  <div class="hero-chips">
+    <span class="chip ch-p">⏱ 110 min</span>
+    <span class="chip ch-gold">⚡ 450 XP</span>
+    <span class="chip ch-o">✏️ 3 atividades práticas</span>
+    <span class="chip ch-c">🌍 5 mercados regionais</span>
+    <span class="chip ch-g">💻 Notebook necessário</span>
+  </div>
+  <div class="hero-bg-num">03</div>
+</section>
+
+<!-- DUO -->
+<div class="duo">
+  <div class="duo-header">⚔️ MODO DUELO — CONTINUAÇÃO DA SEMANA 02</div>
+  <div class="duo-grid">
+    <div class="pslot p1-s" id="ps1">
+      <div class="phead">
+        <div class="pav">🌐</div>
+        <input class="pname" id="p1n" type="text" value="Player 1" placeholder="Seu nome" maxlength="16">
+      </div>
+      <div class="pxp-row"><span class="pxp-val" id="p1xp">0</span><span class="pxp-lbl">XP Sem 03</span></div>
+      <div class="pbar-slot"><div class="pb-fill" id="p1pb"></div></div>
+      <div class="pbadges-txt" id="p1bdg">0 conquistas</div>
+      <button class="pactivate" onclick="setAct(1)">Jogar como P1</button>
+    </div>
+    <div class="vs-mid">VS</div>
+    <div class="pslot p2-s" id="ps2">
+      <div class="phead">
+        <div class="pav">🌍</div>
+        <input class="pname" id="p2n" type="text" value="Player 2" placeholder="Seu nome" maxlength="16">
+      </div>
+      <div class="pxp-row"><span class="pxp-val" id="p2xp">0</span><span class="pxp-lbl">XP Sem 03</span></div>
+      <div class="pbar-slot"><div class="pb-fill" id="p2pb"></div></div>
+      <div class="pbadges-txt" id="p2bdg">0 conquistas</div>
+      <button class="pactivate" onclick="setAct(2)">Jogar como P2</button>
+    </div>
+  </div>
+</div>
+
+<!-- OBJECTIVES -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🎯</span>
+    <div class="ch-tg"><div class="ch-title">OBJETIVOS DA SEMANA</div><div class="ch-sub">Clique para marcar — cada objetivo vale +5 XP</div></div>
+    <div class="xp-tag">+5 XP cada</div>
+  </div>
+  <div class="objs" id="objs"></div>
+</div>
+
+<!-- MAPA MUNDIAL -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🌍</span>
+    <div class="ch-tg"><div class="ch-title">OS GRANDES MERCADOS GLOBAIS</div><div class="ch-sub">Clique em cada mercado para explorar e ganhar XP</div></div>
+    <div class="xp-tag">+30 XP</div>
+  </div>
+
+  <div class="world-grid" id="world-grid"></div>
+
+  <div class="slbl">COMPARATIVO ESTRATÉGICO — TOP 5 MERCADOS</div>
+  <div style="overflow-x:auto">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Mercado</th>
+          <th>Plataforma #1</th>
+          <th>Monetização preferida</th>
+          <th>Gênero Top</th>
+          <th>Desafio de entrada</th>
+          <th>Oportunidade BR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="ct-flag">🇨🇳</span> <span class="ct-highlight">China</span></td>
+          <td>Mobile</td>
+          <td>Gacha + Battle Pass</td>
+          <td>MOBA, Card</td>
+          <td>Regulação estatal, censura</td>
+          <td>Parceria com publishers locais</td>
+        </tr>
+        <tr>
+          <td><span class="ct-flag">🇺🇸</span> <span class="ct-highlight">EUA</span></td>
+          <td>Console + PC</td>
+          <td>Premium + DLC + Battle Pass</td>
+          <td>FPS, Sports, RPG</td>
+          <td>Alta competição, custo UA elevado</td>
+          <td>Nicho indie e jogos culturais</td>
+        </tr>
+        <tr>
+          <td><span class="ct-flag">🇯🇵</span> <span class="ct-highlight">Japão</span></td>
+          <td>Mobile + Console</td>
+          <td>Gacha (mais aceito do mundo)</td>
+          <td>RPG, Puzzle, JRPG</td>
+          <td>Cultura muito específica, localização exigente</td>
+          <td>Estilo visual anime/RPG tem tração</td>
+        </tr>
+        <tr>
+          <td><span class="ct-flag">🇩🇪</span> <span class="ct-highlight">Europa</span></td>
+          <td>PC</td>
+          <td>Premium + F2P (mais regulado)</td>
+          <td>Strategy, RPG, Esports</td>
+          <td>GDPR, regulação de loot boxes</td>
+          <td>Transparência e narrativa forte</td>
+        </tr>
+        <tr>
+          <td><span class="ct-flag">🇧🇷</span> <span class="ct-highlight">Brasil</span></td>
+          <td>Mobile</td>
+          <td>F2P + Cosméticos baratos</td>
+          <td>Battle Royale, MOBA, Casual</td>
+          <td>Câmbio, tributação, P2W sensível</td>
+          <td>Conteúdo cultural, esports</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout c-fire" style="margin-top:14px">
+    <span class="c-ico">🔥</span>
+    <div class="c-txt">
+      <b>Por que isso importa para vocês?</b>
+      Qualquer jogo brasileiro que queira escalar globalmente precisa de uma estratégia diferente para cada mercado. Não existe "estratégia global única" que funcione ao mesmo tempo na China, no Japão e nos EUA. Localização é mais do que tradução — é adaptação cultural completa.
+    </div>
+  </div>
+</div>
+
+<!-- CONTEÚDO TEÓRICO -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">📖</span>
+    <div class="ch-tg"><div class="ch-title">CONTEÚDO TEÓRICO</div><div class="ch-sub">Abra cada região para estudar — +5 XP por tópico</div></div>
+    <div class="xp-tag">+20 XP</div>
+  </div>
+  <div class="acc" id="acc"></div>
+</div>
+
+<!-- VÍDEOS -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🎬</span>
+    <div class="ch-tg"><div class="ch-title">VÍDEOS RECOMENDADOS</div><div class="ch-sub">Assista enquanto faz as atividades</div></div>
+  </div>
+  <div class="vid-grid" id="vid-grid"></div>
+</div>
+
+<!-- ATIVIDADES -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">✏️</span>
+    <div class="ch-tg"><div class="ch-title">ATIVIDADES PRÁTICAS — LABORATÓRIO</div><div class="ch-sub">Notebook requerido · rubricas completas · 50 XP cada</div></div>
+    <div class="xp-tag">+150 XP</div>
+  </div>
+  <div id="acts"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🧠</span>
+    <div class="ch-tg"><div class="ch-title">QUIZ — MERCADO INTERNACIONAL</div><div class="ch-sub">10 questões · sem consulta · player ativo compete</div></div>
+    <div class="xp-tag">até +100 XP</div>
+  </div>
+  <div class="qpr-row">
+    <div class="qpt"><div class="qpf" id="qpf" style="width:0%"></div></div>
+    <span class="qlbl" id="qcnt">0 / 10</span>
+  </div>
+  <div id="quiz"></div>
+</div>
+
+<!-- CONQUISTAS -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">🏆</span>
+    <div class="ch-tg"><div class="ch-title">CONQUISTAS DA SEMANA 03</div></div>
+  </div>
+  <div class="ach-grid" id="ach-grid"></div>
+</div>
+
+<!-- BIBLIO -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">📚</span>
+    <div class="ch-tg"><div class="ch-title">BIBLIOGRAFIA</div></div>
+  </div>
+  <div class="bib">
+    <div class="bi"><strong>KOTLER, P.; KARTAJAYA, H.; SETIAWAN, I.</strong> Marketing 4.0. New Jersey: Wiley, 2016. <em>Cap. 1: Power Shifts to the Connected Customers</em></div>
+    <div class="bi"><strong>GABRIEL, M.</strong> Marketing na Era Digital. São Paulo: Novatec, 2010. <em>Cap. 1: A Revolução Digital</em></div>
+    <div class="bi"><strong>CHANDLER, H. M.</strong> Manual de Produção de Jogos Digitais. Porto Alegre: Bookman, 2012. <em>Cap. 14: Marketing e Relações Públicas</em></div>
+    <div class="bi"><strong>NEWZOO.</strong> Global Games Market Report 2024. Disponível em: newzoo.com. <em>Market Sizing & Forecasting</em></div>
+    <div class="bi"><strong>MASTROCOLA, V. M.</strong> Game Design: Modelos de Negócio e Processos Criativos. São Paulo: Cengage, 2015. <em>Cap. 3: Modelos de Negócio para Jogos Digitais</em></div>
+  </div>
+</div>
+
+<div class="callout c-warn" style="margin-bottom:20px">
+  <span class="c-ico">📌</span>
+  <div class="c-txt">
+    <b>Para a Próxima Aula (Semana 04):</b>
+    Estudar as diferentes plataformas de jogo (console, PC, mobile, cloud) · Pesquisar demografia por plataforma · Entender como plataforma afeta monetização · Pensar: qual plataforma tem o melhor ROI para um estúdio iniciante?
+  </div>
+</div>
+
+<div class="bnav">
+  <a href="semana02_guia.html" class="bnav-a">← Semana 02</a>
+  <a href="semana04_guia.html" class="bnav-a">Semana 04 →</a>
+</div>
+
+</main>
+
+<script>
+// ===========================
+//  STATE
+// ===========================
+let xp=0, streak=0, acts=0;
+let ap=1;
+let p1x=0, p2x=0, p1b=0, p2b=0;
+const MAX=450;
+let wClicks=0, accSet=new Set(), objArr=[];
+
+// ===========================
+//  PLAYERS
+// ===========================
+function setAct(n) {
+  ap = n;
+  document.getElementById('ps1').classList.toggle('a1', n===1);
+  document.getElementById('ps2').classList.toggle('a2', n===2);
+  const nm = document.getElementById(`p${n}n`).value || `Player ${n}`;
+  toast('🎮', `${nm} — ATIVO`, 'Sua vez!');
+}
+function addPXP(v) {
+  if(ap===1){ p1x+=v; document.getElementById('p1xp').textContent=p1x; document.getElementById('p1pb').style.width=Math.min(p1x/MAX*100,100)+'%'; }
+  else { p2x+=v; document.getElementById('p2xp').textContent=p2x; document.getElementById('p2pb').style.width=Math.min(p2x/MAX*100,100)+'%'; }
+}
+function updBdg() {
+  document.getElementById('p1bdg').textContent=p1b+' conquista'+(p1b!==1?'s':'');
+  document.getElementById('p2bdg').textContent=p2b+' conquista'+(p2b!==1?'s':'');
+}
+
+// ===========================
+//  GAMIFICATION
+// ===========================
+function gainXP(v, ic, msg) { xp+=v; addPXP(v); updateHUD(); toast(ic||'⚡',`+${v} XP`, msg||''); }
+function toast(ic,t,m) {
+  document.getElementById('t-ico').textContent=ic;
+  document.getElementById('t-title').textContent=t;
+  document.getElementById('t-msg').textContent=m;
+  const el=document.getElementById('toast');
+  el.classList.add('on');
+  clearTimeout(window._t);
+  window._t=setTimeout(()=>el.classList.remove('on'),3200);
+}
+function unlock(id,name) {
+  const el=document.getElementById(id);
+  if(el&&!el.classList.contains('got')){
+    el.classList.add('got');
+    if(ap===1)p1b++; else p2b++;
+    updBdg();
+    toast('🏆','Badge!',name);
+  }
+}
+function updateHUD() {
+  document.getElementById('h-xp').textContent=xp;
+  document.getElementById('h-stk').textContent=streak;
+  const pct=Math.min(Math.round(xp/MAX*100),100);
+  document.getElementById('h-bar').style.width=pct+'%';
+  document.getElementById('h-pct').textContent=pct+'%';
+  const lvs=[[0,'Novato'],[60,'Aprendiz'],[150,'Analista'],[260,'Estrategista'],[380,'Especialista'],[450,'Game Marketer']];
+  let lv=lvs[0][1]; for(const[t,n]of lvs)if(xp>=t)lv=n;
+  document.getElementById('h-lv').textContent=lv;
+  acts=Math.min(acts,10);
+  document.getElementById('prog').style.width=(acts/10*100)+'%';
+  document.getElementById('prog-txt').textContent=`${acts}/10`;
+}
+
+// ===========================
+//  OBJECTIVES
+// ===========================
+const OBJS=[
+  'Identificar os 5 principais mercados globais de jogos e suas características',
+  'Comparar modelos de monetização aceitos em diferentes regiões (China vs EUA vs Europa)',
+  'Compreender diferenças culturais que afetam a aceitação de jogos por região',
+  'Entender o que é localização x tradução e por que isso é crítico',
+  'Analisar estratégias de internacionalização de jogos brasileiros de sucesso',
+  'Planejar o lançamento de um jogo fictício em um mercado internacional específico',
+];
+(function(){
+  const l=document.getElementById('objs');
+  OBJS.forEach((o,i)=>{
+    objArr.push(false);
+    const d=document.createElement('div');
+    d.className='obj';
+    d.innerHTML=`<div class="obj-ck" id="ck${i}"></div><span>${o}</span>`;
+    d.onclick=()=>{
+      d.classList.toggle('done');
+      objArr[i]=d.classList.contains('done');
+      const c=d.querySelector('.obj-ck');
+      if(objArr[i]){c.textContent='✓';gainXP(5,'🎯','Objetivo marcado!');streak++;}
+      else{c.textContent='';streak=Math.max(0,streak-1);}
+      if(objArr.every(Boolean)){gainXP(30,'🎯','Todos objetivos!');unlock('ach-obj','Objetivos Completos');}
+      acts++;updateHUD();
+    };
+    l.appendChild(d);
+  });
+})();
+
+// ===========================
+//  WORLD CARDS
+// ===========================
+const WORLDS=[
+  {flag:'🇨🇳',name:'China',rev:'$44B',plat:'📱 Mobile',genre:'MOBA, Card Games',cls:'c-orange::after{background:#ff7043}',clr:'#ff7043',rank:'#1'},
+  {flag:'🇺🇸',name:'EUA',rev:'$36B',plat:'🎮 Console + PC',genre:'FPS, RPG, Sports',clr:'#60a5fa',rank:'#2'},
+  {flag:'🇯🇵',name:'Japão',rev:'$19B',plat:'📱+🎮 Mobile+Console',genre:'RPG, Gacha, Puzzle',clr:'#f472b6',rank:'#3'},
+  {flag:'🇩🇪',name:'Alemanha/Europa',rev:'$23B',plat:'💻 PC',genre:'Strategy, RPG, Esports',clr:'#a78bfa',rank:'#4'},
+  {flag:'🇰🇷',name:'Coreia do Sul',rev:'$8B',plat:'📱+💻 Mobile+PC',genre:'MOBA, FPS, MMO',clr:'#34d399',rank:'#5'},
+  {flag:'🇬🇧',name:'Reino Unido',rev:'$7.4B',plat:'🎮+💻 Multi',genre:'Sports, FPS, Casual',clr:'#fbbf24',rank:'#6'},
+];
+(function(){
+  const g=document.getElementById('world-grid');
+  WORLDS.forEach(w=>{
+    const d=document.createElement('div');
+    d.className='wm-card';
+    d.style.cssText=`--bc:${w.clr}`;
+    d.querySelector=undefined;
+    d.innerHTML=`<span class="wm-rank">${w.rank}</span><span class="wm-flag">${w.flag}</span><div class="wm-name">${w.name}</div><div class="wm-rev">${w.rev}/ano</div><div class="wm-plat">${w.plat}</div><div class="wm-genre">Top: ${w.genre}</div>`;
+    d.style.setProperty('--bc',w.clr);
+    const style=document.createElement('style');
+    style.textContent=`.wm-card:nth-child(${WORLDS.indexOf(w)+1})::after{background:${w.clr}}`;
+    document.head.appendChild(style);
+    d.onclick=()=>{ wClicks++; gainXP(3,'🌍','Mercado explorado!'); if(wClicks>=6)unlock('ach-world','Explorador Global'); };
+    g.appendChild(d);
+  });
+})();
+
+// ===========================
+//  ACCORDION
+// ===========================
+const THEORY=[
+  {n:'01',name:'China — O Maior Mercado do Mundo',meta:'~10 min · $44B · Tencent · regulação · gacha',content:`
+    <h4>Por que a China é o case mais fascinante e desafiador?</h4>
+    <p>Com $44 bilhões/ano, a China é o maior mercado individual do mundo. Mas é também o mais regulado e culturalmente específico.</p>
+    <ul>
+      <li><strong>Tencent e ByteDance:</strong> Dois conglomerados controlam boa parte do mercado. A Tencent possui participação em Riot Games (League of Legends), Supercell (Clash of Clans) e Epic Games. Qualquer jogo que queira escalar na China precisa de um publisher local.</li>
+      <li><strong>Licenças governamentais (ISBN):</strong> Todo jogo precisa de aprovação do governo para ser publicado. O processo leva 6-18 meses. Em 2021, novos jogos ficaram proibidos por 8 meses enquanto o governo "revisava o sistema".</li>
+      <li><strong>Restrições de menores:</strong> Crianças menores de 18 anos só podem jogar 3h por semana (nas sextas, sábados e domingos). Verificação por ID nacional obrigatória.</li>
+      <li><strong>Gacha como padrão:</strong> O modelo gacha (pacotes aleatórios pagos) é amplamente aceito e esperado. Jogadores chineses têm alta tolerância a esse modelo, diferente da Europa que está regulando isso como jogo de azar.</li>
+      <li><strong>Censura de conteúdo:</strong> Sangue deve ser substituído por líquido de outras cores. Esqueletos e temas de morte são regulados. Referências políticas sensíveis são proibidas. Personagens femininos com "vestimenta inadequada" também passaram por regulação.</li>
+    </ul>
+    <h4>O que um jogo brasileiro precisaria para entrar na China?</h4>
+    <ul>
+      <li>Parceria obrigatória com publisher chinês (Tencent, NetEase, Perfect World)</li>
+      <li>Adaptação cultural profunda — não apenas tradução para mandarim</li>
+      <li>Remoção ou adaptação de todo conteúdo sensível</li>
+      <li>Processo de licenciamento (ISBN) que demora 1-2 anos</li>
+      <li>Monetização via gacha ou battle pass adaptado</li>
+    </ul>
+  `},
+  {n:'02',name:'EUA — O Mercado Premium por Excelência',meta:'~8 min · $36B · AAA · console culture · marketing massivo',content:`
+    <h4>O modelo americano: premium, console e blockbuster</h4>
+    <ul>
+      <li><strong>Console culture:</strong> Ao contrário do Brasil, os EUA têm base massiva de consoles — 40% dos gamers usam PS5/Xbox como plataforma principal. Isso porque hardware não tem tributação absurda de importação.</li>
+      <li><strong>Modelo AAA:</strong> Jogos como Call of Duty, FIFA, Grand Theft Auto custam $60-70 e são esperados como lançamentos de blockbuster cinematográfico. Marketing de meses com trailers, eventos e streamers é o padrão.</li>
+      <li><strong>DLC e Season Pass:</strong> O mercado americano foi o criador e principal consumidor desses modelos. Disposição a pagar $30+ por conteúdo adicional é alta, mas só se o jogo base for sólido.</li>
+      <li><strong>Custo de UA (User Acquisition):</strong> CPIs (custo por instalação) no iOS americano podem chegar a $5-15. É o mercado mais caro do mundo para adquirir usuários — mas também paga as maiores LTV.</li>
+      <li><strong>Review culture:</strong> Metacritic, IGN, Steam reviews são determinantes. Um jogo com score abaixo de 70 no Metacritic tem vendas 40% menores. Relações com press são investimento obrigatório.</li>
+    </ul>
+    <h4>Como um jogo indie brasileiro pode entrar no mercado americano?</h4>
+    <ul>
+      <li>Steam (PC) tem barreira de entrada mais baixa — $100 de taxa + qualidade mínima</li>
+      <li>Narrativa e identidade visual forte são diferenciais em um mercado saturado</li>
+      <li>Press kit profissional e envio antecipado a reviewers é essencial</li>
+      <li>Discord community building antes do lançamento cria base fiel</li>
+      <li>Participação em feiras: GDC (São Francisco), PAX criam credibilidade</li>
+    </ul>
+  `},
+  {n:'03',name:'Japão — O Mercado Mais Exigente do Mundo',meta:'~8 min · $19B · gacha · mobile + Nintendo · cultura específica',content:`
+    <h4>Por que o Japão é diferente de tudo?</h4>
+    <p>O Japão tem a maior taxa de conversão de free para paid do mundo (8-12% vs 1-5% do Brasil). Jogadores japoneses valorizam profundamente a qualidade artística, a narrativa e a coletabilidade.</p>
+    <ul>
+      <li><strong>Gacha: máxima tolerância:</strong> Enquanto a Europa está regulando gacha como jogo de azar, no Japão é completamente aceito culturalmente. Jogos como Fate/Grand Order e Pokémon GO têm receitas absurdas justamente pelo comportamento de coleção japonês.</li>
+      <li><strong>Nintendo como cultura nacional:</strong> Nintendo Switch domina o mercado de consoles de forma que não acontece em nenhum outro país. É quase como uma parte da identidade cultural japonesa.</li>
+      <li><strong>Qualidade artística rigorosa:</strong> O público japonês tem padrão estético extremamente elevado. Jogos com gráficos mediocres têm dificuldade mesmo que o gameplay seja excelente.</li>
+      <li><strong>Localização profunda:</strong> Não basta traduzir. Piadas, referências culturais, nomes de personagens, até os tipos de fontes tipográficas usadas precisam ser adaptados para o mercado japonês.</li>
+      <li><strong>Community content:</strong> Fan art, doujin (fanzines), cosplay — a indústria japonesa encoraja e abraça o conteúdo criado pelos fãs como parte do ecossistema de marketing.</li>
+    </ul>
+    <h4>Oportunidade para jogos brasileiros no Japão</h4>
+    <ul>
+      <li>Jogos com estética anime-like ou RPG têm maior chance de receptividade</li>
+      <li>Parceria com publisher japonês (SQEX, Capcom, NHN Japan) facilita entrada</li>
+      <li>Qualidade de arte é não-negociável</li>
+    </ul>
+  `},
+  {n:'04',name:'Localização vs Tradução — A Diferença Crítica',meta:'~10 min · soft launch · adaptação cultural · casos reais',content:`
+    <h4>Tradução é trocar palavras. Localização é trocar culturas.</h4>
+    <p>Um dos erros mais comuns e caros que estúdios cometem ao internacionalizar é confundir tradução com localização. Veja a diferença:</p>
+    <ul>
+      <li><strong>Tradução:</strong> "Continue" vira "Continuar" em português.</li>
+      <li><strong>Localização:</strong> Um jogo com humor americano baseado em trocadilhos do inglês precisa ter os trocadilhos reimaginados em português — não traduzidos palavra por palavra.</li>
+    </ul>
+    <h4>Cases reais de localização bem e mal feita</h4>
+    <ul>
+      <li><strong>Horizon Chase (Aquiris, BR → Global):</strong> Escolha estratégica de não usar elementos culturais muito brasileiros. Estética retrô universal evitou o problema de localização — qualquer pessoa em qualquer país "entende" a linguagem visual.</li>
+      <li><strong>Pokémon (JP → Global):</strong> Mastercalss em localização. Não apenas tradução — nomes de personagens foram adaptados (Satoshi virou Ash), referências culturais japonesas foram substituídas por equivalentes ocidentais. Tomato rice bento viraram sanduíches nos episódios americanos.</li>
+      <li><strong>Localização mal feita:</strong> Vários jogos ocidentais no Japão falharam por não adaptar o UI para leitura vertical, não usar fontes adequadas, ou ter diálogos muito diretos (cultura japonesa é indireta).</li>
+    </ul>
+    <h4>Estratégias de soft launch</h4>
+    <ul>
+      <li><strong>Soft launch:</strong> Lançar em 1-2 mercados menores (ex: Canadá, Austrália, Nova Zelândia) antes do lançamento global para testar monetização, retenção e bugs sem queimar a reputação nos mercados principais.</li>
+      <li>Medir: Day 1, Day 7, Day 30 retention + ARPU (Average Revenue Per User) + CPI por país</li>
+      <li>Ajustar pricing, dificuldade, loop de monetização baseado nos dados antes de expandir</li>
+    </ul>
+  `},
+];
+(function(){
+  const acc=document.getElementById('acc');
+  THEORY.forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='ai';
+    d.innerHTML=`<div class="ai-head" onclick="tAcc(this,${i})"><span class="ai-n">${t.n}</span><span class="ai-name">${t.name}</span><span class="ai-meta">${t.meta}</span><span class="ai-arrow">▼</span></div><div class="ai-body"><div class="ai-cnt">${t.content}</div></div>`;
+    acc.appendChild(d);
+  });
+})();
+function tAcc(h,i){
+  const item=h.parentElement;
+  const was=item.classList.contains('open');
+  document.querySelectorAll('.ai').forEach(a=>a.classList.remove('open'));
+  if(!was){
+    item.classList.add('open');
+    if(!accSet.has(i)){accSet.add(i);gainXP(5,'📖','Região estudada!');if(accSet.size>=4){unlock('ach-reader','Leitor Global');acts++;updateHUD();}}
+  }
+}
+
+// ===========================
+//  VIDEOS
+// ===========================
+const VIDS=[
+  {e:'🌏',t:'Global Games Market Report',d:'Panorama do mercado global — Newzoo',u:'https://www.youtube.com/watch?v=YPr7E5rBPjE'},
+  {e:'🇨🇳',t:'Gaming in China',d:'O maior mercado do mundo por dentro',u:'https://www.youtube.com/watch?v=e-x_PU4RHQg'},
+  {e:'📱',t:'State of Mobile Gaming Worldwide',d:'Tendências do mobile gaming global',u:'https://www.youtube.com/watch?v=AcKIKnz1d7w'},
+  {e:'🇪🇺',t:'European Gaming Market',d:'O mercado europeu e suas peculiaridades',u:'https://www.youtube.com/watch?v=qT7lT5r0rqU'},
+  {e:'🇯🇵',t:'Japanese Gaming Industry',d:'Por que o Japão é diferente de tudo',u:'https://www.youtube.com/watch?v=Z9L8N5JzsKw'},
+  {e:'🌎',t:'Latin American Gaming Growth',d:'Crescimento do gaming na LATAM',u:'https://www.youtube.com/watch?v=kCFw7NvJb8s'},
+];
+(function(){
+  const g=document.getElementById('vid-grid');
+  VIDS.forEach(v=>{const d=document.createElement('div');d.className='vc';d.innerHTML=`<div class="vt">${v.e}</div><div class="vi"><h4>${v.t}</h4><p>${v.d}</p><a href="${v.u}" target="_blank" class="vbtn">▶ Assistir</a></div>`;g.appendChild(d);});
+})();
+
+// ===========================
+//  ACTIVITIES
+// ===========================
+const ACTS=[
+  {num:'01',title:'Análise Comparativa de 3 Mercados Globais',
+   tags:[{t:'⏱ 45 min',c:'at-p'},{t:'💻 Sheets + Slides',c:'at-c'},{t:'⚡ 50 XP',c:'at-g'}],
+   obj:'Comparar em profundidade 3 mercados globais de jogos, identificando diferenças estratégicas e oportunidades para desenvolvedores brasileiros.',
+   steps:[
+     {t:'Cada um escolhe 2 mercados do seu interesse dentre: China, EUA, Japão, Alemanha, Coreia do Sul, UK'},
+     {t:'Para cada mercado, crie uma tabela com: Receita total, Plataforma dominante, Gênero top 3, Modelo de monetização preferido, 2 maiores publishers locais'},
+     {t:'Pesquise 1 jogo de sucesso específico de cada mercado — descubra como ele monetiza e qual estratégia de marketing usa'},
+     {t:'Identifique: se você fosse lançar um jogo BR em cada mercado, qual seria o maior desafio e a maior oportunidade?'},
+     {t:'Crie uma apresentação de <strong>4-6 slides</strong> no Google Slides com visual limpo — compare os 3 mercados lado a lado'},
+     {t:'<strong>Apresente em 5 min</strong> para o colega, depois juntem as análises e discutam: qual mercado tem o melhor custo-benefício para um estúdio indie brasileiro?'},
+   ],
+   rub:[
+     {l:'Insuficiente',d:'Dados superficiais de fontes não confiáveis, sem comparação estruturada',c:'ri'},
+     {l:'Básico',d:'Comparação com dados básicos, análise rasa, sem identificar oportunidades específicas',c:'rb'},
+     {l:'Proficiente',d:'Comparação detalhada com fontes, análise das oportunidades para o BR, apresentação clara',c:'rp'},
+     {l:'Excelente',d:'Dados cruzados com cases reais, análise crítica de oportunidades e riscos, proposta de estratégia de entrada fundamentada',c:'re'},
+   ],xp:50,id:'a1',ach:'ach-a1',an:'Analista Global'},
+  {num:'02',title:'Estratégia de Localização para um Jogo Fictício',
+   tags:[{t:'⏱ 35 min',c:'at-o'},{t:'💻 Google Docs',c:'at-c'},{t:'⚡ 50 XP',c:'at-g'}],
+   obj:'Planejar a localização completa de um jogo fictício para um mercado internacional específico, demonstrando compreensão das diferenças culturais.',
+   steps:[
+     {t:'Criem juntos um jogo fictício simples: defina gênero, plataforma, premissa em 2 frases e modelo de monetização'},
+     {t:'Cada um escolhe um mercado diferente para localizar: China, Japão, EUA ou Europa'},
+     {t:'Liste todos os elementos que precisariam ser adaptados: linguagem, UI/UX, conteúdo visual, mecânicas de monetização, tom da comunicação'},
+     {t:'Pesquise 1 concorrente que já existe nesse mercado — o que ele faz diferente do padrão brasileiro?'},
+     {t:'Defina uma estratégia de <strong>soft launch</strong>: em qual país menor você testaria antes do lançamento no mercado principal? Por quê?'},
+     {t:'Escreva no Google Docs: um plano de localização de 1 página com seções claras — compare depois com o colega para ver as diferenças de abordagem'},
+   ],
+   rub:[
+     {l:'Insuficiente',d:'Localização confundida com tradução, sem adaptação cultural real',c:'ri'},
+     {l:'Básico',d:'Adaptações identificadas superficialmente, plano de soft launch sem justificativa',c:'rb'},
+     {l:'Proficiente',d:'Adaptações culturais específicas justificadas, plano de soft launch fundamentado em dados, concorrente analisado',c:'rp'},
+     {l:'Excelente',d:'Plano completo com adaptações profundas (UI, monetização, tom, arte), soft launch estratégico com métricas de sucesso definidas',c:'re'},
+   ],xp:50,id:'a2',ach:'ach-a2',an:'Estrategista de Localização'},
+  {num:'03',title:'Mapa de Oportunidades Globais para Jogos BR',
+   tags:[{t:'⏱ 30 min',c:'at-p'},{t:'💻 Canva/Slides',c:'at-c'},{t:'⚡ 50 XP',c:'at-g'}],
+   obj:'Criar um mapa visual de oportunidades globais identificando quais mercados são mais estratégicos para diferentes tipos de jogos brasileiros.',
+   steps:[
+     {t:'Escolham 3 gêneros de jogos (ex: casual mobile, RPG narrativo, esports/MOBA) — cada um analisa um gênero diferente + um em conjunto'},
+     {t:'Para cada gênero, identifique o <strong>mercado mais estratégico</strong> para lançar primeiro — justifique com dados de tamanho, CPI e comportamento de monetização'},
+     {t:'Pesquise: existe algum jogo brasileiro que já exportou para esse mercado? Qual foi o resultado?'},
+     {t:'Defina para cada gênero: canal de marketing principal, faixa de preço/monetização, 1 publisher ou parceiro ideal'},
+     {t:'No <strong>Canva</strong>, crie um visual de 1 página tipo "mapa" ou "quadrante" que mostre gênero × mercado × oportunidade'},
+     {t:'Apresente o mapa para o colega em 3 minutos — ele apresenta o dele — depois juntem os dois em um único documento "Mapa de Oportunidades Globais para Games BR 2024"'},
+   ],
+   rub:[
+     {l:'Insuficiente',d:'Sem dados, escolhas de mercado sem justificativa, visual confuso',c:'ri'},
+     {l:'Básico',d:'Mercados identificados com justificativas parciais, visual simples',c:'rb'},
+     {l:'Proficiente',d:'Mercados com justificativa em dados, canais de marketing e monetização definidos, visual claro',c:'rp'},
+     {l:'Excelente',d:'Análise cross-gênero com dados reais, cases brasileiros referenciados, visual de alto impacto, insight original sobre qual combinação gênero-mercado tem maior ROI para um estúdio iniciante',c:'re'},
+   ],xp:50,id:'a3',ach:'ach-a3',an:'Cartógrafo de Mercados'},
+];
+(function(){
+  const c=document.getElementById('acts');
+  ACTS.forEach(a=>{
+    const tags=a.tags.map(t=>`<span class="at ${t.c}">${t.t}</span>`).join('');
+    const steps=a.steps.map((s,i)=>`<div class="step"><div class="sn">${i+1}</div><div>${s.t}</div></div>`).join('');
+    const rub=a.rub.map(r=>`<div class="rc ${r.c}"><span class="rlv">${r.l}</span><p>${r.d}</p></div>`).join('');
+    const d=document.createElement('div');
+    d.className='act';
+    d.innerHTML=`<div class="act-hdr"><div class="act-n">${a.num}</div><div class="act-hi"><div class="act-title">${a.title}</div><div class="act-tgs">${tags}</div></div></div>
+    <div class="act-body">
+      <div class="act-obj">${a.obj}</div>
+      <div class="slbl">PASSO A PASSO</div>
+      <div class="steps">${steps}</div>
+      <div class="rub-title">RUBRICA DE AVALIAÇÃO</div>
+      <div class="rub">${rub}</div>
+      <button class="cbtn" id="cb-${a.id}" onclick="doneAct('${a.id}','${a.ach}','${a.an}',${a.xp},this)">✅ CONCLUÍDA — +${a.xp} XP</button>
+    </div>`;
+    c.appendChild(d);
+  });
+})();
+function doneAct(id,ach,an,v,btn){
+  if(btn.disabled)return;
+  btn.disabled=true;btn.textContent='✅ Concluída!';
+  gainXP(v,'✏️',`Atividade concluída!`);unlock(ach,an);acts++;updateHUD();
+}
+
+// ===========================
+//  QUIZ
+// ===========================
+const QS=[
+  {q:'Qual é a receita aproximada do mercado global de jogos em 2024?',opts:['$50 bilhões','$100 bilhões','$184 bilhões','$300 bilhões'],c:2,xp:10,fb:'✅ A indústria global de games gerou ~$184 bilhões em 2024, superando cinema e música combinados. A China sozinha representa ~$44B (24%) desse total.'},
+  {q:'Por que qualquer jogo que quer ser publicado na China precisa de aprovação governamental (ISBN)?',opts:['É uma taxa de importação como qualquer produto','O governo regula todo conteúdo cultural para garantir alinhamento com valores nacionais e proteger a indústria local','É apenas um registro de propriedade intelectual','A App Store chinesa exige isso de todos os apps'],c:1,xp:10,fb:'✅ A China classifica jogos como produtos culturais, sujeitos a aprovação do Ministério da Administração Cibernética. O processo pode demorar 6-18 meses e exige parceria com publisher local. Em 2021, novos jogos ficaram proibidos por 8 meses durante revisão do sistema.'},
+  {q:'O modelo "gacha" (pacotes de itens aleatórios pagos) é aceito de forma diferente em cada mercado. Onde é mais tolerado?',opts:['EUA e Europa','Apenas no Brasil','Japão e China','Austrália e Canadá'],c:2,xp:10,fb:'✅ Japão e China têm a maior tolerância cultural ao modelo gacha. No Japão, é parte integrada da cultura de coleção (colecionáveis, card games). Na Europa, países como Bélgica e Holanda já classificaram gacha como jogo de azar e proibiram. O Brasil está no meio-termo.'},
+  {q:'Qual é a principal diferença entre "tradução" e "localização" de jogos?',opts:['Localização é apenas a tradução do idioma, tradução é converter o código','Localização é apenas mais cara que tradução','Localização adapta elementos culturais completos (humor, referências, UI, monetização), tradução apenas converte o idioma','Não há diferença prática entre os dois termos'],c:2,xp:10,fb:'✅ Localização é a adaptação cultural completa do produto para um mercado: reescrever humor que não funciona no novo idioma, adaptar referências culturais, ajustar o UI para padrões locais (ex: layout de texto vertical para japonês), recalibrar a monetização para o comportamento financeiro local.'},
+  {q:'Um estúdio brasileiro quer lançar um jogo no mercado americano. Qual plataforma oferece a menor barreira de entrada para um indie?',opts:['PlayStation Store exclusivo','Nintendo eShop premium','Steam (PC) — taxa de $100 + aprovação por qualidade mínima','Xbox Game Pass — aceita qualquer jogo'],c:2,xp:10,fb:'✅ Steam é a plataforma com menor barreira de entrada no mercado americano: taxa única de $100, sem exclusividade obrigatória, acesso a reviews orgânicos de usuários. Lojas de consoles exigem processos mais longos, exclusividades e portabilidades técnicas adicionais.'},
+  {q:'O que é "soft launch" no contexto de internacionalização de jogos?',opts:['Lançar o jogo sem marketing, apenas nas lojas','Lançar em 1-2 mercados menores (Canadá, Austrália) antes do lançamento global para testar métricas','Versão simplificada do jogo para plataformas menos potentes','Lançar gratuitamente para criar buzz antes de cobrar'],c:1,xp:10,fb:'✅ Soft launch é lançar primeiro em mercados menores (Canadá, Austrália, Nova Zelândia são os favoritos) para testar: retenção D1/D7/D30, ARPU, CPI e bugs — sem queimar a reputação nos mercados prioritários (EUA, Alemanha, Japão). Depois os dados guiam ajustes antes da expansão global.'},
+  {q:'O jogo "Horizon Chase" da Aquiris foi um case de internacionalização bem-sucedida. Qual estratégia visual explica esse sucesso global?',opts:['Usou elementos folclóricos brasileiros para se diferenciar','Adotou estética retrô dos anos 80, universalmente reconhecida e sem barreiras culturais específicas','Traduziu para 50 idiomas simultâneos','Lançou primeiro na China e depois expandiu'],c:1,xp:10,fb:'✅ Horizon Chase escolheu uma estética retrô dos anos 80 que gera nostalgia positiva em qualquer cultura — nenhuma "tradução cultural" necessária. É um exemplo de design de produto que evita o problema de localização ao invés de resolver depois.'},
+  {q:'Por que o custo de User Acquisition (UA) nos EUA é considerado o mais alto do mundo?',opts:['Porque os EUA têm mais empresas de games','Porque o público americano é mais exigente e não clica em anúncios','Alta competição de grandes publishers disputando o mesmo inventário de anúncios, resultando em CPIs de $5-15 por instalação','Porque a Internet americana é mais cara'],c:2,xp:10,fb:'✅ Os EUA têm a maior concentração de publishers investindo em UA (Activision, EA, Take-Two, Disney, King) disputando o mesmo inventário de anúncios no Facebook, TikTok e iOS. Isso eleva o CPI para $5-15 — mas também gera a maior LTV por usuário do mundo.'},
+  {q:'Qual característica do mercado japonês de jogos é mais diferente do mercado brasileiro?',opts:['Japoneses preferem jogos de esporte como futebol','A taxa de conversão de free para paid no Japão é 8-12%, comparado a 1-5% no Brasil','Japoneses não jogam mobile','O Japão não tem mercado de console'],c:1,xp:10,fb:'✅ A taxa de conversão de free para paid no Japão é 8-12% — até 8× maior que no Brasil. Isso se deve à cultura de colecionismo (gacha, cards físicos), maior renda disponível para jogos, e tolerância cultural ao modelo de monetização premium em mobile.'},
+  {q:'Você trabalha em um estúdio brasileiro que quer lançar um casual mobile no mercado internacional. Qual sequência de mercados é mais estratégica?',opts:['China primeiro (maior mercado), depois expandir','EUA direto para maximizar receita imediatamente','Soft launch no Canadá → Ajustar métricas → Escalar para EUA/Europa → Avaliar China como fase 3','Japão primeiro porque paga mais por usuário'],c:2,xp:10,fb:'✅ A estratégia mais sólida: (1) Soft launch no Canadá/Austrália para validar métricas com custo baixo, (2) Ajustar loop de monetização com base nos dados, (3) Escalar para EUA e Europa com dados validados, (4) Avaliar China como mercado complexo separado que exige publisher local e licença específica.'},
+];
+let qCur=0,qCor=0,qAns={};
+(function(){
+  const c=document.getElementById('quiz');
+  let h='';
+  QS.forEach((q,i)=>{
+    const opts=q.opts.map((o,oi)=>`<button class="qo" onclick="ansQ(${i},${oi})">${String.fromCharCode(65+oi)}) ${o}</button>`).join('');
+    h+=`<div class="qq ${i===0?'on':''}" id="q${i}"><div class="qtxt">Q${i+1}. ${q.q}</div><div class="qopts">${opts}</div><div class="qfb" id="qfb${i}"></div><div class="qnrow" id="qnr${i}"><button class="qnbtn" onclick="${i<QS.length-1?`nxtQ(${i+1})`:'showRes()'}">${i<QS.length-1?'Próxima →':'Ver Resultado ✨'}</button></div></div>`;
+  });
+  h+=`<div class="qres" id="qres"><span class="qres-big" id="qrb">0/10</span><div class="qres-msg" id="qrm"></div><div class="qres-xp" id="qrx"></div><button class="qres-btn" onclick="rstQ()">↺ Tentar Novamente</button></div>`;
+  c.innerHTML=h;
+})();
+function ansQ(qi,ch){
+  const q=QS[qi];
+  const card=document.getElementById(`q${qi}`);
+  card.querySelectorAll('.qo').forEach(b=>b.disabled=true);
+  card.querySelectorAll('.qo')[ch].classList.add(ch===q.c?'correct':'wrong');
+  if(ch!==q.c)card.querySelectorAll('.qo')[q.c].classList.add('correct');
+  const ok=ch===q.c;
+  const fb=document.getElementById(`qfb${qi}`);
+  fb.textContent=ok?q.fb:'❌ Incorreto. '+q.fb;
+  fb.className='qfb on '+(ok?'ok':'fail');
+  document.getElementById(`qnr${qi}`).classList.add('on');
+  if(ok){qCor++;gainXP(q.xp,'🧠','Resposta correta!');streak++;}
+  else{streak=Math.max(0,streak-1);updateHUD();}
+  qAns[qi]=ok;
+  document.getElementById('qpf').style.width=((qi+1)/QS.length*100)+'%';
+  document.getElementById('qcnt').textContent=`${qi+1} / ${QS.length}`;
+}
+function nxtQ(n){document.querySelector('.qq.on').classList.remove('on');document.getElementById(`q${n}`).classList.add('on');}
+function showRes(){
+  document.querySelector('.qq.on').classList.remove('on');
+  document.getElementById('qres').classList.add('on');
+  document.getElementById('qrb').textContent=`${qCor}/10`;
+  const msgs=['📚 Revise o conteúdo!','⚡ Progredindo!','🔥 Boa performance!','🏆 Especialista!','💎 Perfeito!'];
+  document.getElementById('qrm').textContent=msgs[Math.min(Math.floor(qCor/2),4)];
+  const earned=Object.keys(qAns).filter(k=>qAns[k]).reduce((s,k)=>s+QS[+k].xp,0);
+  const nm=document.getElementById(`p${ap}n`).value||`Player ${ap}`;
+  document.getElementById('qrx').textContent=`+${earned} XP para ${nm}!`;
+  if(qCor>=8)unlock('ach-quiz','Quiz Aprovado');
+  if(qCor===10)unlock('ach-perfect','Quiz Perfeito!');
+  acts++;updateHUD();
+}
+function rstQ(){
+  qCor=0;qAns={};
+  document.getElementById('qres').classList.remove('on');
+  document.getElementById('qpf').style.width='0%';
+  document.getElementById('qcnt').textContent='0 / 10';
+  QS.forEach((_,i)=>{
+    const c=document.getElementById(`q${i}`);
+    c.classList.toggle('on',i===0);
+    c.querySelectorAll('.qo').forEach(b=>{b.disabled=false;b.className='qo';});
+    const fb=document.getElementById(`qfb${i}`);fb.className='qfb';fb.textContent='';
+    document.getElementById(`qnr${i}`).classList.remove('on');
+  });
+}
+
+// ===========================
+//  ACHIEVEMENTS
+// ===========================
+const ACHS=[
+  {id:'ach-boot',e:'🚀',n:'Lab Online S03'},
+  {id:'ach-world',e:'🌍',n:'Explorador Global'},
+  {id:'ach-reader',e:'📖',n:'Leitor Global'},
+  {id:'ach-obj',e:'🎯',n:'Objetivos Completos'},
+  {id:'ach-a1',e:'📊',n:'Analista Global'},
+  {id:'ach-a2',e:'🗺️',n:'Estrategista de Loc.'},
+  {id:'ach-a3',e:'🧭',n:'Cartógrafo de Mercados'},
+  {id:'ach-quiz',e:'🎓',n:'Quiz Aprovado'},
+  {id:'ach-perfect',e:'💎',n:'Quiz Perfeito'},
+];
+(function(){
+  const g=document.getElementById('ach-grid');
+  ACHS.forEach(a=>{const d=document.createElement('div');d.className='ach';d.id=a.id;d.innerHTML=`<span class="ach-e">${a.e}</span><div class="ach-n">${a.n}</div>`;g.appendChild(d);});
+})();
+
+// ===========================
+//  INIT
+// ===========================
+setTimeout(()=>{unlock('ach-boot','Lab Online S03');gainXP(5,'🚀','Semana 03 iniciada!');acts++;updateHUD();},700);
+setAct(1);
+</script>
+</body>
+</html>
