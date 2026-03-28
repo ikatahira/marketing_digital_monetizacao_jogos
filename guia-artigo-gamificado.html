@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUEST: Artigo Científico — Marketing Digital & Monetização</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon-green: #39ff14;
+    --neon-cyan: #00e5ff;
+    --neon-purple: #bf00ff;
+    --neon-gold: #ffd700;
+    --neon-pink: #ff006e;
+    --dark-bg: #0a0a12;
+    --card-bg: #10101e;
+    --card-border: #1e1e38;
+    --text: #e0e0f0;
+    --text-muted: #7070a0;
+    --xp-bar: #1a1a30;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px 80px;
+    background: radial-gradient(ellipse at 50% 0%, #1a003a 0%, var(--dark-bg) 70%);
+    border-bottom: 1px solid var(--neon-purple);
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-purple), var(--neon-cyan), transparent);
+    animation: scanH 3s linear infinite;
+  }
+
+  @keyframes scanH { 0%{opacity:0.4} 50%{opacity:1} 100%{opacity:0.4} }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(191,0,255,0.15);
+    border: 1px solid var(--neon-purple);
+    color: var(--neon-purple);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7em;
+    letter-spacing: 3px;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.6em, 5vw, 3em);
+    font-weight: 900;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 20px var(--neon-cyan), 0 0 60px rgba(0,229,255,0.3);
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .hero h1 span { color: var(--neon-gold); text-shadow: 0 0 20px var(--neon-gold); }
+
+  .hero-sub {
+    font-size: 1.05em;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+
+  /* XP BAR GLOBAL */
+  .xp-global {
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--xp-bar);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 12px 20px;
+  }
+
+  .xp-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.72em;
+    color: var(--neon-gold);
+    margin-bottom: 8px;
+  }
+
+  .xp-track {
+    height: 10px;
+    background: #111128;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #222244;
+  }
+
+  .xp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+    border-radius: 5px;
+    width: 0%;
+    transition: width 1s ease;
+    box-shadow: 0 0 8px var(--neon-green);
+    animation: xpPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes xpPulse { 0%,100%{box-shadow:0 0 6px var(--neon-green)} 50%{box-shadow:0 0 16px var(--neon-green)} }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* SECTION INTRO */
+  .intro-card {
+    background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(191,0,255,0.05));
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro-card::before {
+    content: '📋';
+    position: absolute;
+    right: 20px; top: 20px;
+    font-size: 3em;
+    opacity: 0.1;
+  }
+
+  .intro-card h2 {
+    font-family: 'Orbitron', monospace;
+    color: var(--neon-cyan);
+    font-size: 1em;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .intro-card p { color: #b0b0d0; line-height: 1.8; }
+
+  /* ── QUEST CARD ── */
+  .quest-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+    position: relative;
+  }
+
+  .quest-card:hover { border-color: var(--neon-cyan); transform: translateY(-2px); }
+
+  .quest-card.locked { opacity: 0.55; pointer-events: none; }
+
+  .quest-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    user-select: none;
+  }
+
+  .quest-header:hover { background: rgba(0,229,255,0.04); border-bottom-color: var(--card-border); }
+
+  .quest-header.active { border-bottom-color: var(--neon-cyan); background: rgba(0,229,255,0.06); }
+
+  .quest-icon {
+    width: 54px; height: 54px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6em;
+    flex-shrink: 0;
+    border: 2px solid;
+  }
+
+  .q1 .quest-icon { background: rgba(57,255,20,0.1); border-color: var(--neon-green); }
+  .q2 .quest-icon { background: rgba(0,229,255,0.1); border-color: var(--neon-cyan); }
+  .q3 .quest-icon { background: rgba(255,215,0,0.1); border-color: var(--neon-gold); }
+  .q4 .quest-icon { background: rgba(255,0,110,0.1); border-color: var(--neon-pink); }
+  .q5 .quest-icon { background: rgba(191,0,255,0.1); border-color: var(--neon-purple); }
+
+  .quest-meta { flex: 1; }
+
+  .quest-week {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65em;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .quest-title {
+    font-weight: 800;
+    font-size: 1.15em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .quest-desc { font-size: 0.88em; color: var(--text-muted); }
+
+  .quest-xp {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85em;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    border: 1px solid;
+  }
+
+  .q1 .quest-xp { color: var(--neon-green); border-color: var(--neon-green); background: rgba(57,255,20,0.08); }
+  .q2 .quest-xp { color: var(--neon-cyan); border-color: var(--neon-cyan); background: rgba(0,229,255,0.08); }
+  .q3 .quest-xp { color: var(--neon-gold); border-color: var(--neon-gold); background: rgba(255,215,0,0.08); }
+  .q4 .quest-xp { color: var(--neon-pink); border-color: var(--neon-pink); background: rgba(255,0,110,0.08); }
+  .q5 .quest-xp { color: var(--neon-purple); border-color: var(--neon-purple); background: rgba(191,0,255,0.08); }
+
+  .quest-chevron {
+    font-size: 1.2em;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+    margin-left: 8px;
+  }
+
+  .quest-header.active .quest-chevron { transform: rotate(90deg); }
+
+  /* QUEST BODY */
+  .quest-body {
+    display: none;
+    padding: 28px 28px 32px;
+    animation: fadeIn 0.25s ease;
+  }
+
+  .quest-body.open { display: block; }
+
+  @keyframes fadeIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* STEPS */
+  .step-list { counter-reset: steps; }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px; top: 40px;
+    width: 2px;
+    height: calc(100% - 10px);
+    background: var(--card-border);
+  }
+
+  .step-num {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--dark-bg);
+    border: 2px solid var(--neon-cyan);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-content { padding-top: 6px; flex: 1; }
+
+  .step-content h4 {
+    font-size: 0.95em;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .step-content p, .step-content li {
+    font-size: 0.9em;
+    color: #a0a0c0;
+    line-height: 1.7;
+  }
+
+  .step-content ul { padding-left: 18px; }
+  .step-content li { margin-bottom: 4px; }
+
+  /* ELICIT BOX */
+  .elicit-box {
+    background: rgba(0,229,255,0.05);
+    border: 1px dashed var(--neon-cyan);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    position: relative;
+  }
+
+  .elicit-box::before {
+    content: '🔍 ELICIT.COM';
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6em;
+    letter-spacing: 2px;
+    color: var(--neon-cyan);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .elicit-query {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.88em;
+    color: #e0f8ff;
+    background: rgba(0,0,0,0.3);
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 6px 0;
+    border-left: 3px solid var(--neon-cyan);
+  }
+
+  .elicit-tip {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* LATEX BOX */
+  .latex-box {
+    background: #06060f;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 16px 0;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .latex-header {
+    background: #13132a;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72em;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    border-bottom: 1px solid #1e1e38;
+  }
+
+  .latex-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .d1 { background: #ff5f57; }
+  .d2 { background: #febc2e; }
+  .d3 { background: #28c840; }
+
+  .latex-code {
+    padding: 16px 20px;
+    font-size: 0.85em;
+    color: #c8d0e7;
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+
+  .latex-code .kw { color: #bf7fff; }
+  .latex-code .str { color: #98c379; }
+  .latex-code .cm { color: #5c6370; font-style: italic; }
+  .latex-code .hl { color: var(--neon-gold); }
+
+  /* THEORY GRID */
+  .theory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+
+  .theory-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .theory-card:hover { border-color: var(--neon-gold); background: rgba(255,215,0,0.04); }
+
+  .theory-card .tc-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65em;
+    letter-spacing: 2px;
+    color: var(--neon-gold);
+    margin-bottom: 6px;
+  }
+
+  .theory-card h4 {
+    font-size: 0.9em;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .theory-card p { font-size: 0.8em; color: var(--text-muted); line-height: 1.6; }
+
+  /* MILESTONE */
+  .milestone {
+    background: linear-gradient(135deg, rgba(57,255,20,0.08), rgba(0,229,255,0.08));
+    border: 1px solid rgba(57,255,20,0.3);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .milestone-icon { font-size: 2em; flex-shrink: 0; }
+
+  .milestone h4 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.78em;
+    letter-spacing: 1px;
+    color: var(--neon-green);
+    margin-bottom: 4px;
+  }
+
+  .milestone p { font-size: 0.85em; color: #a0d0a0; line-height: 1.6; }
+
+  /* COMPLETE BTN */
+  .complete-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 12px 28px;
+    border-radius: 6px;
+    border: 2px solid var(--neon-green);
+    background: rgba(57,255,20,0.08);
+    color: var(--neon-green);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background 0.25s, box-shadow 0.25s, transform 0.15s;
+    text-transform: uppercase;
+  }
+
+  .complete-btn:hover { background: rgba(57,255,20,0.18); box-shadow: 0 0 20px rgba(57,255,20,0.3); transform: scale(1.02); }
+
+  .complete-btn.done { background: rgba(57,255,20,0.25); box-shadow: 0 0 10px rgba(57,255,20,0.2); cursor: default; }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65em;
+    letter-spacing: 4px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin: 40px 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--card-border);
+  }
+
+  /* OVERLEAF GUIDE */
+  .overleaf-path {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 14px 0;
+  }
+
+  .path-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+
+  .path-item:hover { border-color: var(--neon-gold); }
+
+  .path-num {
+    width: 28px; height: 28px;
+    background: var(--dark-bg);
+    border: 1px solid var(--neon-gold);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7em;
+    color: var(--neon-gold);
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  .path-text { font-size: 0.88em; color: #b0b0cc; line-height: 1.6; }
+  .path-text strong { color: var(--text); }
+
+  code {
+    font-family: 'Share Tech Mono', monospace;
+    background: rgba(255,255,255,0.08);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--neon-cyan);
+  }
+
+  /* FINAL */
+  .final-card {
+    background: radial-gradient(ellipse at center, rgba(191,0,255,0.12), rgba(0,0,0,0) 70%), var(--card-bg);
+    border: 1px solid var(--neon-purple);
+    border-radius: 14px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 40px;
+    box-shadow: 0 0 40px rgba(191,0,255,0.1);
+  }
+
+  .final-card h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4em;
+    color: var(--neon-purple);
+    text-shadow: 0 0 20px var(--neon-purple);
+    margin-bottom: 12px;
+  }
+
+  .final-card p { color: var(--text-muted); max-width: 500px; margin: 0 auto 20px; line-height: 1.8; }
+
+  .trophy { font-size: 4em; margin-bottom: 16px; display: block; animation: float 3s ease-in-out infinite; }
+
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 14px 0; }
+  .checklist li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88em; color: #a0a0c0;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .checklist li .cb {
+    width: 20px; height: 20px;
+    border: 2px solid var(--neon-green);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.8em;
+    color: var(--neon-green);
+  }
+
+  .checklist li .cb:hover { background: rgba(57,255,20,0.2); }
+
+  /* notification toast */
+  #toast {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    background: var(--card-bg);
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75em;
+    padding: 14px 22px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(57,255,20,0.3);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 10000;
+    letter-spacing: 1px;
+  }
+
+  #toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Responsive */
+  @media(max-width:600px) {
+    .quest-header { flex-wrap: wrap; }
+    .quest-xp { align-self: flex-start; }
+    .theory-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<div class="hero">
+  <div class="hero-badge">FATEC OURINHOS · JOGOS DIGITAIS · 6º SEM</div>
+  <h1>QUEST: <span>ARTIGO</span><br>CIENTÍFICO</h1>
+  <p class="hero-sub">Complete as 5 missões semanais e publique seu artigo sobre <strong style="color:#ffd700">Marketing Digital & Monetização</strong> em jogos. Cada passo = XP real no Overleaf.</p>
+
+  <div class="xp-global">
+    <div class="xp-label">
+      <span>⚡ XP TOTAL</span>
+      <span id="xpDisplay">0 / 500 XP</span>
+    </div>
+    <div class="xp-track">
+      <div class="xp-fill" id="xpFill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CONTAINER ══════════ -->
+<div class="container">
+
+  <div class="intro-card">
+    <h2>COMO FUNCIONA ESTA QUEST</h2>
+    <p>Cada semana é uma missão com objetivos claros. Você verá <strong>o que pesquisar no Elicit</strong>, <strong>o que escrever no LaTeX</strong> e qual é o <strong>resultado esperado</strong>. Complete cada missão para desbloquear a próxima e acumular XP. Ao final, seu artigo está pronto — seção por seção.</p>
+  </div>
+
+  <!-- ══════ QUEST 1 ══════ -->
+  <div class="section-label">MISSÃO 01</div>
+  <div class="quest-card q1" id="q1">
+    <div class="quest-header" onclick="toggleQuest('q1')" id="qh1">
+      <div class="quest-icon">🚀</div>
+      <div class="quest-meta">
+        <div class="quest-week">Semana 01 · Setup Inicial</div>
+        <div class="quest-title">INICIAR O PROJETO — Problema & Objetivo</div>
+        <div class="quest-desc">Criar o projeto no Overleaf, definir título, problema de pesquisa e objetivos.</div>
+      </div>
+      <div class="quest-xp">+100 XP</div>
+      <div class="quest-chevron">▶</div>
+    </div>
+    <div class="quest-body" id="qb1">
+
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Acesse o template oficial da FATEC no Overleaf</h4>
+            <p>O professor Isaque disponibilizou o template. Abra-o, faça uma cópia (<em>Menu → Copy Project</em>) e renomeie para <code>artigo-marketing-games</code>.</p>
+            <div class="overleaf-path">
+              <div class="path-item">
+                <div class="path-num">→</div>
+                <div class="path-text">No arquivo <strong>main.tex</strong>, localize o campo <code>\title{}</code> e insira o título provisório do seu artigo.</div>
+              </div>
+            </div>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Título & Autores</div>
+              <div class="latex-code"><span class="cm">% ── PREENCHA COM OS DADOS DO GRUPO ──</span>
+<span class="kw">\title</span>{<span class="str">Marketing Digital 4.0 e Jornada do Jogador:<br>   Estratégias para Sustentabilidade Comercial em Jogos Digitais</span>}
+
+<span class="kw">\author</span>{<span class="str">Nome Aluno 1; Nome Aluno 2; Nome Aluno 3</span>}
+
+<span class="kw">\affiliation</span>{<span class="str">FATEC Ourinhos — Tecnologia em Jogos Digitais</span>}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Defina o Problema de Pesquisa (Seção: Introdução)</h4>
+            <p>Na seção <code>\section{Introdução}</code> do template, escreva o contexto e o problema. Use este modelo como base:</p>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Introdução</div>
+              <div class="latex-code"><span class="kw">\section</span>{Introdução}
+
+A indústria de jogos digitais é o setor de entretenimento
+mais lucrativo do mundo <span class="kw">\cite</span>{<span class="hl">NewZoo2024</span>}.
+Entretanto, estima-se que mais de <span class="str">90\%</span> dos títulos
+independentes não atingem viabilidade comercial, fenômeno
+conhecido como \textit{discoverability gap}.
+
+<span class="cm">% ── PROBLEMA DE PESQUISA ──</span>
+Diante disso, este trabalho investiga: \textbf{De que forma
+a integração de estratégias de Marketing Digital 4.0 e o
+mapeamento da Jornada do Jogador podem mitigar o risco de
+fracasso comercial em estúdios de jogos independentes?}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Pesquise no Elicit — Contexto do Mercado</h4>
+            <p>Busque artigos que justifiquem o problema. Copie os dados encontrados (autor, ano, título) para o arquivo <code>fatec.bib</code>.</p>
+            <div class="elicit-box">
+              <div class="elicit-query">"indie game commercial failure marketing strategies 2020 2024"</div>
+              <div class="elicit-query">"discoverability problem independent games steam"</div>
+              <div class="elicit-query">"digital games industry revenue growth global 2023"</div>
+              <div class="elicit-tip">💡 No Elicit: após a busca, clique em <strong>Export → BibTeX</strong> e cole no arquivo <code>fatec.bib</code> do Overleaf.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Escreva os Objetivos no LaTeX</h4>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Objetivos</div>
+              <div class="latex-code"><span class="cm">% Ainda na Introdução, após o problema:</span>
+<span class="kw">\subsection</span>{Objetivos}
+
+O \textbf{objetivo geral} é analisar a importância das
+estratégias de marketing digital e da análise demográfica
+para a sustentabilidade de produtos na indústria de jogos.
+
+Os \textbf{objetivos específicos} são:
+<span class="kw">\begin</span>{itemize}
+  <span class="kw">\item</span> Identificar tendências e perfil demográfico do mercado
+          de jogos brasileiro e internacional;
+  <span class="kw">\item</span> Mapear a jornada do jogador com foco em retenção;
+  <span class="kw">\item</span> Propor um framework de ações baseadas em Marketing 4.0.
+<span class="kw">\end</span>{itemize}</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /step-list -->
+
+      <div class="milestone">
+        <div class="milestone-icon">🏁</div>
+        <div>
+          <h4>ENTREGA DA SEMANA 01</h4>
+          <p>Screenshot do Overleaf compilando sem erros com: título, autores, introdução com problema e objetivos. Envie no portal da FATEC.</p>
+        </div>
+      </div>
+
+      <button class="complete-btn" onclick="completeQuest('q1',100)" id="btn-q1">▶ MARCAR MISSÃO COMO CONCLUÍDA</button>
+    </div>
+  </div>
+
+  <!-- ══════ QUEST 2 ══════ -->
+  <div class="section-label">MISSÃO 02</div>
+  <div class="quest-card q2" id="q2">
+    <div class="quest-header" onclick="toggleQuest('q2')" id="qh2">
+      <div class="quest-icon">📚</div>
+      <div class="quest-meta">
+        <div class="quest-week">Semana 02 · Referencial Teórico — Parte 1</div>
+        <div class="quest-title">FUNDAMENTOS — Marketing 1.0 ao 4.0 + Panorama do Mercado</div>
+        <div class="quest-desc">Construir as subseções 2.1 e 2.2 com base em artigos do Elicit.</div>
+      </div>
+      <div class="quest-xp">+100 XP</div>
+      <div class="quest-chevron">▶</div>
+    </div>
+    <div class="quest-body" id="qb2">
+
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Entenda o mapa do Referencial Teórico</h4>
+            <p>Seu referencial teórico terá 4 subseções. Nas semanas 02 e 03 você constrói todas elas:</p>
+            <div class="theory-grid">
+              <div class="theory-card">
+                <div class="tc-label">Subseção 2.1 · Semana 02</div>
+                <h4>Marketing 1.0 ao 4.0</h4>
+                <p>Evolução do marketing: produto → cliente → valores → conectividade humana.</p>
+              </div>
+              <div class="theory-card">
+                <div class="tc-label">Subseção 2.2 · Semana 02</div>
+                <h4>Panorama da Indústria</h4>
+                <p>Dados do mercado: receita global, crescimento Brasil, plataformas dominantes.</p>
+              </div>
+              <div class="theory-card">
+                <div class="tc-label">Subseção 2.3 · Semana 03</div>
+                <h4>Comportamento & Personas</h4>
+                <p>Quem é o jogador? Faixas etárias, gênero, plataformas, hábitos de compra.</p>
+              </div>
+              <div class="theory-card">
+                <div class="tc-label">Subseção 2.4 · Semana 03</div>
+                <h4>Engajamento & Comunidade</h4>
+                <p>Redes sociais, influenciadores, Discord, Twitch e live marketing em games.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Pesquise Subseção 2.1 — Marketing 4.0 no Elicit</h4>
+            <div class="elicit-box">
+              <div class="elicit-query">"Marketing 4.0 Kotler digital connectivity human touch"</div>
+              <div class="elicit-query">"evolution digital marketing 1.0 to 4.0 review"</div>
+              <div class="elicit-query">"marketing 4.0 brand community engagement games"</div>
+              <div class="elicit-tip">💡 Selecione mínimo 3 artigos. No Elicit, use o campo <strong>"Key findings"</strong> para extrair a ideia principal de cada um.</div>
+            </div>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Subseção 2.1</div>
+              <div class="latex-code"><span class="kw">\section</span>{Referencial Teórico}
+
+<span class="kw">\subsection</span>{Fundamentos do Marketing Digital 4.0}
+
+O Marketing 4.0, conceito desenvolvido por
+<span class="kw">\citeauthor</span>{<span class="hl">Kotler2017</span>} (<span class="kw">\citeyear</span>{<span class="hl">Kotler2017</span>}),
+representa a transição de interações digitais para
+interações humanas, reconhecendo que a conectividade
+não elimina a necessidade de \textit{touch points}
+emocionais entre marca e consumidor.
+
+<span class="cm">% Continue citando os artigos encontrados no Elicit</span>
+Segundo <span class="kw">\cite</span>{<span class="hl">AutorElicit2023</span>}, a aplicação
+deste paradigma na indústria de jogos...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Pesquise Subseção 2.2 — Panorama do Mercado no Elicit</h4>
+            <div class="elicit-box">
+              <div class="elicit-query">"Brazilian video game market growth revenue 2022 2024"</div>
+              <div class="elicit-query">"global gaming industry market size mobile PC console"</div>
+              <div class="elicit-query">"independent game development challenges market share"</div>
+              <div class="elicit-tip">💡 Procure dados numéricos (receita em bilhões, número de jogadores, % mobile). Esses números valorizam muito o artigo.</div>
+            </div>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Subseção 2.2</div>
+              <div class="latex-code"><span class="kw">\subsection</span>{Panorama da Indústria de Jogos Digitais}
+
+De acordo com <span class="kw">\cite</span>{<span class="hl">NewZoo2024</span>}, a indústria
+global de jogos digitais movimentou aproximadamente
+\$<span class="str">184</span> bilhões em 2023, com crescimento projetado
+de <span class="str">8\%</span> ao ano até 2027.
+
+No Brasil, o mercado se destaca como o maior da
+América Latina, com mais de <span class="str">90</span> milhões de
+jogadores ativos <span class="kw">\cite</span>{<span class="hl">AutorBrasil2023</span>},
+sendo o segmento mobile responsável por...
+
+<span class="cm">% Use \begin{figure} para inserir gráficos se tiver</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-icon">📊</div>
+        <div>
+          <h4>ENTREGA DA SEMANA 02</h4>
+          <p>Seções 2.1 e 2.2 escritas e compilando. Mínimo 3 citações por subseção, todas no arquivo <code>fatec.bib</code>.</p>
+        </div>
+      </div>
+
+      <button class="complete-btn" onclick="completeQuest('q2',100)" id="btn-q2">▶ MARCAR MISSÃO COMO CONCLUÍDA</button>
+    </div>
+  </div>
+
+  <!-- ══════ QUEST 3 ══════ -->
+  <div class="section-label">MISSÃO 03</div>
+  <div class="quest-card q3" id="q3">
+    <div class="quest-header" onclick="toggleQuest('q3')" id="qh3">
+      <div class="quest-icon">🧪</div>
+      <div class="quest-meta">
+        <div class="quest-week">Semana 03 · Referencial (Parte 2) + Metodologia</div>
+        <div class="quest-title">PERSONAS & MÉTODO CIENTÍFICO</div>
+        <div class="quest-desc">Subseções 2.3 e 2.4 + escrever toda a seção de Metodologia com o ciclo científico.</div>
+      </div>
+      <div class="quest-xp">+100 XP</div>
+      <div class="quest-chevron">▶</div>
+    </div>
+    <div class="quest-body" id="qb3">
+
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Pesquise Subseção 2.3 — Comportamento e Personas no Elicit</h4>
+            <div class="elicit-box">
+              <div class="elicit-query">"gamer demographic profile age gender platform preference"</div>
+              <div class="elicit-query">"player persona design game marketing segmentation"</div>
+              <div class="elicit-query">"mobile gamer behavior monetization in-app purchase"</div>
+              <div class="elicit-tip">💡 Personas são personagens semificionais que representam seu jogador-alvo. Busque artigos que descrevam como criá-las para games.</div>
+            </div>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Subseção 2.3</div>
+              <div class="latex-code"><span class="kw">\subsection</span>{Comportamento do Jogador e Perfil Demográfico}
+
+A construção de \textit{personas} no contexto de jogos
+digitais envolve a análise de variáveis como faixa etária,
+plataforma preferida, tempo de sessão e propensão a
+gastos in-game <span class="kw">\cite</span>{<span class="hl">AutorPersona2022</span>}.
+
+<span class="cm">% Descreva pelo menos 2 perfis de personas baseados
+% nos artigos encontrados no Elicit</span>
+
+Segundo <span class="kw">\cite</span>{<span class="hl">AutorDemografia2023</span>}, jogadores
+entre 18 e 34 anos representam o segmento com maior
+poder de compra e engajamento com conteúdo premium...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Pesquise Subseção 2.4 — Comunidade & Engajamento no Elicit</h4>
+            <div class="elicit-box">
+              <div class="elicit-query">"influencer marketing video games twitch youtube impact"</div>
+              <div class="elicit-query">"gaming community Discord social media engagement retention"</div>
+              <div class="elicit-query">"user generated content game marketing viral"</div>
+            </div>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Subseção 2.4</div>
+              <div class="latex-code"><span class="kw">\subsection</span>{Engajamento, Comunidade e Marketing de Influência}
+
+As comunidades digitais em plataformas como Discord
+e Reddit têm se consolidado como canais fundamentais
+para a retenção orgânica de jogadores
+<span class="kw">\cite</span>{<span class="hl">AutorComunidade2023</span>}.
+
+O marketing de influência, especialmente via
+\textit{streamers} na plataforma Twitch, demonstra
+ROI significativamente superior ao da publicidade
+tradicional para o segmento de games indie
+<span class="kw">\cite</span>{<span class="hl">AutorInfluencer2022</span>}.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Escreva a Metodologia usando o Ciclo Científico</h4>
+            <p>Seu trabalho é uma <strong>Pesquisa Bibliográfica Qualitativa</strong>. Explique como cada etapa do método científico se aplou ao seu artigo:</p>
+
+            <div style="margin: 16px 0; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; padding: 20px;">
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(0,229,255,0.15);border:2px solid var(--neon-cyan);display:flex;align-items:center;justify-content:center;font-size:0.8em;color:var(--neon-cyan);font-weight:700;flex-shrink:0;">1</div>
+                  <div style="font-size:0.88em;color:#b0b0cc;"><strong style="color:var(--neon-cyan)">Observação:</strong> Alta taxa de insucesso comercial em jogos indie.</div>
+                </div>
+                <div style="width:2px;height:14px;background:var(--card-border);margin-left:15px;"></div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.15);border:2px solid var(--neon-gold);display:flex;align-items:center;justify-content:center;font-size:0.8em;color:var(--neon-gold);font-weight:700;flex-shrink:0;">2</div>
+                  <div style="font-size:0.88em;color:#b0b0cc;"><strong style="color:var(--neon-gold)">Hipótese:</strong> O Marketing 4.0 aumenta a retenção do jogador.</div>
+                </div>
+                <div style="width:2px;height:14px;background:var(--card-border);margin-left:15px;"></div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(57,255,20,0.15);border:2px solid var(--neon-green);display:flex;align-items:center;justify-content:center;font-size:0.8em;color:var(--neon-green);font-weight:700;flex-shrink:0;">3</div>
+                  <div style="font-size:0.88em;color:#b0b0cc;"><strong style="color:var(--neon-green)">Experimento:</strong> Revisão bibliográfica sistemática via Elicit.</div>
+                </div>
+                <div style="width:2px;height:14px;background:var(--card-border);margin-left:15px;"></div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,0,110,0.15);border:2px solid var(--neon-pink);display:flex;align-items:center;justify-content:center;font-size:0.8em;color:var(--neon-pink);font-weight:700;flex-shrink:0;">4</div>
+                  <div style="font-size:0.88em;color:#b0b0cc;"><strong style="color:var(--neon-pink)">Análise:</strong> Cruzamento dos artigos com conceitos das aulas.</div>
+                </div>
+                <div style="width:2px;height:14px;background:var(--card-border);margin-left:15px;"></div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(191,0,255,0.15);border:2px solid var(--neon-purple);display:flex;align-items:center;justify-content:center;font-size:0.8em;color:var(--neon-purple);font-weight:700;flex-shrink:0;">5</div>
+                  <div style="font-size:0.88em;color:#b0b0cc;"><strong style="color:var(--neon-purple)">Conclusão:</strong> Framework de Marketing 4.0 para jogos indie.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Seção Metodologia</div>
+              <div class="latex-code"><span class="kw">\section</span>{Metodologia}
+
+Este trabalho caracteriza-se como uma pesquisa de
+natureza \textbf{qualitativa}, do tipo
+\textbf{bibliográfica}, conforme classificação de
+<span class="kw">\cite</span>{<span class="hl">GilMetodos2022</span>}.
+
+O processo seguiu o fluxo do método científico
+(Figura~<span class="kw">\ref</span>{<span class="hl">fig:metodo</span>}), composto pelas
+etapas: \textit{observação} do problema (alta taxa
+de insucesso de jogos independentes);
+\textit{formulação da hipótese} (o Marketing 4.0
+como mitigador de risco comercial);
+\textit{experimentação} via revisão bibliográfica
+sistemática utilizando a plataforma Elicit.com
+para mapeamento de artigos científicos;
+\textit{análise} dos resultados; e
+\textit{conclusão}.
+
+<span class="kw">\begin</span>{figure}[h]
+  <span class="kw">\centering</span>
+  <span class="kw">\includegraphics</span>[width=0.55<span class="kw">\textwidth</span>]{metodocientifico.png}
+  <span class="kw">\caption</span>{Fluxo do Método Científico aplicado à pesquisa.}
+  <span class="kw">\label</span>{fig:metodo}
+<span class="kw">\end</span>{figure}
+
+<span class="cm">% DICA: Faça upload do arquivo metodocientifico.png
+% no Overleaf pelo botão "Upload Files"</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-icon">🧬</div>
+        <div>
+          <h4>ENTREGA DA SEMANA 03</h4>
+          <p>Subseções 2.3 e 2.4 escritas + seção de Metodologia completa com a Figura 1 compilando no PDF.</p>
+        </div>
+      </div>
+
+      <button class="complete-btn" onclick="completeQuest('q3',100)" id="btn-q3">▶ MARCAR MISSÃO COMO CONCLUÍDA</button>
+    </div>
+  </div>
+
+  <!-- ══════ QUEST 4 ══════ -->
+  <div class="section-label">MISSÃO 04</div>
+  <div class="quest-card q4" id="q4">
+    <div class="quest-header" onclick="toggleQuest('q4')" id="qh4">
+      <div class="quest-icon">🗺️</div>
+      <div class="quest-meta">
+        <div class="quest-week">Semana 04 · Resultados & Discussão</div>
+        <div class="quest-title">JORNADA DO JOGADOR — Análise & Framework</div>
+        <div class="quest-desc">Mapear as etapas de retenção e propor o framework de Marketing 4.0 para jogos.</div>
+      </div>
+      <div class="quest-xp">+100 XP</div>
+      <div class="quest-chevron">▶</div>
+    </div>
+    <div class="quest-body" id="qb4">
+
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Pesquise a Jornada do Jogador no Elicit</h4>
+            <div class="elicit-box">
+              <div class="elicit-query">"player journey map game onboarding retention churn"</div>
+              <div class="elicit-query">"game loop engagement funnel acquisition activation retention"</div>
+              <div class="elicit-query">"player lifecycle game marketing awareness consideration conversion"</div>
+              <div class="elicit-query">"free to play monetization player motivation model"</div>
+              <div class="elicit-tip">💡 Mapeie as fases: Descoberta → Aquisição → Ativação → Retenção → Receita → Indicação (framework AARRR aplicado a games).</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Escreva a seção de Resultados e Discussão</h4>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Resultados</div>
+              <div class="latex-code"><span class="kw">\section</span>{Resultados e Discussão}
+
+<span class="kw">\subsection</span>{A Jornada do Jogador e os Pontos de Retenção}
+
+A revisão bibliográfica evidenciou que a jornada do
+jogador pode ser mapeada em seis etapas críticas,
+alinhadas ao framework AARRR
+(\textit{Acquisition, Activation, Retention,
+Revenue, Referral}) <span class="kw">\cite</span>{<span class="hl">AutorAARRR2022</span>}:
+
+<span class="kw">\begin</span>{enumerate}
+  <span class="kw">\item</span> \textbf{Descoberta:} Ações de topo de funil —
+         anúncios, trailers, press kits e influenciadores;
+  <span class="kw">\item</span> \textbf{Aquisição:} Conversão do interesse em download
+         ou compra, influenciada por avaliações e gameplay;
+  <span class="kw">\item</span> \textbf{Ativação:} Primeiros minutos de jogo —
+         onboarding e curva de aprendizado;
+  <span class="kw">\item</span> \textbf{Retenção:} Loops de progressão, eventos e
+         atualizações de conteúdo;
+  <span class="kw">\item</span> \textbf{Receita:} Modelos de monetização éticos
+         alinhados com o perfil da persona;
+  <span class="kw">\item</span> \textbf{Indicação:} Mecânicas sociais e programas
+         de referência para crescimento orgânico.
+<span class="kw">\end</span>{enumerate}
+
+<span class="kw">\subsection</span>{Framework de Marketing 4.0 para Jogos Indies}
+
+Com base na literatura analisada, propõe-se um
+framework de quatro pilares para estúdios independentes:
+
+<span class="kw">\begin</span>{enumerate}
+  <span class="kw">\item</span> \textbf{Conhecer o Jogador:} Construção de personas
+         baseadas em dados demográficos reais;
+  <span class="kw">\item</span> \textbf{Construir Presença Digital:} Conteúdo
+         consistente em redes sociais antes do lançamento;
+  <span class="kw">\item</span> \textbf{Ativar Comunidade:} Discord, beta aberto
+         e programa de influenciadores micro-nicho;
+  <span class="kw">\item</span> \textbf{Medir e Iterar:} Uso de analytics para
+         ajuste contínuo de campanhas e monetização.
+<span class="kw">\end</span>{enumerate}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-icon">🗺️</div>
+        <div>
+          <h4>ENTREGA DA SEMANA 04</h4>
+          <p>Seção de Resultados completa com: jornada do jogador explicada + framework de 4 pilares com citações de apoio.</p>
+        </div>
+      </div>
+
+      <button class="complete-btn" onclick="completeQuest('q4',100)" id="btn-q4">▶ MARCAR MISSÃO COMO CONCLUÍDA</button>
+    </div>
+  </div>
+
+  <!-- ══════ QUEST 5 ══════ -->
+  <div class="section-label">MISSÃO 05 — BOSS FINAL</div>
+  <div class="quest-card q5" id="q5">
+    <div class="quest-header" onclick="toggleQuest('q5')" id="qh5">
+      <div class="quest-icon">👑</div>
+      <div class="quest-meta">
+        <div class="quest-week">Semana 05 · Conclusão + Revisão Final</div>
+        <div class="quest-title">GAME OVER (THE GOOD ENDING) — Conclusão & BibTeX</div>
+        <div class="quest-desc">Escrever conclusão, revisar todas as referências no BibTeX e gerar o PDF final.</div>
+      </div>
+      <div class="quest-xp">+100 XP</div>
+      <div class="quest-chevron">▶</div>
+    </div>
+    <div class="quest-body" id="qb5">
+
+      <div class="step-list">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Escreva a Conclusão</h4>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>main.tex — Conclusão</div>
+              <div class="latex-code"><span class="kw">\section</span>{Conclusão}
+
+Este trabalho investigou como estratégias de Marketing
+Digital 4.0 e o mapeamento da Jornada do Jogador podem
+mitigar o risco de fracasso comercial de jogos digitais
+independentes.
+
+A revisão bibliográfica confirmou a hipótese inicial:
+estúdios que adotam práticas de marketing centradas no
+jogador, com construção de comunidade anterior ao
+lançamento e uso de dados demográficos para segmentação,
+apresentam taxas de retenção significativamente superiores
+<span class="kw">\cite</span>{<span class="hl">AutorRetencao2023</span>}.
+
+Como contribuição prática, propôs-se um framework de
+quatro pilares adaptável a qualquer estúdio indie,
+independentemente do porte ou orçamento.
+
+Como limitação, aponta-se a ausência de estudos de caso
+longitudinais no contexto brasileiro. Pesquisas futuras
+poderiam aplicar o framework proposto a estúdios reais
+e medir seus resultados quantitativamente.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Revise e complete o arquivo fatec.bib</h4>
+            <p>Cada citação usada no texto DEVE ter uma entrada correspondente no .bib. Verifique se todas estão corretas:</p>
+            <div class="latex-box">
+              <div class="latex-header"><div class="latex-dot d1"></div><div class="latex-dot d2"></div><div class="latex-dot d3"></div>fatec.bib — Exemplos de Entradas Completas</div>
+              <div class="latex-code"><span class="cm">% ── LIVRO ──</span>
+@book{<span class="hl">Kotler2017</span>,
+  author    = {Kotler, Philip and Kartajaya, Hermawan
+               and Setiawan, Iwan},
+  title     = {Marketing 4.0: Moving from Traditional
+               to Digital},
+  publisher = {John Wiley \& Sons},
+  year      = {2017},
+  address   = {New Jersey}
+}
+
+<span class="cm">% ── ARTIGO CIENTÍFICO (do Elicit) ──</span>
+@article{<span class="hl">AutorElicit2023</span>,
+  author  = {Sobrenome, Nome},
+  title   = {Título completo do artigo},
+  journal = {Nome da Revista},
+  year    = {2023},
+  volume  = {10},
+  number  = {2},
+  pages   = {100--115},
+  doi     = {10.xxxx/xxxxx}
+}
+
+<span class="cm">% ── RELATÓRIO DE MERCADO ──</span>
+@misc{<span class="hl">NewZoo2024</span>,
+  author       = {{Newzoo}},
+  title        = {Global Games Market Report 2024},
+  year         = {2024},
+  howpublished = {\url{https://newzoo.com}},
+  note         = {Acesso em: jan. 2025}
+}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Checklist Final antes do PDF</h4>
+            <ul class="checklist">
+              <li><div class="cb" onclick="toggleCb(this)"></div> Título, autores e afiliação corretos no main.tex</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> Resumo (Abstract) e Palavras-chave preenchidos</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> Seção 1 — Introdução com problema e objetivos</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> Seção 2 — Referencial com 4 subseções e ≥3 cit. cada</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> Seção 3 — Metodologia com Figura 1 compilando</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> Seção 4 — Resultados com Jornada + Framework</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> Seção 5 — Conclusão respondendo ao problema</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> Todas as citações têm entrada no fatec.bib</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> PDF final compila sem erros no Overleaf</li>
+              <li><div class="cb" onclick="toggleCb(this)"></div> PDF submetido no portal da FATEC ✓</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-icon">🏆</div>
+        <div>
+          <h4>ENTREGA FINAL — SEMANA 05</h4>
+          <p>PDF completo do artigo gerado pelo Overleaf, sem erros de compilação. Este é o <strong>Boss Final</strong>. Boa sorte, dev!</p>
+        </div>
+      </div>
+
+      <button class="complete-btn" onclick="completeQuest('q5',100)" id="btn-q5">⚡ ENTREGAR ARTIGO — QUEST COMPLETA</button>
+    </div>
+  </div>
+
+  <!-- FINAL CARD -->
+  <div class="final-card" id="finalCard" style="display:none;">
+    <span class="trophy">🏆</span>
+    <h2>ARTIGO PUBLICADO!</h2>
+    <p>Você completou todas as 5 missões e dominou o conhecimento sobre Marketing Digital & Monetização aplicado à indústria de jogos. Seu artigo está pronto para o mundo.</p>
+    <div style="font-family:'Share Tech Mono',monospace; font-size:0.8em; color:var(--neon-gold); letter-spacing:2px; margin-top:10px;">
+      500 XP · NÍVEL MAX · ARTIGO COMPLETO
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div id="toast"></div>
+
+<script>
+  // XP system
+  let totalXP = 0;
+  const maxXP = 500;
+  const completedQuests = new Set();
+
+  function updateXP() {
+    const pct = (totalXP / maxXP) * 100;
+    document.getElementById('xpFill').style.width = pct + '%';
+    document.getElementById('xpDisplay').textContent = totalXP + ' / ' + maxXP + ' XP';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function completeQuest(id, xp) {
+    if (completedQuests.has(id)) return;
+    completedQuests.add(id);
+    totalXP += xp;
+    updateXP();
+
+    const btn = document.getElementById('btn-' + id);
+    btn.textContent = '✔ MISSÃO CONCLUÍDA!';
+    btn.classList.add('done');
+
+    showToast('⚡ +' + xp + ' XP CONQUISTADOS!');
+
+    if (completedQuests.size === 5) {
+      setTimeout(() => {
+        document.getElementById('finalCard').style.display = 'block';
+        document.getElementById('finalCard').scrollIntoView({ behavior: 'smooth' });
+      }, 600);
+    }
+  }
+
+  function toggleQuest(id) {
+    const body = document.getElementById('qb' + id.replace('q',''));
+    const header = document.getElementById('qh' + id.replace('q',''));
+    const isOpen = body.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.quest-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.quest-header').forEach(h => h.classList.remove('active'));
+
+    if (!isOpen) {
+      body.classList.add('open');
+      header.classList.add('active');
+    }
+  }
+
+  function toggleCb(el) {
+    if (el.textContent === '✔') {
+      el.textContent = '';
+    } else {
+      el.textContent = '✔';
+    }
+  }
+
+  // Open first quest on load
+  window.addEventListener('DOMContentLoaded', () => {
+    toggleQuest('q1');
+    updateXP();
+  });
+</script>
+</body>
+</html>

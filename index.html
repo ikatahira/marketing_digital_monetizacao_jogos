@@ -174,6 +174,135 @@
             box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
         }
 
+        .activity-card {
+            background: linear-gradient(135deg, #0a0a18 0%, #1a0a2e 100%);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(106, 17, 203, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            border-left: 5px solid #39ff14;
+            grid-column: 1 / -1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, #39ff14, #00e5ff, #bf00ff, #39ff14);
+            background-size: 200% 100%;
+            animation: shimmer 2.5s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .activity-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(57, 255, 20, 0.3);
+        }
+
+        .activity-inner {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .activity-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 10px;
+            background: rgba(57, 255, 20, 0.12);
+            border: 2px solid #39ff14;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7em;
+            flex-shrink: 0;
+            box-shadow: 0 0 14px rgba(57, 255, 20, 0.3);
+        }
+
+        .activity-text { flex: 1; min-width: 180px; }
+
+        .activity-label {
+            font-size: 0.7em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #39ff14;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .activity-title {
+            color: #ffffff;
+            font-size: 1.15em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .activity-sub {
+            color: #a0a0c0;
+            font-size: 0.88em;
+            line-height: 1.5;
+        }
+
+        .activity-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .activity-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.72em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border: 1px solid;
+        }
+
+        .ab-green { color: #39ff14; border-color: #39ff14; background: rgba(57,255,20,0.08); }
+        .ab-cyan  { color: #00e5ff; border-color: #00e5ff; background: rgba(0,229,255,0.08); }
+        .ab-gold  { color: #ffd700; border-color: #ffd700; background: rgba(255,215,0,0.08); }
+
+        .activity-xp {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .xp-circle {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            background: rgba(255, 215, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 14px rgba(255,215,0,0.25);
+        }
+
+        .xp-num {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #ffd700;
+            line-height: 1;
+        }
+
+        .xp-label-sm {
+            font-size: 0.55em;
+            color: #ffd700;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -243,6 +372,31 @@
                     <p class="week-subtitle">Aplicando conceitos modernos de marketing aos jogos</p>
                     <span class="week-badge">MARKETING 4.0</span>
                 </a>
+
+                <!-- ── ATIVIDADE AVALIATIVA ── -->
+                <a href="guia-artigo-gamificado.html" class="activity-card">
+                    <div class="activity-inner">
+                        <div class="activity-icon">⚡</div>
+                        <div class="activity-text">
+                            <div class="activity-label">📋 Atividade Avaliativa · Módulo 1</div>
+                            <div class="activity-title">QUEST: Construção do Artigo Científico</div>
+                            <div class="activity-sub">Guia gamificado passo a passo para produzir o artigo sobre Marketing Digital &amp; Monetização em jogos. Complete 5 missões no Overleaf e acumule 500 XP.</div>
+                            <div class="activity-badges">
+                                <span class="activity-badge ab-green">⚡ 500 XP</span>
+                                <span class="activity-badge ab-cyan">5 MISSÕES</span>
+                                <span class="activity-badge ab-gold">OVERLEAF + ELICIT</span>
+                            </div>
+                        </div>
+                        <div class="activity-xp">
+                            <div class="xp-circle">
+                                <div class="xp-num">500</div>
+                                <div class="xp-label-sm">XP</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- ── /ATIVIDADE AVALIATIVA ── -->
+
             </div>
         </div>
 
