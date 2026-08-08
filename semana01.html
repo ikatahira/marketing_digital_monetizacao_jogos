@@ -27,11 +27,15 @@ html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:var(
 .hfi{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:100px;transition:width .8s ease}
 .ab{font-family:'Fira Code',monospace;font-size:.68rem;color:var(--td);text-decoration:none;background:var(--s2);border:1px solid color-mix(in srgb,var(--a) 20%,transparent);padding:6px 12px;border-radius:6px;transition:all .2s;white-space:nowrap}
 .ab:hover{color:var(--a)}
-.pbw{background:rgba(13,8,18,.85);border-bottom:1px solid var(--b);padding:5px 24px}
-.pbi{max-width:1300px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.pbw{position:sticky;top:66px;z-index:99;background:rgba(13,8,18,.96);backdrop-filter:blur(16px);border-bottom:1px solid color-mix(in srgb,var(--a) 18%,transparent);padding:7px 24px}
+.pbi{max-width:1300px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .pbl{font-family:'Fira Code',monospace;font-size:.58rem;color:var(--tm);white-space:nowrap}
-.pbt{flex:1;height:3px;background:rgba(255,255,255,.05);border-radius:100px;overflow:hidden}
+.pbe{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--a);white-space:nowrap;font-weight:700;letter-spacing:.03em;display:flex;align-items:center;gap:6px}
+.pbdv{width:1px;height:12px;background:var(--b2);flex-shrink:0}
+.pbem{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--td);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbt{flex:1;min-width:70px;height:3px;background:rgba(255,255,255,.05);border-radius:100px;overflow:hidden}
 .pbf{height:100%;background:linear-gradient(90deg,var(--a),var(--pur),var(--a2));border-radius:100px;transition:width .6s ease}
+@media(max-width:768px){.pbem{display:none}}
 .tst{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--s2);border:1px solid color-mix(in srgb,var(--a) 40%,transparent);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.7);transform:translateY(120px) scale(.9);opacity:0;transition:all .45s cubic-bezier(.34,1.56,.64,1);max-width:320px}
 .tst.on{transform:translateY(0) scale(1);opacity:1}
 .ti{font-size:1.5rem}.tt{font-family:'Fira Code',monospace;font-size:.82rem;font-weight:700;color:var(--a)}.tm{font-size:.7rem;color:var(--td);margin-top:2px}
@@ -79,6 +83,17 @@ html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:var(
 .p2 .pac{background:rgba(255,112,67,.12);color:var(--or2)}
 .p2 .pac:hover,.p2.a2 .pac{background:var(--or);color:#fff;font-weight:700}
 .vsm{text-align:center;font-weight:900;font-size:2rem;color:rgba(255,255,255,.1)}
+.welc{background:linear-gradient(135deg,rgba(0,229,255,.07),rgba(156,39,176,.07));border:1px solid color-mix(in srgb,var(--a) 25%,transparent);border-radius:20px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.welc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a),var(--pur),var(--a2))}
+.welct{font-weight:900;font-size:1.15rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.welcp{font-size:.86rem;color:var(--td);line-height:1.7;margin-bottom:18px;max-width:760px}
+.howg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px}
+.howi{background:rgba(255,255,255,.02);border:1px solid var(--b);border-radius:12px;padding:13px}
+.howe{font-size:1.2rem;margin-bottom:6px;display:block}
+.hown{font-family:'Fira Code',monospace;font-size:.68rem;font-weight:700;color:var(--a);margin-bottom:3px}
+.howd{font-size:.72rem;color:var(--tm);line-height:1.5}
+.chk{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.chki{display:flex;align-items:center;gap:9px;font-size:.8rem;color:var(--td);padding:9px 12px;background:rgba(255,255,255,.015);border:1px solid var(--b);border-radius:9px}
 .card{background:var(--s);border:1px solid var(--b);border-radius:20px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--a) 35%,transparent),transparent)}
 .ch2{display:flex;align-items:center;gap:14px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--b)}
@@ -196,8 +211,7 @@ html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:var(
   <div class="hdi">
     <div class="lt">MKTG GAMES</div>
     <div class="ht"><h1>Marketing Digital e Monetização para Jogos</h1><p>Prof. Isaque Katahira · Jogos Digitais 6º Sem · FATEC Ourinhos</p></div>
-    <a href="semana01.html" class="ab">← Sem 01</a>
-    <a href="index.html" class="ab">⌂ Índice</a>
+    <a href="index.html" class="ab">⌂ Índice do Curso</a>
     <div class="hud">
       <div class="hp"><span class="hv" id="hxp">0</span><span class="hl">XP</span></div>
       <div class="hp"><span class="hv" id="hstk">0</span><span class="hl">Streak</span></div>
@@ -205,15 +219,39 @@ html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:var(
     </div>
   </div>
 </header>
-<div class="pbw"><div class="pbi"><span class="pbl">PROGRESSO S01</span><div class="pbt"><div class="pbf" id="prog" style="width:0%"></div></div><span class="pbl" id="progt">0/12</span></div></div>
+<div class="pbw"><div class="pbi">
+  <span class="pbe">📍 MÓDULO 1 · FUNDAMENTOS DO MARKETING DIGITAL <span style="color:var(--tm);font-weight:400">(Semanas 1–5)</span></span>
+  <div class="pbdv"></div>
+  <span class="pbem">Ementa: introdução ao Marketing Digital aplicado a jogos</span>
+  <div class="pbt"><div class="pbf" id="prog" style="width:0%"></div></div>
+  <span class="pbl" id="progt">0/12</span>
+</div></div>
 <main class="pg">
 <section class="hero">
   <div class="ey">SEMANA 01 · MÓDULO 1 — FUNDAMENTOS</div>
   <h2>Introdução ao Marketing Digital</h2>
   <p class="hsub">Marketing de jogos não é só anunciar — é entender por que pessoas jogam, como descobrem novos títulos e o que as faz continuar. Desde os fliperamas dos anos 70 até os live service games de hoje, o marketing acompanhou cada revolução da indústria. Este é o ponto de partida.</p>
-  <div class="hch"><span class="ch cha">⏱ 90 min</span><span class="ch chgo">⚡ 420 XP</span><span class="ch cho">✏️ 2 atividades</span><span class="ch chp">🎮 Fundamentos</span><span class="ch chg">💻 Notebook necessário</span></div>
+  <div class="hch"><span class="ch chgo" style="font-weight:700">🆕 Aula 01 · Boas-vindas</span><span class="ch cha">⏱ 90 min</span><span class="ch chgo">⚡ 420 XP</span><span class="ch cho">✏️ 2 atividades</span><span class="ch chp">🎮 Fundamentos</span><span class="ch chg">💻 Notebook necessário</span></div>
   <div class="hbn">01</div>
 </section>
+<div class="welc">
+  <div class="welct">🎉 Bem-vindo(a) à disciplina!</div>
+  <p class="welcp">Esta é a <strong style="color:var(--tx)">primeira aula</strong> de Marketing Digital e Monetização para Jogos. O curso inteiro funciona como um jogo: você ganha XP, sobe de nível, desbloqueia conquistas e pode jogar em "Modo Duelo" contra um colega. Veja rapidamente como tudo funciona antes de começar:</p>
+  <div class="howg">
+    <div class="howi"><span class="howe">⚡</span><div class="hown">XP</div><div class="howd">Pontos ganhos ao completar objetivos, flashcards, quiz e atividades</div></div>
+    <div class="howi"><span class="howe">🔥</span><div class="hown">STREAK</div><div class="howd">Sequência de acertos no quiz — erros reiniciam o contador</div></div>
+    <div class="howi"><span class="howe">📈</span><div class="hown">NÍVEL</div><div class="howd">Novato → Aprendiz → Analista → Expert → Mestre → Lendário</div></div>
+    <div class="howi"><span class="howe">⚔️</span><div class="hown">MODO DUELO</div><div class="howd">Dois jogadores na mesma aula competem pelo maior XP da semana</div></div>
+    <div class="howi"><span class="howe">🏆</span><div class="hown">CONQUISTAS</div><div class="howd">Badges especiais desbloqueadas ao dominar cada tipo de atividade</div></div>
+  </div>
+  <div class="slbl" style="margin:0 0 10px">ANTES DE COMEÇAR</div>
+  <div class="chk">
+    <div class="chki">💻 Notebook ou computador com internet</div>
+    <div class="chki">📝 Este material vale como registro de presença e nota</div>
+    <div class="chki">🔗 Acesse o <a href="index.html" style="color:var(--a)">índice do curso</a> para ver as 20 semanas</div>
+    <div class="chki">⏱️ Reserve ~90 minutos para completar tudo</div>
+  </div>
+</div>
 <div class="duo">
   <div class="dh">⚔️ MODO DUELO — SEMANA 01</div>
   <div class="dg">
@@ -260,8 +298,17 @@ html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:var(
   <div class="ch2"><span class="ci">🏆</span><div class="ctt"><div class="ctit">CONQUISTAS — SEMANA 01</div></div></div>
   <div class="ag" id="ag"></div>
 </div>
+<div class="card">
+  <div class="ch2"><span class="ci">🔗</span><div class="ctt"><div class="ctit">RECURSOS COMPLEMENTARES</div><div class="csub">Fontes reais usadas pela indústria — vale a pena explorar</div></div></div>
+  <div class="chk">
+    <div class="chki">📊 <a href="https://newzoo.com" target="_blank" rel="noopener" style="color:var(--a)">Newzoo</a> — relatórios do mercado global de games</div>
+    <div class="chki">📈 <a href="https://trends.google.com" target="_blank" rel="noopener" style="color:var(--a)">Google Trends</a> — interesse de busca por jogo/gênero</div>
+    <div class="chki">🎮 <a href="https://store.steampowered.com" target="_blank" rel="noopener" style="color:var(--a)">Steam</a> — páginas de loja, wishlists e reviews</div>
+    <div class="chki">📰 <a href="https://gamesindustry.biz" target="_blank" rel="noopener" style="color:var(--a)">GamesIndustry.biz</a> — notícias e análises do setor</div>
+  </div>
+</div>
 <div class="cal cw" style="margin-bottom:20px"><span class="cico">📌</span><div class="ctx"><b>Para a Próxima Aula (Semana 02):</b> Estudar o mercado de jogos brasileiro: tamanho, crescimento, principais plataformas, perfil do jogador nacional, rankings de games mais jogados no Brasil e dados do setor.</div></div>
-<div class="bn"><a href="semana01.html" class="bna">← Semana 01</a><a href="semana02.html" class="bna">Semana 02 →</a></div>
+<div class="bn"><a href="index.html" class="bna">⌂ Voltar ao Índice</a><a href="semana02.html" class="bna">Semana 02 →</a></div>
 </main>
 <script>
 let xp=0,stk=0,acts=0,ap=1,p1x=0,p2x=0,p1b=0,p2b=0;
@@ -301,7 +348,7 @@ const DP=[["Pré-lançamento", "Fase de awareness, teaser e construção de hype
   });
   DP.forEach((p,i)=>{
     const z=document.createElement('div');z.className='dz';z.dataset.i=i;z.dataset.c=p[0];
-    z.innerHTML='<span style="font-size:.68rem;font-family:'Fira Code',monospace;color:var(--tm);flex-shrink:0">'+(i+1)+'.</span><span class="dzt">'+p[1]+'</span>';
+    z.innerHTML='<span style="font-size:.68rem;font-family:\'Fira Code\',monospace;color:var(--tm);flex-shrink:0">'+(i+1)+'.</span><span class="dzt">'+p[1]+'</span>';
     z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('dov');});
     z.addEventListener('dragleave',()=>z.classList.remove('dov'));
     z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('dov');if(dragSrc){dragAns[i]=dragSrc.dataset.v;z.dataset.d=dragSrc.dataset.v;z.querySelector('.dzt').textContent=dragSrc.dataset.v+' → '+p[1];dragSrc.style.opacity='.35';dragSrc=null;}});
