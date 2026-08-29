@@ -807,6 +807,51 @@ body {
 }
 .bnav-a:hover { color: var(--orange2); border-color: rgba(255,112,67,0.35); }
 
+/* === COMBO / LEVEL UP === */
+.combo-flag {
+  position: fixed;
+  top: 90px;
+  right: 24px;
+  z-index: 9998;
+  background: linear-gradient(135deg, var(--pink), var(--orange));
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px 18px;
+  border-radius: 100px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transform: scale(0) rotate(-8deg);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.combo-flag.on { transform: scale(1) rotate(-4deg); opacity: 1; }
+.lvlup-ovl {
+  position: fixed; inset: 0; z-index: 10000;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(13,8,18,0.82); backdrop-filter: blur(6px);
+}
+.lvlup-ovl.on { display: flex; }
+.lvlup-card {
+  background: var(--surface); border: 1px solid rgba(255,215,64,0.4);
+  border-radius: 22px; padding: 40px 50px; text-align: center;
+  box-shadow: 0 0 80px rgba(255,215,64,0.25);
+  animation: lvlPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes lvlPop { from{transform:scale(0.6);opacity:0} to{transform:scale(1);opacity:1} }
+.lvlup-card .lu-ico { font-size: 3rem; margin-bottom: 10px; }
+.lvlup-card .lu-title { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; }
+.lvlup-card .lu-name { font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, var(--gold), var(--orange2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 8px 0 18px; }
+.lvlup-card button { background: linear-gradient(135deg, var(--purple), var(--orange)); border: none; color: #fff; padding: 10px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; }
+.confetti { position: fixed; top: -10px; z-index: 9997; pointer-events: none; border-radius: 2px; }
+
+/* === BOSS ROUND === */
+.boss-box { background: linear-gradient(135deg, rgba(233,30,99,0.08), rgba(156,39,176,0.08)); border: 1px solid rgba(233,30,99,0.3); border-radius: var(--r); padding: 22px; text-align: center; }
+.boss-hp-track { height: 18px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; margin: 14px 0; border: 1px solid var(--border2); }
+.boss-hp-fill { height: 100%; background: linear-gradient(90deg, var(--pink), #ff1744); transition: width 0.5s ease; }
+.boss-btn { background: linear-gradient(135deg, var(--pink), var(--orange)); border: none; color: #fff; padding: 12px 26px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.9rem; margin-top: 6px; }
+.boss-log { font-family: 'Fira Code', monospace; font-size: 0.68rem; color: var(--text-muted); margin-top: 12px; min-height: 16px; }
+
 @media (max-width: 768px) {
   .hud { display: none; }
   .page { padding: 16px; }
@@ -816,6 +861,8 @@ body {
   .rub { grid-template-columns: 1fr 1fr; }
   .hero-bg-num { display: none; }
   .comp-table { font-size: 0.72rem; }
+  .combo-flag { right: 10px; top: 70px; font-size: 0.76rem; padding: 8px 14px; }
+  .lvlup-card { padding: 30px 24px; }
 }
 </style>
 </head>
@@ -826,6 +873,17 @@ body {
 <div class="toast" id="toast">
   <div class="t-ico" id="t-ico">🌍</div>
   <div><div class="t-title" id="t-title">+XP</div><div class="t-msg" id="t-msg"></div></div>
+</div>
+
+<div class="combo-flag" id="combo-flag">🔥 COMBO x0</div>
+
+<div class="lvlup-ovl" id="lvlup-ovl">
+  <div class="lvlup-card">
+    <div class="lu-ico">🎉</div>
+    <div class="lu-title">SUBIU DE NÍVEL</div>
+    <div class="lu-name" id="lu-name">Aprendiz</div>
+    <button onclick="document.getElementById('lvlup-ovl').classList.remove('on')">Continuar →</button>
+  </div>
 </div>
 
 <!-- HEADER -->
@@ -1031,6 +1089,23 @@ body {
   <div id="quiz"></div>
 </div>
 
+<!-- BOSS ROUND -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">👹</span>
+    <div class="ch-tg"><div class="ch-title">BOSS ROUND — EXPANSÃO INTERNACIONAL</div><div class="ch-sub">10 cenários reais de lançamento global. Erre 4 vezes e o boss resiste!</div></div>
+    <div class="xp-tag">até +180 XP</div>
+  </div>
+  <div class="boss-box">
+    <div style="font-size:2.4rem">👹🌐</div>
+    <div class="boss-hp-track"><div class="boss-hp-fill" id="boss-hp" style="width:100%"></div></div>
+    <div id="boss-q" style="font-weight:700;font-size:0.92rem;margin:10px 0"></div>
+    <div id="boss-opts" style="display:flex;flex-direction:column;gap:8px;max-width:520px;margin:0 auto"></div>
+    <button class="boss-btn" id="boss-start" onclick="startBoss()">⚔️ Enfrentar o Boss</button>
+    <div class="boss-log" id="boss-log"></div>
+  </div>
+</div>
+
 <!-- CONQUISTAS -->
 <div class="card">
   <div class="ch">
@@ -1074,10 +1149,11 @@ body {
 // ===========================
 //  STATE
 // ===========================
-let xp=0, streak=0, acts=0;
+let xp=0, streak=0, acts=0, combo=0, bestCombo=0, curLevel='Novato';
 let ap=1;
 let p1x=0, p2x=0, p1b=0, p2b=0;
-const MAX=450;
+const MAX=600;
+const ACTS_TOTAL=12;
 let wClicks=0, accSet=new Set(), objArr=[];
 
 // ===========================
@@ -1103,6 +1179,42 @@ function updBdg() {
 //  GAMIFICATION
 // ===========================
 function gainXP(v, ic, msg) { xp+=v; addPXP(v); updateHUD(); toast(ic||'⚡',`+${v} XP`, msg||''); }
+function bumpCombo(ok) {
+  if(ok){
+    combo++;
+    bestCombo=Math.max(bestCombo,combo);
+    if(combo>=2){
+      const cf=document.getElementById('combo-flag');
+      cf.textContent=`🔥 COMBO x${combo}`;
+      cf.classList.add('on');
+      clearTimeout(window._cf);
+      window._cf=setTimeout(()=>cf.classList.remove('on'),1600);
+      if(combo>=3){ const bonus=Math.min(combo,10); xp+=bonus; addPXP(bonus); toast('🔥',`Combo x${combo}!`,`Bônus de +${bonus} XP`); }
+      if(combo>=8){ unlock('ach-combo','Combo Master'); }
+    }
+  } else { combo=0; }
+}
+function spawnConfetti(n) {
+  const colors=['#ff7043','#9c27b0','#00e5ff','#69f0ae','#ffd740','#e91e63'];
+  for(let i=0;i<(n||24);i++){
+    const p=document.createElement('div');
+    p.className='confetti';
+    const size=6+Math.random()*6;
+    p.style.width=size+'px'; p.style.height=size+'px';
+    p.style.left=(Math.random()*100)+'vw';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(p);
+    const dur=1800+Math.random()*1400;
+    try {
+      p.animate([
+        {transform:`translateY(0) rotate(0deg)`, opacity:1},
+        {transform:`translateY(${window.innerHeight+40}px) rotate(${360+Math.random()*360}deg)`, opacity:0.9}
+      ],{duration:dur, easing:'ease-in'});
+    } catch(e) { /* Element.animate indisponível — ignora silenciosamente */ }
+    setTimeout(()=>p.remove(),dur+50);
+  }
+}
 function toast(ic,t,m) {
   document.getElementById('t-ico').textContent=ic;
   document.getElementById('t-title').textContent=t;
@@ -1119,6 +1231,7 @@ function unlock(id,name) {
     if(ap===1)p1b++; else p2b++;
     updBdg();
     toast('🏆','Badge!',name);
+    spawnConfetti(16);
   }
 }
 function updateHUD() {
@@ -1127,12 +1240,18 @@ function updateHUD() {
   const pct=Math.min(Math.round(xp/MAX*100),100);
   document.getElementById('h-bar').style.width=pct+'%';
   document.getElementById('h-pct').textContent=pct+'%';
-  const lvs=[[0,'Novato'],[60,'Aprendiz'],[150,'Analista'],[260,'Estrategista'],[380,'Especialista'],[450,'Game Marketer']];
+  const lvs=[[0,'Novato'],[70,'Aprendiz'],[160,'Analista'],[280,'Estrategista'],[420,'Especialista'],[600,'Game Marketer 🏆']];
   let lv=lvs[0][1]; for(const[t,n]of lvs)if(xp>=t)lv=n;
   document.getElementById('h-lv').textContent=lv;
-  acts=Math.min(acts,10);
-  document.getElementById('prog').style.width=(acts/10*100)+'%';
-  document.getElementById('prog-txt').textContent=`${acts}/10`;
+  if(lv!==curLevel && xp>0){
+    curLevel=lv;
+    document.getElementById('lu-name').textContent=lv;
+    document.getElementById('lvlup-ovl').classList.add('on');
+    spawnConfetti(30);
+  }
+  acts=Math.min(acts,ACTS_TOTAL);
+  document.getElementById('prog').style.width=(acts/ACTS_TOTAL*100)+'%';
+  document.getElementById('prog-txt').textContent=`${acts}/${ACTS_TOTAL}`;
 }
 
 // ===========================
@@ -1144,7 +1263,7 @@ const OBJS=[
   'Compreender diferenças culturais que afetam a aceitação de jogos por região',
   'Entender o que é localização x tradução e por que isso é crítico',
   'Analisar estratégias de internacionalização de jogos brasileiros de sucesso',
-  'Planejar o lançamento de um jogo fictício em um mercado internacional específico',
+  'Planejar a adaptação do AgroQuest para um público ou mercado internacional específico',
 ];
 (function(){
   const l=document.getElementById('objs');
@@ -1157,7 +1276,7 @@ const OBJS=[
       d.classList.toggle('done');
       objArr[i]=d.classList.contains('done');
       const c=d.querySelector('.obj-ck');
-      if(objArr[i]){c.textContent='✓';gainXP(5,'🎯','Objetivo marcado!');streak++;}
+      if(objArr[i]){c.textContent='✓';gainXP(5,'🎯','Objetivo marcado!');streak++;bumpCombo(true);}
       else{c.textContent='';streak=Math.max(0,streak-1);}
       if(objArr.every(Boolean)){gainXP(30,'🎯','Todos objetivos!');unlock('ach-obj','Objetivos Completos');}
       acts++;updateHUD();
@@ -1189,7 +1308,7 @@ const WORLDS=[
     const style=document.createElement('style');
     style.textContent=`.wm-card:nth-child(${WORLDS.indexOf(w)+1})::after{background:${w.clr}}`;
     document.head.appendChild(style);
-    d.onclick=()=>{ wClicks++; gainXP(3,'🌍','Mercado explorado!'); if(wClicks>=6)unlock('ach-world','Explorador Global'); };
+    d.onclick=()=>{ wClicks++; gainXP(3,'🌍','Mercado explorado!'); bumpCombo(true); if(wClicks>=6)unlock('ach-world','Explorador Global'); };
     g.appendChild(d);
   });
 })();
@@ -1288,7 +1407,7 @@ function tAcc(h,i){
   document.querySelectorAll('.ai').forEach(a=>a.classList.remove('open'));
   if(!was){
     item.classList.add('open');
-    if(!accSet.has(i)){accSet.add(i);gainXP(5,'📖','Região estudada!');if(accSet.size>=4){unlock('ach-reader','Leitor Global');acts++;updateHUD();}}
+    if(!accSet.has(i)){accSet.add(i);gainXP(5,'📖','Região estudada!');bumpCombo(true);if(accSet.size>=4){unlock('ach-reader','Leitor Global');acts++;updateHUD();}}
   }
 }
 
@@ -1329,22 +1448,22 @@ const ACTS=[
      {l:'Proficiente',d:'Comparação detalhada com fontes, análise das oportunidades para o BR, apresentação clara',c:'rp'},
      {l:'Excelente',d:'Dados cruzados com cases reais, análise crítica de oportunidades e riscos, proposta de estratégia de entrada fundamentada',c:'re'},
    ],xp:50,id:'a1',ach:'ach-a1',an:'Analista Global'},
-  {num:'02',title:'Estratégia de Localização para um Jogo Fictício',
+  {num:'02',title:'Estratégia de Localização do AgroQuest',
    tags:[{t:'⏱ 35 min',c:'at-o'},{t:'💻 Google Docs',c:'at-c'},{t:'⚡ 50 XP',c:'at-g'}],
-   obj:'Planejar a localização completa de um jogo fictício para um mercado internacional específico, demonstrando compreensão das diferenças culturais.',
+   obj:'Planejar a localização do AgroQuest — o jogo que vocês estão desenvolvendo para disseminar o Agronegócio em feiras e para alunos do Ensino Médio — para um público ou mercado internacional específico, demonstrando compreensão das diferenças culturais.',
    steps:[
-     {t:'Criem juntos um jogo fictício simples: defina gênero, plataforma, premissa em 2 frases e modelo de monetização'},
-     {t:'Cada um escolhe um mercado diferente para localizar: China, Japão, EUA ou Europa'},
-     {t:'Liste todos os elementos que precisariam ser adaptados: linguagem, UI/UX, conteúdo visual, mecânicas de monetização, tom da comunicação'},
-     {t:'Pesquise 1 concorrente que já existe nesse mercado — o que ele faz diferente do padrão brasileiro?'},
-     {t:'Defina uma estratégia de <strong>soft launch</strong>: em qual país menor você testaria antes do lançamento no mercado principal? Por quê?'},
-     {t:'Escreva no Google Docs: um plano de localização de 1 página com seções claras — compare depois com o colega para ver as diferenças de abordagem'},
+     {t:'Revisem juntos o AgroQuest como ele é hoje: gênero, formato de apresentação (feira/estande), público-alvo (alunos do Ensino Médio) e objetivo pedagógico sobre Agronegócio'},
+     {t:'Cada um escolhe um país ou região diferente onde o AgroQuest poderia circular em feiras/escolas de agronegócio: EUA (Corn Belt), Argentina, União Europeia ou China'},
+     {t:'Liste todos os elementos que precisariam ser adaptados: linguagem, referências de cultivo e pecuária locais, unidades de medida, exemplos de commodities, tom de comunicação para estudantes daquele país'},
+     {t:'Pesquise 1 jogo ou material educativo sobre agronegócio/agricultura que já exista nesse país — o que ele faz diferente do padrão brasileiro?'},
+     {t:'Defina uma estratégia de <strong>"soft launch"</strong>: em qual feira, escola ou estado brasileiro vocês testariam essa versão adaptada antes de levá-la ao público internacional? Por quê?'},
+     {t:'Escreva no Google Docs: um plano de localização de 1 página com seções claras para o AgroQuest — compare depois com o colega para ver as diferenças de abordagem entre os países escolhidos'},
    ],
    rub:[
-     {l:'Insuficiente',d:'Localização confundida com tradução, sem adaptação cultural real',c:'ri'},
-     {l:'Básico',d:'Adaptações identificadas superficialmente, plano de soft launch sem justificativa',c:'rb'},
-     {l:'Proficiente',d:'Adaptações culturais específicas justificadas, plano de soft launch fundamentado em dados, concorrente analisado',c:'rp'},
-     {l:'Excelente',d:'Plano completo com adaptações profundas (UI, monetização, tom, arte), soft launch estratégico com métricas de sucesso definidas',c:'re'},
+     {l:'Insuficiente',d:'Localização confundida com tradução, sem adaptação cultural real ao contexto agrícola do país escolhido',c:'ri'},
+     {l:'Básico',d:'Adaptações identificadas superficialmente, plano de teste sem justificativa',c:'rb'},
+     {l:'Proficiente',d:'Adaptações culturais e agrícolas específicas justificadas, plano de teste fundamentado, material concorrente analisado',c:'rp'},
+     {l:'Excelente',d:'Plano completo com adaptações profundas (linguagem, referências de cultivo, tom, formato de feira), estratégia de teste estratégica com critérios de sucesso definidos',c:'re'},
    ],xp:50,id:'a2',ach:'ach-a2',an:'Estrategista de Localização'},
   {num:'03',title:'Mapa de Oportunidades Globais para Jogos BR',
    tags:[{t:'⏱ 30 min',c:'at-p'},{t:'💻 Canva/Slides',c:'at-c'},{t:'⚡ 50 XP',c:'at-g'}],
@@ -1387,7 +1506,7 @@ const ACTS=[
 function doneAct(id,ach,an,v,btn){
   if(btn.disabled)return;
   btn.disabled=true;btn.textContent='✅ Concluída!';
-  gainXP(v,'✏️',`Atividade concluída!`);unlock(ach,an);acts++;updateHUD();
+  gainXP(v,'✏️',`Atividade concluída!`);bumpCombo(true);unlock(ach,an);acts++;updateHUD();
 }
 
 // ===========================
@@ -1427,8 +1546,8 @@ function ansQ(qi,ch){
   fb.textContent=ok?q.fb:'❌ Incorreto. '+q.fb;
   fb.className='qfb on '+(ok?'ok':'fail');
   document.getElementById(`qnr${qi}`).classList.add('on');
-  if(ok){qCor++;gainXP(q.xp,'🧠','Resposta correta!');streak++;}
-  else{streak=Math.max(0,streak-1);updateHUD();}
+  if(ok){qCor++;gainXP(q.xp,'🧠','Resposta correta!');streak++;bumpCombo(true);}
+  else{streak=Math.max(0,streak-1);bumpCombo(false);updateHUD();}
   qAns[qi]=ok;
   document.getElementById('qpf').style.width=((qi+1)/QS.length*100)+'%';
   document.getElementById('qcnt').textContent=`${qi+1} / ${QS.length}`;
@@ -1444,11 +1563,11 @@ function showRes(){
   const nm=document.getElementById(`p${ap}n`).value||`Player ${ap}`;
   document.getElementById('qrx').textContent=`+${earned} XP para ${nm}!`;
   if(qCor>=8)unlock('ach-quiz','Quiz Aprovado');
-  if(qCor===10)unlock('ach-perfect','Quiz Perfeito!');
+  if(qCor===10){unlock('ach-perfect','Quiz Perfeito!');spawnConfetti(30);}
   acts++;updateHUD();
 }
 function rstQ(){
-  qCor=0;qAns={};
+  qCor=0;qAns={};combo=0;
   document.getElementById('qres').classList.remove('on');
   document.getElementById('qpf').style.width='0%';
   document.getElementById('qcnt').textContent='0 / 10';
@@ -1474,11 +1593,91 @@ const ACHS=[
   {id:'ach-a3',e:'🧭',n:'Cartógrafo de Mercados'},
   {id:'ach-quiz',e:'🎓',n:'Quiz Aprovado'},
   {id:'ach-perfect',e:'💎',n:'Quiz Perfeito'},
+  {id:'ach-boss',e:'👹',n:'Domador de Boss'},
+  {id:'ach-combo',e:'🔥',n:'Combo Master'},
 ];
 (function(){
   const g=document.getElementById('ach-grid');
   ACHS.forEach(a=>{const d=document.createElement('div');d.className='ach';d.id=a.id;d.innerHTML=`<span class="ach-e">${a.e}</span><div class="ach-n">${a.n}</div>`;g.appendChild(d);});
 })();
+
+// ===========================
+//  BOSS ROUND — EXPANSÃO INTERNACIONAL
+// ===========================
+const BOSSQ=[
+  {q:'"Meu jogo faz sucesso no Brasil e quero lançar direto na China." Qual o maior risco dessa decisão?',opts:['Nenhum, a China aceita qualquer jogo estrangeiro sem restrições','Pular o processo de licenciamento (ISBN) e a parceria obrigatória com publisher local','O jogo ficar caro demais para o público chinês','Não existir internet rápida o suficiente na China'],c:1,fb:'Sem ISBN e publisher local (Tencent, NetEase, Perfect World), o jogo simplesmente não pode ser publicado legalmente na China — o processo de aprovação pode levar de 6 a 18 meses.'},
+  {q:'"Traduzi meu jogo para o japonês, mas as vendas não decolam." O que provavelmente falta?',opts:['Reduzir o preço do jogo pela metade','Localização real: UI, fontes, tom de comunicação e adequação cultural além da tradução literal','Lançar em mais idiomas ao mesmo tempo','Remover completamente o texto do jogo'],c:1,fb:'Tradução troca palavras; localização adapta cultura — layout de leitura, tom indireto de comunicação, e mesmo o tipo de fonte usada fazem diferença real na recepção do público japonês.'},
+  {q:'"Quero testar meu jogo antes de gastar toda a verba de marketing nos EUA." Qual é a jogada mais estratégica?',opts:['Lançar direto no mercado principal e torcer','Fazer soft launch em mercados menores (Canadá, Austrália) para validar retenção e ARPU antes de escalar','Cancelar o lançamento internacional','Lançar simultaneamente em 10 países'],c:1,fb:'Soft launch é exatamente para isso: validar métricas (retenção D1/D7/D30, ARPU, CPI) com risco e custo baixos antes de investir pesado nos mercados prioritários.'},
+  {q:'"Meu jogo indie tem orçamento de marketing pequeno e eu quero entrar no mercado americano." Por onde começar?',opts:['Comprar exclusividade de console imediatamente','Steam (PC), pela menor barreira de entrada e acesso a reviews orgânicos','Investir tudo em anúncios de TV nacional','Só lançar depois de fechar contrato com a Netflix'],c:1,fb:'Steam tem taxa única de $100, sem exigir exclusividade, e dá acesso a uma base de jogadores que descobre jogos por reviews orgânicos — ideal para orçamento indie limitado.'},
+  {q:'"Quero incluir loot boxes no meu jogo para monetizar melhor na Europa." O que preciso considerar antes?',opts:['Loot boxes são livres em qualquer país europeu, sem restrição','Alguns países (como Bélgica e Holanda) já classificaram loot boxes como jogo de azar e as proibiram','A Europa exige que todo jogo tenha loot boxes obrigatoriamente','Loot boxes só existem em jogos mobile'],c:1,fb:'Diferente do Japão e China, parte da Europa está regulando pesado o modelo de pacotes aleatórios pagos — é essencial checar a legislação de cada país antes de incluir esse mecanismo.'},
+  {q:'"Meu jogo é um MOBA e quero saber onde investir marketing primeiro." Qual mercado tem MOBA como gênero historicamente forte?',opts:['Coreia do Sul','Reino Unido','Alemanha','México'],c:0,fb:'A Coreia do Sul tem tradição forte em MOBA, FPS e MMO, com uma cultura de esports muito desenvolvida — um dos motivos de seu peso desproporcional ao tamanho do país.'},
+  {q:'"Meu publisher disse que o custo de aquisição de usuários (UA) nos EUA está mais alto do que em qualquer outro mercado." Por que isso acontece?',opts:['Porque a internet americana é mais lenta','Alta concorrência de grandes publishers disputando o mesmo inventário de anúncios','Porque o governo americano taxa anúncios de jogos','Porque os EUA não têm público gamer suficiente'],c:1,fb:'Grandes publishers (Activision, EA, Take-Two, Disney, King) disputam o mesmo inventário de anúncios no Facebook, TikTok e iOS, elevando o CPI para $5-15 — mas também gerando a maior LTV do mundo.'},
+  {q:'"Quero saber se meu jogo brasileiro teria mais chance de sucesso no Japão ou na Alemanha." O que mais pesa nessa decisão?',opts:['O preço do dólar no dia do lançamento','O ajuste estético/cultural do jogo e o modelo de monetização aceito em cada mercado','Apenas o tamanho da população de cada país','Nenhum dos dois mercados importa para jogos brasileiros'],c:1,fb:'Japão tem alta tolerância a gacha e valoriza estética anime/RPG; a Alemanha/Europa é mais regulada, prefere PC e é mais sensível a mecânicas de pagar-para-vencer — a escolha depende do fit cultural do jogo.'},
+  {q:'"Um jogo de corrida retrô brasileiro fez sucesso mundial sem grandes adaptações culturais." Que estratégia de design explica isso?',opts:['Usar apenas elementos brasileiros bem específicos','Escolher uma estética universal (retrô/nostálgica) que não depende de contexto cultural local','Traduzir para 50 idiomas simultaneamente','Lançar apenas no Brasil antes de qualquer outro país'],c:1,fb:'Esse é o case do Horizon Chase: a estética retrô dos anos 80 gera nostalgia positiva em qualquer cultura, evitando boa parte do problema de localização antes mesmo de ele aparecer.'},
+  {q:'"Tenho um jogo casual mobile e quero definir a sequência ideal de expansão internacional." Qual caminho é mais sólido?',opts:['China primeiro, por ser o maior mercado','Soft launch (Canadá/Austrália) → ajustar métricas → escalar para EUA/Europa → avaliar China depois','EUA direto, sem testes prévios','Japão primeiro, porque paga mais por usuário'],c:1,fb:'A sequência mais segura é validar com soft launch em mercados menores, ajustar o loop de monetização com dados reais, escalar para EUA/Europa, e só depois avaliar a China — que exige uma estratégia à parte por sua complexidade regulatória.'},
+];
+let bossIdx=0, bossHP=100, bossMiss=0, bossActive=false;
+const BOSS_MAX_MISS=4;
+function startBoss(){
+  if(bossActive)return;
+  bossActive=true; bossIdx=0; bossHP=100; bossMiss=0;
+  document.getElementById('boss-hp').style.width='100%';
+  document.getElementById('boss-start').style.display='none';
+  document.getElementById('boss-log').textContent='';
+  renderBossQ();
+}
+function renderBossQ(){
+  if(bossIdx>=BOSSQ.length){ bossWin(); return; }
+  const q=BOSSQ[bossIdx];
+  document.getElementById('boss-q').textContent=`Cenário ${bossIdx+1}/${BOSSQ.length}: ${q.q}`;
+  const wrap=document.getElementById('boss-opts');
+  wrap.innerHTML='';
+  q.opts.forEach((o,oi)=>{
+    const b=document.createElement('button');
+    b.className='qo'; b.style.textAlign='left';
+    b.textContent=`${String.fromCharCode(65+oi)}) ${o}`;
+    b.onclick=()=>bossAnswer(oi,b,q);
+    wrap.appendChild(b);
+  });
+}
+function bossAnswer(oi,btn,q){
+  document.querySelectorAll('#boss-opts .qo').forEach(b=>b.disabled=true);
+  if(oi===q.c){
+    btn.classList.add('correct');
+    bossHP=Math.max(0,bossHP-(100/BOSSQ.length));
+    document.getElementById('boss-hp').style.width=bossHP+'%';
+    document.getElementById('boss-log').textContent='💥 Acertou! O boss perdeu HP.';
+    gainXP(12,'⚔️','Golpe certeiro!'); bumpCombo(true);
+    bossIdx++;
+    setTimeout(()=>{ bossHP<=0 ? bossWin() : renderBossQ(); },900);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#boss-opts .qo')[q.c].classList.add('correct');
+    bossMiss++;
+    bumpCombo(false);
+    document.getElementById('boss-log').textContent=`❌ Errou! ${q.fb} (${bossMiss}/${BOSS_MAX_MISS} erros)`;
+    if(bossMiss>=BOSS_MAX_MISS){ setTimeout(bossLose,1200); }
+    else { bossIdx++; setTimeout(renderBossQ,1800); }
+  }
+}
+function bossWin(){
+  bossActive=false;
+  document.getElementById('boss-q').textContent='🎉 Boss derrotado!';
+  document.getElementById('boss-opts').innerHTML='';
+  document.getElementById('boss-hp').style.width='0%';
+  document.getElementById('boss-log').textContent='Sua estratégia de internacionalização convenceu até o cliente mais difícil.';
+  document.getElementById('boss-start').textContent='↺ Enfrentar Novamente';
+  document.getElementById('boss-start').style.display='inline-block';
+  gainXP(60,'👹','Boss derrotado!'); unlock('ach-boss','Domador de Boss'); spawnConfetti(28); acts++; updateHUD();
+}
+function bossLose(){
+  bossActive=false;
+  document.getElementById('boss-q').textContent='😵 O boss resistiu desta vez...';
+  document.getElementById('boss-opts').innerHTML='';
+  document.getElementById('boss-log').textContent='Revise as estratégias de internacionalização e tente de novo!';
+  document.getElementById('boss-start').textContent='↺ Tentar Novamente';
+  document.getElementById('boss-start').style.display='inline-block';
+}
 
 // ===========================
 //  INIT
