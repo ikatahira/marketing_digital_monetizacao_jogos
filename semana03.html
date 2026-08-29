@@ -1065,6 +1065,24 @@ body {
   <div class="vid-grid" id="vid-grid"></div>
 </div>
 
+<!-- LEITURA COMPLEMENTAR -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">📄</span>
+    <div class="ch-tg"><div class="ch-title">LEITURA COMPLEMENTAR — ARTIGO CIENTÍFICO</div><div class="ch-sub">Leia antes de responder o quiz do artigo, mais abaixo</div></div>
+    <div class="xp-tag">+10 XP</div>
+  </div>
+  <div class="bib">
+    <div class="bi" id="art-card" style="cursor:pointer">
+      <strong>MERKULOVA, T.; BOBROV, V.</strong> Dynamics and Trends of the Global Video Game Market in the Digital Economy. <em>Економіка та суспільство</em>, n. 86, 2026. DOI: <span style="color:var(--orange2)">10.32782/2524-0072/D2026-86-193</span>
+      <p style="margin-top:8px;color:var(--text-dim);font-size:0.82rem;line-height:1.6">
+        O artigo analisa a transformação estrutural do mercado global de videojogos: crescimento da base de jogadores (2,2 para 3,3 bilhões de pessoas entre 2016-2024, 41% da população mundial), domínio do mobile gaming (55% da receita em 2022), instabilidade do ARPU e novas tendências demográficas — aproximação de gênero entre jogadores e relevância do público 40+ na Europa.
+      </p>
+      <div class="biz-hint" id="art-hint">👆 Clique para marcar como lido — libera o Quiz do Artigo</div>
+    </div>
+  </div>
+</div>
+
 <!-- ATIVIDADES -->
 <div class="card">
   <div class="ch">
@@ -1104,6 +1122,20 @@ body {
     <button class="boss-btn" id="boss-start" onclick="startBoss()">⚔️ Enfrentar o Boss</button>
     <div class="boss-log" id="boss-log"></div>
   </div>
+</div>
+
+<!-- QUIZ DO ARTIGO -->
+<div class="card">
+  <div class="ch">
+    <span class="ch-ico">📄</span>
+    <div class="ch-tg"><div class="ch-title">QUIZ DO ARTIGO — MERKULOVA &amp; BOBROV (2026)</div><div class="ch-sub" id="art-quiz-sub">🔒 Leia o artigo acima para liberar · 5 questões</div></div>
+    <div class="xp-tag">até +50 XP</div>
+  </div>
+  <div class="qpr-row">
+    <div class="qpt"><div class="qpf" id="aqpf" style="width:0%"></div></div>
+    <span class="qlbl" id="aqcnt">0 / 5</span>
+  </div>
+  <div id="art-quiz"></div>
 </div>
 
 <!-- CONQUISTAS -->
@@ -1595,6 +1627,9 @@ const ACHS=[
   {id:'ach-perfect',e:'💎',n:'Quiz Perfeito'},
   {id:'ach-boss',e:'👹',n:'Domador de Boss'},
   {id:'ach-combo',e:'🔥',n:'Combo Master'},
+  {id:'ach-article',e:'📄',n:'Leitor Científico'},
+  {id:'ach-artquiz',e:'🔬',n:'Especialista no Artigo'},
+  {id:'ach-artperfect',e:'🌟',n:'Leitura Perfeita'},
 ];
 (function(){
   const g=document.getElementById('ach-grid');
@@ -1677,6 +1712,85 @@ function bossLose(){
   document.getElementById('boss-log').textContent='Revise as estratégias de internacionalização e tente de novo!';
   document.getElementById('boss-start').textContent='↺ Tentar Novamente';
   document.getElementById('boss-start').style.display='inline-block';
+}
+
+// ===========================
+//  LEITURA COMPLEMENTAR + QUIZ DO ARTIGO
+// ===========================
+const ART_QS=[
+  {q:'Qual é o objetivo declarado do artigo de Merkulova e Bobrov (2026)?',opts:['Comparar os modelos de monetização de jogos indie e AAA','Analisar a transformação estrutural do mercado global de videojogos, avaliando a dinâmica da base de jogadores, distribuição por plataforma, eficiência de monetização e tendências sociais','Propor uma nova lei de incentivo à produção de jogos na Ucrânia','Medir o impacto da pandemia no consumo de jogos mobile'],c:1,xp:10,fb:'✅ O artigo define como objetivo analisar a transformação estrutural do mercado global de videojogos avaliando base de jogadores, distribuição por plataforma, eficiência de monetização e tendências sociais.'},
+  {q:'Segundo o artigo, como evoluiu o número de jogadores no mundo entre 2016 e 2024?',opts:['De 1 bilhão para 2 bilhões','De 2,2 bilhões para 3,3 bilhões, representando 41% da população mundial','Caiu de 3 bilhões para 2 bilhões','Permaneceu estável em 2,5 bilhões'],c:1,xp:10,fb:'✅ O número de jogadores cresceu de 2,2 bilhões (2016) para 3,3 bilhões (2024), passando de 28% para 41% da população mundial, seguindo uma tendência linear com R² = 0,993.'},
+  {q:'Qual foi a participação do mobile gaming na receita total da indústria em 2022, segundo o artigo?',opts:['16%','25%','55%','70%'],c:2,xp:10,fb:'✅ Em 2022, o mobile gaming gerou 55% da receita total da indústria, enquanto os consoles, que dominavam em 2005 com 41%, caíram para apenas 16%.'},
+  {q:'O que os dados sobre o ARPU (receita média por usuário) de 2020 a 2024 revelam, segundo o artigo?',opts:['O ARPU cresceu de forma extremamente estável e sempre acompanhou o crescimento do número de jogadores','O ARPU cresceu em média 3,75% ao ano, mas de forma instável e sem correlação direta com o crescimento do número de jogadores, pois muitos novos usuários vêm de mercados emergentes com menor poder de compra','O ARPU caiu continuamente entre 2020 e 2024','O ARPU não pôde ser medido no período'],c:1,xp:10,fb:'✅ O ARPU cresceu em média 3,75% ao ano (2020-2024), mas de forma instável — sem correlação direta com o crescimento de jogadores, indicando que novos usuários vêm de mercados com menor poder aquisitivo.'},
+  {q:'Sobre os dados demográficos apresentados no artigo, o que é verdadeiro?',opts:['A audiência feminina de jogos nos EUA está diminuindo desde 2006','Nos EUA, a parcela de jogadores homens caiu de 61% (2006-2008) para 53% (2023), aproximando a audiência de um equilíbrio de gênero; além disso, a faixa 40+ segue estável e relevante na Europa','O artigo não trata de gênero ou idade dos jogadores','Apenas jogadores com menos de 25 anos são considerados no estudo'],c:1,xp:10,fb:'✅ O artigo mostra que a proporção de jogadores homens nos EUA caiu de 61% (2006-2008) para 53% (2023), e que na Europa a faixa etária 40+ representa uma parcela estável e significativa dos jogadores.'},
+];
+let articleRead=false, aqCor=0, aqAns={};
+function readArt(){
+  if(articleRead)return;
+  articleRead=true;
+  document.getElementById('art-card').style.background='rgba(105,240,174,0.05)';
+  document.getElementById('art-hint').textContent='✓ Artigo marcado como lido';
+  gainXP(10,'📄','Artigo lido!'); bumpCombo(true); unlock('ach-article','Leitor Científico'); acts++; updateHUD();
+  document.getElementById('art-quiz-sub').textContent='5 questões · sem consulta';
+  renderArtQuiz();
+}
+function renderArtQuiz(){
+  const c=document.getElementById('art-quiz');
+  let h='';
+  ART_QS.forEach((q,i)=>{
+    const opts=q.opts.map((o,oi)=>`<button class="qo" onclick="artAnsQ(${i},${oi})">${String.fromCharCode(65+oi)}) ${o}</button>`).join('');
+    h+=`<div class="qq ${i===0?'on':''}" id="aq${i}"><div class="qtxt">Q${i+1}. ${q.q}</div><div class="qopts">${opts}</div><div class="qfb" id="aqfb${i}"></div><div class="qnrow" id="aqnr${i}"><button class="qnbtn" onclick="${i<ART_QS.length-1?`artNxtQ(${i+1})`:'artShowRes()'}">${i<ART_QS.length-1?'Próxima →':'Ver Resultado ✨'}</button></div></div>`;
+  });
+  h+=`<div class="qres" id="aqres"><span class="qres-big" id="aqrb">0/${ART_QS.length}</span><div class="qres-msg" id="aqrm"></div><div class="qres-xp" id="aqrx"></div><button class="qres-btn" onclick="artRstQ()">↺ Tentar Novamente</button></div>`;
+  c.innerHTML=h;
+}
+(function(){
+  document.getElementById('art-card').onclick=readArt;
+  document.getElementById('art-quiz').innerHTML=`<div class="callout c-warn"><span class="c-ico">🔒</span><div class="c-txt">Marque o artigo acima como lido para liberar estas 5 questões.</div></div>`;
+})();
+function artAnsQ(qi,ch){
+  const q=ART_QS[qi];
+  const card=document.getElementById(`aq${qi}`);
+  card.querySelectorAll('.qo').forEach(b=>b.disabled=true);
+  card.querySelectorAll('.qo')[ch].classList.add(ch===q.c?'correct':'wrong');
+  if(ch!==q.c)card.querySelectorAll('.qo')[q.c].classList.add('correct');
+  const ok=ch===q.c;
+  const fb=document.getElementById(`aqfb${qi}`);
+  fb.textContent=ok?q.fb:'❌ Incorreto. '+q.fb;
+  fb.className='qfb on '+(ok?'ok':'fail');
+  document.getElementById(`aqnr${qi}`).classList.add('on');
+  if(ok){aqCor++;gainXP(q.xp,'📄','Resposta correta!');streak++;bumpCombo(true);}
+  else{streak=Math.max(0,streak-1);bumpCombo(false);updateHUD();}
+  aqAns[qi]=ok;
+  document.getElementById('aqpf').style.width=((qi+1)/ART_QS.length*100)+'%';
+  document.getElementById('aqcnt').textContent=`${qi+1} / ${ART_QS.length}`;
+}
+function artNxtQ(n){document.querySelector('#art-quiz .qq.on').classList.remove('on');document.getElementById(`aq${n}`).classList.add('on');}
+function artShowRes(){
+  document.querySelector('#art-quiz .qq.on').classList.remove('on');
+  document.getElementById('aqres').classList.add('on');
+  document.getElementById('aqrb').textContent=`${aqCor}/${ART_QS.length}`;
+  const msgs=['📚 Revise o artigo!','⚡ Progredindo!','🔥 Boa leitura!','🏆 Especialista!','💎 Perfeito!'];
+  document.getElementById('aqrm').textContent=msgs[Math.min(aqCor,4)];
+  const earned=Object.keys(aqAns).filter(k=>aqAns[k]).reduce((s,k)=>s+ART_QS[+k].xp,0);
+  const nm=document.getElementById(`p${ap}n`).value||`Player ${ap}`;
+  document.getElementById('aqrx').textContent=`+${earned} XP para ${nm}!`;
+  if(aqCor>=4)unlock('ach-artquiz','Especialista no Artigo');
+  if(aqCor===ART_QS.length){unlock('ach-artperfect','Leitura Perfeita');spawnConfetti(24);}
+  acts++;updateHUD();
+}
+function artRstQ(){
+  aqCor=0;aqAns={};combo=0;
+  document.getElementById('aqres').classList.remove('on');
+  document.getElementById('aqpf').style.width='0%';
+  document.getElementById('aqcnt').textContent=`0 / ${ART_QS.length}`;
+  ART_QS.forEach((_,i)=>{
+    const c=document.getElementById(`aq${i}`);
+    c.classList.toggle('on',i===0);
+    c.querySelectorAll('.qo').forEach(b=>{b.disabled=false;b.className='qo';});
+    const fb=document.getElementById(`aqfb${i}`);fb.className='qfb';fb.textContent='';
+    document.getElementById(`aqnr${i}`).classList.remove('on');
+  });
 }
 
 // ===========================
