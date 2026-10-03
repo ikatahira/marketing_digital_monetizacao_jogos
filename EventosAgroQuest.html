@@ -1,0 +1,738 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Missão AgroQuest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: mapa de safra. Cabeçalho fixo com barra de crescimento (XP), trilha de fases em chips, uma fase por vez com navegação anterior/próxima. */
+:root{
+  --bg:#ECF0E6; --panel:#F8FAF4; --ink:#14291D; --muted:#4F6357; --line:#CBD5C4;
+  --leaf:#1E6B43; --leaf-ink:#FFFFFF; --sun:#E9A820; --sun-ink:#2A1D00; --soil:#7A4B2A;
+  --ok:#1E7A46; --bad:#B3361F; --okbg:#DDF0E2; --badbg:#F6DFD8;
+  --f-display:'Bricolage Grotesque','Trebuchet MS',sans-serif;
+  --f-body:'Figtree','Segoe UI',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1B14; --panel:#162619; --ink:#E4EEE2; --muted:#9DB3A3; --line:#2B4132;
+  --leaf:#4CB87C; --leaf-ink:#07140C; --sun:#F2BC3F; --sun-ink:#2A1D00; --soil:#C79A74;
+  --ok:#5CCB8A; --bad:#F08A72; --okbg:#1B3A27; --badbg:#41231C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1B14; --panel:#162619; --ink:#E4EEE2; --muted:#9DB3A3; --line:#2B4132;
+  --leaf:#4CB87C; --leaf-ink:#07140C; --sun:#F2BC3F; --sun-ink:#2A1D00; --soil:#C79A74;
+  --ok:#5CCB8A; --bad:#F08A72; --okbg:#1B3A27; --badbg:#41231C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--f-body);padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:880px;margin-inline:auto}
+h1,h2,h3{font-family:var(--f-display);line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:clamp(1.7rem,5vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+.mono{font-family:var(--f-mono)}
+.tag{font:600 .72rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-16px;padding:10px 16px 0}
+.hrow{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:880px;margin-inline:auto}
+.brand{font:800 1.15rem var(--f-display);letter-spacing:-.01em}
+.brand span{color:var(--leaf)}
+.rank{font:600 .8rem var(--f-mono);display:flex;gap:10px;align-items:center}
+.rank b{background:var(--sun);color:var(--sun-ink);padding:3px 8px;border-radius:4px}
+.bar{max-width:880px;margin:8px auto 0;position:relative;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--leaf);transition:width .5s}
+.stages{max-width:880px;margin:3px auto 0;display:flex;justify-content:space-between;font:400 .62rem var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+nav.trail{max-width:880px;margin:6px auto 0;display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin}
+nav.trail button{flex:none;min-height:40px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:0 14px;font:500 .85rem var(--f-body);cursor:pointer;display:flex;align-items:center;gap:8px}
+nav.trail button[aria-current="true"]{background:var(--leaf);color:var(--leaf-ink);border-color:var(--leaf)}
+nav.trail button .dot{width:8px;height:8px;border-radius:50%;background:var(--line)}
+nav.trail button.full .dot{background:var(--sun)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+/* phases */
+.phase{display:none;padding-top:28px;flex-direction:column;gap:22px}
+.phase.on{display:flex}
+.lead{font-size:1.1rem;color:var(--muted);max-width:62ch}
+.when{display:inline-flex;gap:8px;align-items:center;background:var(--sun);color:var(--sun-ink);font:600 .75rem var(--f-mono);padding:5px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.06em;width:fit-content}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.box.quest{border-color:var(--leaf);border-width:2px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.grid2>*{min-width:0}
+ul.plain{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
+.xp{font:600 .72rem var(--f-mono);color:var(--leaf);white-space:nowrap}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);cursor:pointer}
+.chk:first-of-type{border-top:0}
+.chk input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--leaf);flex:none}
+.chk span{flex:1;min-width:0}
+label.f{display:flex;flex-direction:column;gap:5px;font:600 .82rem var(--f-body);min-width:0}
+input[type=text],input[type=number],input[type=date],textarea,select{width:100%;font:400 1rem var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px;min-height:44px}
+textarea{resize:vertical;min-height:84px}
+.hint{font-size:.88rem;color:var(--muted)}
+.btn{min-height:44px;border:0;border-radius:6px;background:var(--leaf);color:var(--leaf-ink);font:600 .95rem var(--f-body);padding:0 18px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:8px;flex-wrap:wrap}
+
+/* quiz */
+.quiz{display:flex;flex-direction:column;gap:10px}
+.quiz .q{font-weight:600}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{text-align:left;min-height:44px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:400 .95rem var(--f-body);cursor:pointer}
+.opts button.right{background:var(--okbg);border-color:var(--ok)}
+.opts button.wrong{background:var(--badbg);border-color:var(--bad)}
+.fb{font-size:.9rem;min-height:1.2em}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--bad)}
+
+/* business card */
+.cardwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;align-items:start}
+.bcard{aspect-ratio:90/55;max-width:100%;background:var(--leaf);color:var(--leaf-ink);border-radius:8px;padding:5% 6%;display:grid;grid-template-columns:1fr auto;grid-template-rows:1fr auto;gap:4px 10px;box-shadow:0 6px 18px rgba(0,0,0,.18);overflow:hidden;container-type:inline-size}
+.bcard .g{font:800 9cqw var(--f-display);line-height:1;letter-spacing:-.02em}
+.bcard .fr{font:400 4.3cqw/1.25 var(--f-body);opacity:.92;margin-top:2cqw}
+.bcard .qr{grid-row:1/3;grid-column:2;align-self:end;width:22cqw;aspect-ratio:1;background:var(--leaf-ink);border-radius:3px;padding:1.5cqw}
+.bcard .qr svg{width:100%;height:100%;display:block}
+.bcard .who{grid-column:1;align-self:end;font:400 3.7cqw/1.35 var(--f-body)}
+.bcard .who b{font-weight:600;display:block;font-size:4.6cqw}
+.bcard .who span{font-family:var(--f-mono);font-size:3.2cqw}
+
+/* banner map */
+.bannermock{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;aspect-ratio:3/4;max-width:420px;width:100%;margin-inline:auto}
+.bannermock button{border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;font:600 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;padding:4px;min-height:44px}
+.bannermock button[aria-pressed="true"]{border-color:var(--sun);background:var(--sun);color:var(--sun-ink)}
+.bannermock .title{grid-column:1/4}
+.bannermock .shot{grid-column:2/4;grid-row:span 2;background:var(--okbg)}
+.bannermock .foot{grid-column:1/4}
+.tip{background:var(--bg);border-left:4px solid var(--sun);padding:10px 14px;border-radius:0 6px 6px 0;font-size:.95rem}
+
+/* pitch timer */
+.clock{font:700 clamp(2.6rem,12vw,4.4rem)/1 var(--f-mono);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.segs{display:flex;height:14px;border-radius:4px;overflow:hidden;gap:2px}
+.segs i{display:block;background:var(--line);transition:background .3s}
+.segs i.on{background:var(--sun)} .segs i.past{background:var(--leaf)}
+.segnames{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;font:400 .66rem var(--f-mono);color:var(--muted)}
+.cur{font:700 1.15rem var(--f-display)}
+
+/* tables */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.92rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono)}
+.out{font:800 clamp(1.8rem,7vw,2.6rem) var(--f-display);color:var(--leaf);font-variant-numeric:tabular-nums}
+.funnel{display:flex;flex-direction:column;gap:6px}
+.funnel div{padding:10px 14px;border-radius:6px;background:var(--leaf);color:var(--leaf-ink);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.funnel div b{font-family:var(--f-display)}
+.funnel div span{font-size:.85rem;opacity:.9}
+.badge{display:none;background:var(--sun);color:var(--sun-ink);border-radius:10px;padding:18px}
+.badge.on{display:block}
+.badge h3{margin-bottom:4px}
+.evrow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:10px;align-items:end;padding:12px 0;border-top:1px solid var(--line)}
+.evrow:first-of-type{border-top:0}
+.evrow .d{font:600 .8rem var(--f-mono);color:var(--muted);white-space:nowrap}
+@media (max-width:560px){.evrow{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="hrow">
+    <div class="brand">Missão <span>AgroQuest</span></div>
+    <div class="rank"><span id="xpTxt">0 XP</span><b id="rankName">Semente</b></div>
+  </div>
+  <div class="bar" role="progressbar" aria-label="Progresso da missão" aria-valuemin="0" aria-valuemax="100" id="barA"><i id="barI"></i></div>
+  <div class="stages"><span>Semente</span><span>Broto</span><span>Muda</span><span>Planta</span><span>Colheita</span></div>
+  <nav class="trail" id="trail" aria-label="Fases da missão"></nav>
+</header>
+
+<main>
+
+<!-- 0 -->
+<section class="phase" id="inicio" data-title="Início">
+  <div>
+    <p class="tag">Marketing Digital e Monetização para Jogos</p>
+    <h2 style="margin-top:8px">Do código ao palco: transforme o AgroQuest em projeto que se apresenta, se divulga e se sustenta</h2>
+  </div>
+  <p class="lead">Cada fase desta aula prepara uma entrega real da sua agenda. Você ganha XP ao marcar tarefas, acertar os desafios e preencher o seu plano. O seu progresso fica salvo neste navegador.</p>
+  <div class="box quest">
+    <h3>Mapa de entregas</h3>
+    <div class="tw"><table>
+      <tr><th>Evento</th><th>Entrega</th><th>Fase</th></tr>
+      <tr><td>GeniusCon</td><td>Apresentar o cartão de visitas e o banner</td><td>Hoje: fases 1 e 2</td></tr>
+      <tr><td>Fatec Botucatu</td><td>Banner e apresentação oral do resumo expandido</td><td>Fases 2 e 3</td></tr>
+      <tr><td>CIC Unifio</td><td>Banner</td><td>Fase 2</td></tr>
+      <tr><td>Simpósio do Centro Paula Souza, Marília</td><td>Pitch</td><td>Fase 4</td></tr>
+      <tr><td>Escola de Inovadores</td><td>Parte I entregue por todos os integrantes</td><td>Fase 7</td></tr>
+    </table></div>
+  </div>
+  <div class="box">
+    <h3>Ficha do jogo <span class="xp">+20 XP ao preencher tudo</span></h3>
+    <p class="hint">Todo material parte destas respostas. Escreva com as palavras do seu grupo.</p>
+    <div class="grid2">
+      <label class="f">Nome do jogo<input type="text" id="g_nome" data-f="g_nome" value="AgroQuest"></label>
+      <label class="f">Plataforma e link<input type="text" id="g_link" data-f="g_link" placeholder="Ex.: Android, itch.io/seu-jogo"></label>
+    </div>
+    <label class="f">Quem joga e qual problema o jogo resolve<textarea id="g_prob" data-f="g_prob" placeholder="Ex.: estudantes de cursos agrícolas aprendem manejo de lavoura jogando, sem depender só de aula expositiva."></textarea></label>
+    <label class="f">O que a pessoa faz no jogo, em uma frase<textarea id="g_acao" data-f="g_acao" placeholder="Ex.: planeja a safra, administra recursos e reage a clima e mercado."></textarea></label>
+    <label class="f">Como o jogo foi construído (engine, linguagem, equipe, tempo)<textarea id="g_build" data-f="g_build" placeholder="Ex.: Unity/Godot, C#/GDScript, 4 pessoas, 6 meses, 2 ciclos de playtest."></textarea></label>
+    <label class="f">Resultado mais forte que você já tem (teste com usuários, números, prêmio)<textarea id="g_res" data-f="g_res" placeholder="Ex.: 32 alunos testaram; 78% concluíram a primeira safra."></textarea></label>
+  </div>
+  <div class="quiz box" id="q0" data-a="1" data-xp="10" data-why="O mesmo núcleo (problema, solução, resultado) alimenta cartão, banner, resumo e pitch. Muda só o tamanho.">
+    <p class="q">Desafio 1. Qual é a melhor estratégia para preparar quatro materiais diferentes sobre o mesmo jogo?</p>
+    <div class="opts">
+      <button data-i="0">Escrever cada material do zero, para cada um ficar único</button>
+      <button data-i="1">Definir um núcleo (problema, solução, resultado) e adaptar o tamanho a cada formato</button>
+      <button data-i="2">Usar o texto do resumo em todos, sem mudar nada</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><span></span><button class="btn go" data-dir="1">Fase 1: Cartão de visitas</button></div>
+</section>
+
+<!-- 1 -->
+<section class="phase" id="cartao" data-title="Cartão de visitas">
+  <span class="when">GeniusCon · apresentar hoje</span>
+  <h2>Cartão de visitas: em 5 segundos a pessoa precisa saber o que é o jogo e como achar você</h2>
+  <p class="lead">Um cartão de jogo não é currículo. Ele leva uma ideia, um caminho (QR) e um nome. Monte o seu abaixo e veja o resultado ao vivo.</p>
+  <div class="cardwrap">
+    <div class="box">
+      <label class="f">Seu nome<input type="text" id="cn_nome" data-f="cn_nome" placeholder="Nome e sobrenome"></label>
+      <label class="f">Função no projeto<input type="text" id="cn_cargo" data-f="cn_cargo" placeholder="Ex.: Desenvolvedor e game designer"></label>
+      <label class="f">Frase de uma linha (máx. 60 caracteres)<input type="text" id="cn_frase" data-f="cn_frase" maxlength="60" placeholder="Aprenda manejo agrícola jogando"></label>
+      <label class="f">E-mail ou @ de contato<input type="text" id="cn_cont" data-f="cn_cont" placeholder="voce@email.com"></label>
+    </div>
+    <div>
+      <div class="bcard" aria-label="Prévia do cartão">
+        <div><div class="g" id="pv_g">AgroQuest</div><div class="fr" id="pv_fr">Sua frase de uma linha aparece aqui</div></div>
+        <div class="qr"><svg viewBox="0 0 21 21" aria-label="Espaço reservado para o QR code"><g fill="#14291D"><path d="M0 0h7v7H0zM14 0h7v7h-7zM0 14h7v7H0z"/></g><g fill="#fff"><path d="M1 1h5v5H1zM15 1h5v5h-5zM1 15h5v5H1z"/></g><g fill="#14291D"><path d="M2 2h3v3H2zM16 2h3v3h-3zM2 16h3v3H2zM9 1h2v2H9zM9 5h3v2H9zM9 9h3v3H9zM13 10h2v2h-2zM16 9h3v2h-3zM10 14h2v3h-2zM14 14h3v2h-3zM18 17h2v3h-2zM13 18h3v2h-3z"/></g></svg></div>
+        <div class="who"><b id="pv_n">Seu nome</b>Sua função<br><span id="pv_c">contato</span></div>
+      </div>
+      <p class="hint" style="margin-top:8px">O quadro de QR é um espaço reservado. Gere o QR real do link da sua build ou da página do jogo e coloque neste lugar. Formato impresso padrão: 90 × 55 mm, com margem de segurança de 3 mm.</p>
+    </div>
+  </div>
+  <div class="box">
+    <h3>Checklist de impressão e uso</h3>
+    <label class="chk"><input type="checkbox" id="c_card1" data-xp="10"><span>O nome do jogo é o maior elemento do cartão. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_card2" data-xp="10"><span>O QR tem pelo menos 2 × 2 cm e foi testado no celular impresso, não só na tela. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_card3" data-xp="10"><span>Contraste alto entre texto e fundo. Nada de texto claro sobre foto. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_card4" data-xp="10"><span>Tenho 30 segundos ensaiados para entregar o cartão falando o problema e o resultado do jogo. <span class="xp">+10</span></span></label>
+  </div>
+  <div class="quiz box" id="q1" data-a="2" data-xp="15" data-why="O cartão é a ponte para a próxima ação. Um link ou QR que leva ao jogo converte o contato em jogador ou parceiro.">
+    <p class="q">Desafio 2. O que mais ajuda o cartão a gerar uma ação depois do evento?</p>
+    <div class="opts">
+      <button data-i="0">Colocar todos os seus dados acadêmicos</button>
+      <button data-i="1">Usar fonte decorativa para chamar atenção</button>
+      <button data-i="2">Um QR que abre direto a página do jogo, com instruções para jogar</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn go" data-dir="1">Fase 2: Banner</button></div>
+</section>
+
+<!-- 2 -->
+<section class="phase" id="banner" data-title="Banner">
+  <span class="when">GeniusCon hoje · Fatec Botucatu · CIC Unifio</span>
+  <h2>Banner: lido a 2 metros, em 30 segundos, por quem passa andando</h2>
+  <p class="lead">Um banner serve três eventos, mas cada comissão tem regras próprias de tamanho e seções. Confirme o regulamento de cada evento antes de imprimir. Toque nas áreas para ver a função de cada uma.</p>
+  <div class="grid2">
+    <div class="box">
+      <div class="bannermock" id="bmock">
+        <button class="title" data-k="titulo" aria-pressed="true">Título + autores</button>
+        <button data-k="problema" aria-pressed="false">Problema</button>
+        <button class="shot" data-k="visual" aria-pressed="false">Telas do jogo</button>
+        <button data-k="metodo" aria-pressed="false">Como foi feito</button>
+        <button data-k="resultados" aria-pressed="false">Resultados</button>
+        <button data-k="conclusao" aria-pressed="false">Conclusão</button>
+        <button class="foot" data-k="qr" aria-pressed="false">QR + referências + apoio</button>
+      </div>
+    </div>
+    <div class="box">
+      <h3 id="tipName">Título + autores</h3>
+      <div class="tip" id="tipBody">Título de até 12 palavras, legível a 2 metros (mínimo 72 pt). Nomes, curso, instituição e orientador logo abaixo, em corpo menor.</div>
+      <p class="hint">Regras gerais: texto do corpo a partir de 24 pt, no máximo uma imagem forte por seção, 30% a 40% do espaço vazio, e leitura em 3 colunas de cima para baixo.</p>
+    </div>
+  </div>
+  <div class="box">
+    <h3>Rascunho do seu banner <span class="xp">+20 XP</span></h3>
+    <label class="f">Título (até 12 palavras)<input type="text" id="b_tit" data-f="b_tit" placeholder="AgroQuest: jogo digital para ensinar manejo agrícola"></label>
+    <label class="f">Problema em 2 linhas<textarea id="b_prob" data-f="b_prob"></textarea></label>
+    <label class="f">Método em 3 tópicos curtos<textarea id="b_met" data-f="b_met"></textarea></label>
+    <label class="f">Resultado principal com um número<textarea id="b_res" data-f="b_res"></textarea></label>
+    <label class="f">Conclusão em 1 frase<textarea id="b_con" data-f="b_con"></textarea></label>
+  </div>
+  <div class="box">
+    <h3>Checklist de entrega</h3>
+    <label class="chk"><input type="checkbox" id="c_ban1" data-xp="10"><span>Conferi o tamanho e a orientação exigidos por GeniusCon, Fatec Botucatu e CIC Unifio. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_ban2" data-xp="10"><span>Arquivo em alta resolução (300 dpi no tamanho final) e fontes convertidas ou incorporadas. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_ban3" data-xp="10"><span>Pelo menos 3 capturas de tela do jogo em uso real, com legenda curta. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_ban4" data-xp="10"><span>Logotipos obrigatórios da instituição e do evento no lugar certo. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_ban5" data-xp="10"><span>Revisão ortográfica por outra pessoa do grupo. <span class="xp">+10</span></span></label>
+  </div>
+  <div class="quiz box" id="q2" data-a="0" data-xp="15" data-why="No banner o visual conta a história e o texto só confirma. Resultado com número é a prova que a comissão procura.">
+    <p class="q">Desafio 3. A comissão avalia seu banner em 30 segundos. O que deve dominar a área central?</p>
+    <div class="opts">
+      <button data-i="0">Capturas de tela do jogo e o resultado principal com número</button>
+      <button data-i="1">Dois parágrafos de fundamentação teórica</button>
+      <button data-i="2">A lista completa de referências</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn go" data-dir="1">Fase 3: Resumo e oral</button></div>
+</section>
+
+<!-- 3 -->
+<section class="phase" id="oral" data-title="Resumo e oral">
+  <span class="when">Fatec Botucatu · resumo expandido</span>
+  <h2>Resumo expandido e apresentação oral: o texto prova, a fala convence</h2>
+  <p class="lead">Siga o modelo de formatação do evento. A estrutura abaixo funciona para a maioria dos resumos expandidos em tecnologia.</p>
+  <div class="box">
+    <h3>Esqueleto do resumo expandido</h3>
+    <div class="tw"><table>
+      <tr><th>Seção</th><th>O que entra para o AgroQuest</th></tr>
+      <tr><td>Introdução</td><td>Contexto do ensino agrícola, lacuna que o jogo cobre, objetivo claro.</td></tr>
+      <tr><td>Metodologia</td><td>Como o jogo foi construído: documento de design, engine, ciclos de desenvolvimento, plano de teste com usuários.</td></tr>
+      <tr><td>Resultados e discussão</td><td>O que funcionou nos testes, números, limitações e o que muda na próxima versão.</td></tr>
+      <tr><td>Considerações finais</td><td>Resposta direta ao objetivo e próximos passos.</td></tr>
+      <tr><td>Referências</td><td>Somente o que foi citado no texto, no padrão ABNT pedido pelo evento.</td></tr>
+    </table></div>
+  </div>
+  <div class="box">
+    <h3>Roteiro da fala, tempo de 10 minutos <span class="xp">+20 XP ao preencher</span></h3>
+    <p class="hint">Confirme o tempo real da sua sessão. Ajuste proporcionalmente. Máximo de 1 slide por minuto.</p>
+    <label class="f">1. Abertura (1 min): a pergunta ou problema que o jogo responde<textarea id="o_1" data-f="o_1"></textarea></label>
+    <label class="f">2. Como foi construído (3 min): decisões técnicas e de design mais importantes<textarea id="o_2" data-f="o_2"></textarea></label>
+    <label class="f">3. Resultados (3 min): o que os testes mostraram<textarea id="o_3" data-f="o_3"></textarea></label>
+    <label class="f">4. Demonstração (2 min): qual trecho do jogo você mostra, ao vivo ou em vídeo de reserva<textarea id="o_4" data-f="o_4"></textarea></label>
+    <label class="f">5. Fechamento (1 min): conclusão e convite para jogar<textarea id="o_5" data-f="o_5"></textarea></label>
+  </div>
+  <div class="box">
+    <h3>Checklist de preparo</h3>
+    <label class="chk"><input type="checkbox" id="c_or1" data-xp="10"><span>Ensaiei em voz alta, cronometrado, pelo menos duas vezes. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_or2" data-xp="10"><span>Tenho vídeo curto de reserva caso internet ou build falhe. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_or3" data-xp="10"><span>Preparei respostas para 3 perguntas prováveis: público, validação, o que falta. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_or4" data-xp="10"><span>Slides com pouco texto e apenas um número por slide de resultado. <span class="xp">+10</span></span></label>
+  </div>
+  <div class="quiz box" id="q3" data-a="1" data-xp="15" data-why="Banca de metodologia quer rastrear como você chegou ao jogo e como validou. Isso é o que diferencia projeto de demonstração.">
+    <p class="q">Desafio 4. Na seção de metodologia de um resumo sobre a construção de um jogo, o que a comissão espera?</p>
+    <div class="opts">
+      <button data-i="0">A história do enredo do jogo</button>
+      <button data-i="1">Etapas de desenvolvimento, ferramentas e como o jogo foi testado com usuários</button>
+      <button data-i="2">Uma lista de jogos concorrentes</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn go" data-dir="1">Fase 4: Pitch</button></div>
+</section>
+
+<!-- 4 -->
+<section class="phase" id="pitch" data-title="Pitch">
+  <span class="when">Simpósio Centro Paula Souza · Marília</span>
+  <h2>Pitch: convencer em poucos minutos que o AgroQuest merece apoio</h2>
+  <p class="lead">Pitch é pedido: ao final, a plateia sabe o que você quer que ela faça. Escreva o roteiro em quatro blocos e treine com o cronômetro.</p>
+  <div class="box">
+    <h3>Cronômetro de treino</h3>
+    <div style="display:flex;gap:12px;align-items:end;flex-wrap:wrap">
+      <label class="f" style="width:160px">Duração<select id="pt_dur"><option value="120">2 minutos</option><option value="180" selected>3 minutos</option><option value="300">5 minutos</option></select></label>
+      <button class="btn" id="pt_go">Iniciar</button>
+      <button class="btn alt" id="pt_rs">Zerar</button>
+    </div>
+    <div class="clock" id="pt_clock" aria-live="off">3:00</div>
+    <div class="cur" id="pt_cur">Gancho e problema</div>
+    <div class="segs" id="pt_segs"><i style="flex:15"></i><i style="flex:25"></i><i style="flex:35"></i><i style="flex:25"></i></div>
+    <div class="segnames"><span>Gancho</span><span>Solução</span><span>Negócio</span><span>Pedido</span></div>
+  </div>
+  <div class="box">
+    <h3>Roteiro em 4 blocos <span class="xp">+20 XP ao preencher</span></h3>
+    <label class="f">Gancho e problema (15%): um dado, uma pergunta ou uma cena do campo<textarea id="p_1" data-f="p_1"></textarea></label>
+    <label class="f">Solução (25%): o AgroQuest em uma frase e a principal mecânica<textarea id="p_2" data-f="p_2"></textarea></label>
+    <label class="f">Negócio (35%): para quem é, como cresce e como gera receita<textarea id="p_3" data-f="p_3"></textarea></label>
+    <label class="f">Pedido (25%): o que você precisa (teste em sala, parceria, mentoria, recurso) e o próximo passo<textarea id="p_4" data-f="p_4"></textarea></label>
+  </div>
+  <div class="box">
+    <h3>Checklist</h3>
+    <label class="chk"><input type="checkbox" id="c_pi1" data-xp="10"><span>O pedido final é específico e cabe em uma frase. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_pi2" data-xp="10"><span>Falo de um número real: testes, usuários ou custo. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_pi3" data-xp="10"><span>Treinei com cronômetro e terminei dentro do tempo. <span class="xp">+10</span></span></label>
+  </div>
+  <div class="quiz box" id="q4" data-a="2" data-xp="15" data-why="Sem pedido, o pitch vira apresentação. A plateia precisa saber como ajudar.">
+    <p class="q">Desafio 5. O que fecha melhor um pitch?</p>
+    <div class="opts">
+      <button data-i="0">Agradecimento e pedido de perguntas</button>
+      <button data-i="1">Repetir o título do projeto</button>
+      <button data-i="2">Um pedido claro e o próximo passo concreto</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn go" data-dir="1">Fase 5: Marketing digital</button></div>
+</section>
+
+<!-- 5 -->
+<section class="phase" id="marketing" data-title="Marketing digital">
+  <span class="when">Aula · marketing digital para jogos</span>
+  <h2>Marketing digital: um funil que leva o jogo de desconhecido a recomendado</h2>
+  <p class="lead">Marketing de jogo é ver cada passo de quem chega e medir onde a pessoa desiste.</p>
+  <div class="funnel" aria-label="Funil do jogador">
+    <div><b>1. Descoberta</b><span>Devlog, vídeos curtos, eventos, escolas</span></div>
+    <div style="width:94%"><b>2. Instalação ou teste</b><span>Página do jogo clara, QR, demo jogável</span></div>
+    <div style="width:88%"><b>3. Ativação</b><span>Primeira safra em até 3 minutos</span></div>
+    <div style="width:82%"><b>4. Retenção</b><span>Missões, ciclos de safra, metas semanais</span></div>
+    <div style="width:76%"><b>5. Receita</b><span>Compras, parcerias, licenças</span></div>
+    <div style="width:70%"><b>6. Indicação</b><span>Professor leva para a turma, jogador convida</span></div>
+  </div>
+  <div class="box">
+    <h3>Métricas que você vai citar</h3>
+    <div class="tw"><table>
+      <tr><th>Sigla</th><th>Significa</th><th>Para que serve</th></tr>
+      <tr><td class="mono">CPI</td><td>Custo por instalação</td><td>Quanto custa trazer cada jogador</td></tr>
+      <tr><td class="mono">D1 / D7 / D30</td><td>Retenção no dia 1, 7 e 30</td><td>Quantos voltam depois de instalar</td></tr>
+      <tr><td class="mono">ARPU</td><td>Receita média por usuário</td><td>Quanto cada pessoa gera</td></tr>
+      <tr><td class="mono">LTV</td><td>Valor do jogador no tempo</td><td>Deve ser maior que o CPI</td></tr>
+    </table></div>
+  </div>
+  <div class="box">
+    <h3>Seu plano de divulgação <span class="xp">+20 XP ao preencher</span></h3>
+    <label class="f">Quem é o público principal (aluno, professor, produtor rural)?<textarea id="m_pub" data-f="m_pub"></textarea></label>
+    <label class="f">Onde esse público já está? Escolha 2 canais e explique por quê.<textarea id="m_can" data-f="m_can" placeholder="Ex.: Instagram e grupos de professores no WhatsApp."></textarea></label>
+    <label class="f">3 conteúdos que você publica nos próximos 14 dias<textarea id="m_con" data-f="m_con" placeholder="Ex.: vídeo de 30 s da primeira safra, bastidores do banner, resultado do playtest."></textarea></label>
+    <label class="f">Como você vai medir se funcionou? Uma métrica e uma meta.<textarea id="m_met" data-f="m_met"></textarea></label>
+  </div>
+  <div class="quiz box" id="q5" data-a="1" data-xp="15" data-why="D7 mostra se o jogo cria hábito. Se muita gente instala e some, o problema está no jogo ou na ativação, não na divulgação.">
+    <p class="q">Desafio 6. Muita gente instala o AgroQuest, mas poucos voltam depois de 7 dias. Qual é a leitura certa?</p>
+    <div class="opts">
+      <button data-i="0">Gastar mais em anúncio resolve</button>
+      <button data-i="1">A retenção em D7 está baixa. Vale revisar ativação e o motivo para voltar ao jogo</button>
+      <button data-i="2">É normal, não há o que fazer</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn go" data-dir="1">Fase 6: Monetização</button></div>
+</section>
+
+<!-- 6 -->
+<section class="phase" id="monetizacao" data-title="Monetização">
+  <span class="when">Aula · monetização para jogos</span>
+  <h2>Monetização: de onde vem o dinheiro e o que cada caminho exige do jogo</h2>
+  <p class="lead">Para um jogo educacional como o AgroQuest, a venda direta ao jogador raramente é o melhor caminho. Compare as opções.</p>
+  <div class="box">
+    <div class="tw"><table>
+      <tr><th>Modelo</th><th>Como funciona</th><th>Para o AgroQuest</th></tr>
+      <tr><td>Licença institucional</td><td>Escola ou curso paga por turma ou por ano</td><td>Alta aderência ao uso em sala</td></tr>
+      <tr><td>Patrocínio do setor</td><td>Empresa ou cooperativa financia conteúdo ou cenário</td><td>Exige transparência e cuidado com viés</td></tr>
+      <tr><td>Freemium</td><td>Base gratuita e itens ou módulos pagos</td><td>Novos cultivos, regiões, desafios</td></tr>
+      <tr><td>Anúncio premiado</td><td>Usuário assiste anúncio e ganha benefício</td><td>Baixa receita por usuário, bom para base grande</td></tr>
+      <tr><td>Assinatura do professor</td><td>Painel com relatórios e planos de aula</td><td>Cria recorrência, usa dados do jogo</td></tr>
+      <tr><td>Edital e fomento</td><td>Dinheiro público ou privado para projeto</td><td>Pitch e resultados viram argumento</td></tr>
+    </table></div>
+  </div>
+  <div class="box">
+    <h3>Simulador de receita mensal <span class="xp">+10 XP ao ajustar</span></h3>
+    <p class="hint">Números de exemplo. Troque pelos seus quando tiver dados reais.</p>
+    <div class="grid2">
+      <label class="f">Instalações por mês<input type="number" id="s_inst" min="0" value="2000" inputmode="numeric"></label>
+      <label class="f">Retenção D30 (%)<input type="number" id="s_ret" min="0" max="100" value="15" inputmode="decimal"></label>
+      <label class="f">Usuários que pagam (%)<input type="number" id="s_pag" min="0" max="100" value="3" inputmode="decimal"></label>
+      <label class="f">Valor médio da compra (R$)<input type="number" id="s_tk" min="0" value="12" inputmode="decimal"></label>
+      <label class="f">Anúncios premiados por usuário ativo/mês<input type="number" id="s_ad" min="0" value="10" inputmode="decimal"></label>
+      <label class="f">Receita por 1.000 anúncios, eCPM (R$)<input type="number" id="s_ecpm" min="0" value="12" inputmode="decimal"></label>
+    </div>
+    <div class="tw"><table style="min-width:420px">
+      <tr><th>Usuários ativos</th><th>Compras</th><th>Anúncios</th></tr>
+      <tr><td class="num" id="o_ativos">0</td><td class="num" id="o_comp">R$ 0</td><td class="num" id="o_ads">R$ 0</td></tr>
+    </table></div>
+    <div><span class="tag">Receita estimada por mês</span><div class="out" id="o_total">R$ 0</div></div>
+  </div>
+  <div class="box">
+    <h3>Seu modelo de receita <span class="xp">+20 XP ao preencher</span></h3>
+    <label class="f">Escolha 1 modelo principal e 1 complementar. Por quê?<textarea id="mo_mod" data-f="mo_mod"></textarea></label>
+    <label class="f">Quem paga e o que essa pessoa ganha em troca?<textarea id="mo_quem" data-f="mo_quem"></textarea></label>
+    <label class="f">Qual é o primeiro teste barato para validar que alguém paga?<textarea id="mo_test" data-f="mo_test"></textarea></label>
+  </div>
+  <div class="quiz box" id="q6" data-a="0" data-xp="15" data-why="Em educação, quem usa nem sempre é quem paga. Venda para a instituição aproveita esse padrão.">
+    <p class="q">Desafio 7. Qual caminho combina melhor com um jogo usado em sala por estudantes?</p>
+    <div class="opts">
+      <button data-i="0">Licença institucional para escolas e cursos, com possível painel para o professor</button>
+      <button data-i="1">Só anúncios de vídeo longos entre as fases</button>
+      <button data-i="2">Cobrar R$ 50 de cada estudante</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn go" data-dir="1">Fase 7: Escola de Inovadores</button></div>
+</section>
+
+<!-- 7 Escola de Inovadores -->
+<section class="phase" id="inovadores" data-title="Escola de Inovadores">
+  <span class="when">Entrega obrigatória · todos</span>
+  <h2>Escola de Inovadores, Parte I: cada integrante entrega a sua</h2>
+  <p class="lead">A Escola de Inovadores é a formação online e gratuita do Centro Paula Souza, de 50 horas, que leva da identificação do problema até o protótipo, o teste com usuários e a apresentação do projeto. O AgroQuest já tem tudo isso para contar. Use o que você construiu como projeto.</p>
+  <div class="box">
+    <h3>Dados da entrega <span class="xp">+20 XP ao preencher</span></h3>
+    <p class="hint">Copie da plataforma da Escola exatamente o que a Parte I pede e o prazo. Aqui você organiza a sua resposta antes de enviar.</p>
+    <label class="f">Prazo de entrega da Parte I<input type="date" id="ei_prazo" data-f="ei_prazo"></label>
+    <label class="f">O que a Parte I pede (cole o enunciado)<textarea id="ei_ent" data-f="ei_ent"></textarea></label>
+    <label class="f">Problema ou oportunidade que o AgroQuest enfrenta<textarea id="ei_prob" data-f="ei_prob" placeholder="Use a ficha do jogo da fase inicial como base."></textarea></label>
+    <label class="f">Quem é afetado pelo problema e o que essa pessoa vive hoje<textarea id="ei_stake" data-f="ei_stake" placeholder="Estudantes, professores, produtores rurais, escolas."></textarea></label>
+  </div>
+  <div class="box">
+    <h3>Controle da equipe: todos entregaram?</h3>
+    <p class="hint">Escreva o nome de cada integrante e marque quando a entrega estiver confirmada na plataforma.</p>
+    <div id="eqp"></div>
+    <p class="hint" id="eqpTot"></p>
+  </div>
+  <div class="box">
+    <h3>Checklist</h3>
+    <label class="chk"><input type="checkbox" id="c_ei1" data-xp="10"><span>Inscrição feita na Escola de Inovadores. As inscrições da edição atual vão até 9 de outubro. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_ei2" data-xp="10"><span>Li o enunciado da Parte I e anotei o prazo. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_ei3" data-xp="10"><span>Cada integrante usa a própria conta e envia a própria entrega. <span class="xp">+10</span></span></label>
+    <label class="chk"><input type="checkbox" id="c_ei4" data-xp="10"><span>Guardei o comprovante ou captura de tela do envio. <span class="xp">+10</span></span></label>
+  </div>
+  <div class="quiz box" id="q7" data-a="1" data-xp="15" data-why="A entrega é individual na plataforma. A equipe se ajuda no conteúdo, mas cada pessoa confirma o próprio envio.">
+    <p class="q">Desafio 8. Como garantir que todos entreguem a Parte I?</p>
+    <div class="opts">
+      <button data-i="0">Uma pessoa entrega por todos no final</button>
+      <button data-i="1">Cada integrante envia a sua, e a equipe confere o comprovante de todos antes do prazo</button>
+      <button data-i="2">Esperar o último dia para ver quem falta</button>
+    </div>
+    <p class="fb"></p>
+  </div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn go" data-dir="1">Fase final: Plano de ação</button></div>
+</section>
+
+<!-- 8 -->
+<section class="phase" id="plano" data-title="Plano de ação">
+  <span class="when">Chefe final</span>
+  <h2>Plano de ação: datas, entregas e o texto pronto para compartilhar</h2>
+  <div class="box">
+    <h3>Agenda <span class="xp">+10 XP por data preenchida</span></h3>
+    <div id="agenda"></div>
+  </div>
+  <div class="box">
+    <h3>Resumo do seu grupo</h3>
+    <p class="hint">Reúne o que você escreveu nas fases anteriores. Copie e cole no grupo ou no seu documento.</p>
+    <textarea id="resumo" readonly style="min-height:260px;font-family:var(--f-mono);font-size:.85rem"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="btn" id="copiar">Copiar resumo</button><span class="hint" id="copiado"></span></div>
+  </div>
+  <div class="badge" id="badge"><h3>Colheita concluída</h3><p>Você passou de 85% do XP. Seu material está pronto para os eventos.</p></div>
+  <div class="pager"><button class="btn alt go" data-dir="-1">Voltar</button><button class="btn alt" id="reset">Zerar progresso</button></div>
+  <p class="hint" id="resetmsg"></p>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+var KEY='agroquest-aula-v1';
+var S={checks:{},quiz:{},f:{}};
+try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);S.checks=p.checks||{};S.quiz=p.quiz||{};S.f=p.f||{}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+var phases=$$('.phase'), trail=$('#trail'), idx=0;
+phases.forEach(function(ph,i){
+  var b=document.createElement('button');
+  b.type='button';b.innerHTML='<span class="dot"></span>'+(i)+'. '+ph.dataset.title;
+  if(i===0)b.innerHTML='<span class="dot"></span>'+ph.dataset.title;
+  b.addEventListener('click',function(){show(i,true)});
+  trail.appendChild(b);
+});
+function show(i,scroll){
+  idx=Math.max(0,Math.min(phases.length-1,i));
+  phases.forEach(function(p,k){p.classList.toggle('on',k===idx)});
+  $$('button',trail).forEach(function(b,k){b.setAttribute('aria-current',k===idx?'true':'false')});
+  try{history.replaceState(null,'','#'+phases[idx].id)}catch(e){}
+  if(scroll)window.scrollTo({top:0,behavior:'smooth'});
+  var cur=$$('button',trail)[idx];if(cur&&cur.scrollIntoView)cur.scrollIntoView({inline:'center',block:'nearest'});
+  if(phases[idx].id==='plano')renderResumo();
+}
+$$('.go').forEach(function(b){b.addEventListener('click',function(){show(idx+parseInt(b.dataset.dir,10),true)})});
+
+/* XP */
+var ranks=[['Semente',0],['Broto',20],['Muda',40],['Planta',60],['Colheita',85]];
+function xpTotals(){
+  var max=0,got=0;
+  $$('input[type=checkbox][data-xp]').forEach(function(c){var v=+c.dataset.xp;max+=v;if(c.checked)got+=v});
+  $$('.quiz').forEach(function(q){var v=+q.dataset.xp;max+=v;if(S.quiz[q.id])got+=v});
+  var groups=[['g_nome','g_link','g_prob','g_acao','g_build','g_res'],['b_tit','b_prob','b_met','b_res','b_con'],['o_1','o_2','o_3','o_4','o_5'],['p_1','p_2','p_3','p_4'],['m_pub','m_can','m_con','m_met'],['mo_mod','mo_quem','mo_test'],['ei_prazo','ei_ent','ei_prob','ei_stake']];
+  var gv=[20,20,20,20,20,20,20];
+  groups.forEach(function(g,i){max+=gv[i];var ok=g.every(function(k){return (S.f[k]||'').trim().length>2});if(ok)got+=gv[i]});
+  /* simulador */
+  max+=10;if(S.sim)got+=10;
+  /* agenda */
+  for(var e=0;e<5;e++){max+=10;if(S.f['ev_d'+e])got+=10}
+  $$('input[data-eq]').forEach(function(c){max+=5;if(c.checked)got+=5});
+  return {max:max,got:got};
+}
+function paint(){
+  var t=xpTotals(),pct=t.max?Math.round(t.got/t.max*100):0;
+  $('#barI').style.width=pct+'%';$('#barA').setAttribute('aria-valuenow',pct);
+  $('#xpTxt').textContent=t.got+' XP';
+  var r=ranks[0][0];ranks.forEach(function(x){if(pct>=x[1])r=x[0]});
+  $('#rankName').textContent=r;
+  $('#badge').classList.toggle('on',pct>=85);
+  var cb=$$('button',trail);
+  phases.forEach(function(ph,i){
+    var items=$$('input[type=checkbox][data-xp]',ph),qs=$$('.quiz',ph);
+    var done=(items.length||qs.length)&&items.every(function(c){return c.checked})&&qs.every(function(q){return S.quiz[q.id]});
+    cb[i].classList.toggle('full',!!done);
+  });
+}
+
+/* checkboxes */
+$$('input[type=checkbox][data-xp]').forEach(function(c){
+  c.checked=!!S.checks[c.id];
+  c.addEventListener('change',function(){S.checks[c.id]=c.checked;save();paint()});
+});
+
+/* quiz */
+$$('.quiz').forEach(function(q){
+  var fb=$('.fb',q),btns=$$('.opts button',q),a=+q.dataset.a;
+  function mark(){btns.forEach(function(b){b.classList.toggle('right',S.quiz[q.id]&&+b.dataset.i===a)});
+    if(S.quiz[q.id]){fb.className='fb ok';fb.textContent='Correto. '+q.dataset.why}}
+  mark();
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    if(S.quiz[q.id])return;
+    if(+b.dataset.i===a){S.quiz[q.id]=true;save();mark();paint()}
+    else{b.classList.add('wrong');fb.className='fb no';fb.textContent='Ainda não. Releia as opções e tente de novo.';setTimeout(function(){b.classList.remove('wrong')},900)}
+  })});
+});
+
+/* fields */
+$$('[data-f]').forEach(function(el){
+  var k=el.dataset.f;
+  if(S.f[k]!==undefined&&S.f[k]!=='')el.value=S.f[k];
+  else S.f[k]=S.f[k]||'';
+  el.addEventListener('input',function(){S.f[k]=el.value;save();paint();card();});
+});
+/* the pre-filled game name should count as saved */
+if(!S.f.g_nome){S.f.g_nome=$('#g_nome').value}
+
+/* cartão */
+function card(){
+  $('#pv_g').textContent=$('#g_nome').value.trim()||'AgroQuest';
+  $('#pv_fr').textContent=$('#cn_frase').value.trim()||'Sua frase de uma linha aparece aqui';
+  $('#pv_n').textContent=$('#cn_nome').value.trim()||'Seu nome';
+  $('#pv_c').textContent=$('#cn_cont').value.trim()||'contato';
+  var cg=$('#cn_cargo').value.trim();var who=$('#pv_n').parentNode;
+  who.childNodes[1].textContent=cg||'Sua função';
+}
+card();
+
+/* banner map */
+var tips={
+ titulo:['Título + autores','Título de até 12 palavras, legível a 2 metros (mínimo 72 pt). Nomes, curso, instituição e orientador logo abaixo, em corpo menor.'],
+ problema:['Problema','Duas ou três linhas. Diga quem sofre com o quê e por que isso importa na formação agrícola.'],
+ visual:['Telas do jogo','A área maior do banner. Capturas reais do AgroQuest em uso, com legendas curtas apontando a mecânica principal.'],
+ metodo:['Como foi feito','Três tópicos: planejamento (documento de design), desenvolvimento (engine e linguagem) e teste (quem jogou e como foi medido). Um diagrama pequeno ajuda.'],
+ resultados:['Resultados','O número mais forte em destaque grande. Um gráfico simples, com eixos legíveis, vale mais que uma tabela.'],
+ conclusao:['Conclusão','Uma frase que responde ao objetivo e uma linha com o próximo passo.'],
+ qr:['QR + referências + apoio','QR para o jogo no canto inferior, contatos, agradecimentos, logotipos de apoio e referências em corpo menor.']
+};
+$$('#bmock button').forEach(function(b){b.addEventListener('click',function(){
+  $$('#bmock button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+  var t=tips[b.dataset.k];$('#tipName').textContent=t[0];$('#tipBody').textContent=t[1];
+})});
+
+/* pitch timer */
+var tm=null,left=180,total=180;
+var segP=[.15,.25,.35,.25],segN=['Gancho e problema','Solução','Negócio e receita','Pedido final'];
+function fmt(s){var m=Math.floor(s/60),r=s%60;return m+':'+(r<10?'0':'')+r}
+function pitchPaint(){
+  $('#pt_clock').textContent=fmt(Math.max(left,0));
+  var el=total-left,acc=0,cur=0;
+  segP.forEach(function(p,i){if(el>=acc*total&&true)cur=i;acc+=p});
+  var a2=0;$$('#pt_segs i').forEach(function(s,i){var start=a2*total;a2+=segP[i];s.className=(el>=a2*total)?'past':(i===cur&&el>=start&&left>0&&(tm||el>0))?'on':''});
+  $('#pt_cur').textContent=left<=0?'Tempo esgotado':(el===0&&!tm?segN[0]:segN[cur]);
+}
+function pitchSet(){total=left=+$('#pt_dur').value;pitchPaint()}
+$('#pt_dur').addEventListener('change',function(){if(tm){clearInterval(tm);tm=null;$('#pt_go').textContent='Iniciar'}pitchSet()});
+$('#pt_go').addEventListener('click',function(){
+  if(tm){clearInterval(tm);tm=null;this.textContent='Continuar';return}
+  if(left<=0)pitchSet();
+  this.textContent='Pausar';
+  tm=setInterval(function(){left--;pitchPaint();if(left<=0){clearInterval(tm);tm=null;$('#pt_go').textContent='Iniciar'}},1000);
+});
+$('#pt_rs').addEventListener('click',function(){if(tm){clearInterval(tm);tm=null}$('#pt_go').textContent='Iniciar';pitchSet()});
+pitchSet();
+
+/* simulador */
+function brl(n){return 'R$ '+Math.round(n).toLocaleString('pt-BR')}
+function sim(user){
+  var g=function(id){return Math.max(0,parseFloat($(id).value)||0)};
+  var ativos=g('#s_inst')*Math.min(g('#s_ret'),100)/100;
+  var comp=ativos*Math.min(g('#s_pag'),100)/100*g('#s_tk');
+  var ads=ativos*g('#s_ad')*g('#s_ecpm')/1000;
+  $('#o_ativos').textContent=Math.round(ativos).toLocaleString('pt-BR');
+  $('#o_comp').textContent=brl(comp);$('#o_ads').textContent=brl(ads);$('#o_total').textContent=brl(comp+ads);
+  if(user&&!S.sim){S.sim=true;save();paint()}
+}
+['#s_inst','#s_ret','#s_pag','#s_tk','#s_ad','#s_ecpm'].forEach(function(id){$(id).addEventListener('input',function(){sim(true)})});
+sim(false);
+
+/* agenda */
+var evs=[['GeniusCon','Cartão de visitas e banner'],['Fatec Botucatu','Banner e apresentação oral do resumo expandido'],['CIC Unifio','Banner'],['Simpósio Centro Paula Souza, Marília','Pitch'],['Escola de Inovadores, Parte I','Entrega da Parte I por todos os integrantes']];
+var ag=$('#agenda');
+evs.forEach(function(e,i){
+  var row=document.createElement('div');row.className='evrow';
+  row.innerHTML='<div><b>'+e[0]+'</b><div class="hint">'+e[1]+'</div></div><label class="f">Data<input type="date" id="ev_d'+i+'" data-agenda="'+i+'"></label><div class="d" id="ev_c'+i+'"></div>';
+  ag.appendChild(row);
+  var inp=$('#ev_d'+i);inp.value=S.f['ev_d'+i]||'';
+  inp.addEventListener('input',function(){S.f['ev_d'+i]=inp.value;save();count(i);paint();renderResumo()});
+  count(i);
+});
+function count(i){
+  var v=$('#ev_d'+i).value,out=$('#ev_c'+i);
+  if(!v){out.textContent='Defina a data';return}
+  var p=v.split('-'),d=new Date(+p[0],+p[1]-1,+p[2]),n=new Date();n=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  var diff=Math.round((d-n)/86400000);
+  out.textContent=diff>0?('Faltam '+diff+' dia'+(diff>1?'s':'')):diff===0?'É hoje':'Já passou';
+}
+
+/* controle da equipe */
+var eq=$('#eqp');
+for(var m=0;m<6;m++){(function(m){
+  var r=document.createElement('div');r.className='chk';r.style.cursor='default';
+  r.innerHTML='<input type="checkbox" id="em_c'+m+'" data-eq="1" aria-label="Entrega confirmada do integrante '+(m+1)+'"><span><input type="text" id="em_n'+m+'" data-f="em_n'+m+'" placeholder="Integrante '+(m+1)+'"></span><span class="xp">+5</span>';
+  eq.appendChild(r);
+  var c=r.querySelector('input[type=checkbox]'),n=r.querySelector('input[type=text]');
+  c.checked=!!S.checks['em_c'+m];n.value=S.f['em_n'+m]||'';
+  c.addEventListener('change',function(){S.checks['em_c'+m]=c.checked;save();eqTot();paint();renderResumo()});
+  n.addEventListener('input',function(){S.f['em_n'+m]=n.value;save();renderResumo()});
+})(m)}
+function eqNames(){var a=[];for(var i=0;i<6;i++){var n=(S.f['em_n'+i]||'').trim();if(n)a.push([n,!!S.checks['em_c'+i]])}return a}
+function eqTot(){var a=eqNames(),ok=a.filter(function(x){return x[1]}).length;$('#eqpTot').textContent=a.length?(ok+' de '+a.length+' entregas confirmadas'):'Adicione os nomes da equipe.'}
+function eqpList(){var a=eqNames();return a.length?a.map(function(x){return x[0]+(x[1]?' (entregue)':' (pendente)')}).join(', '):'(preencher)'}
+eqTot();
+
+/* resumo */
+function dtbr(v){if(!v)return 'a definir';var p=v.split('-');return p[2]+'/'+p[1]+'/'+p[0]}
+function renderResumo(){
+  var f=function(k){return (S.f[k]||'').trim()||'(preencher)'};
+  var t='PROJETO: '+f('g_nome')+'\nLink: '+f('g_link')+'\n\n'+
+  'PROBLEMA\n'+f('g_prob')+'\n\nO QUE O JOGADOR FAZ\n'+f('g_acao')+'\n\nCONSTRUÇÃO\n'+f('g_build')+'\n\nRESULTADO\n'+f('g_res')+'\n\n'+
+  'CARTÃO (GeniusCon)\nFrase: '+f('cn_frase')+'\n\nBANNER\nTítulo: '+f('b_tit')+'\n\n'+
+  'PITCH (Simpósio CPS, Marília)\nGancho: '+f('p_1')+'\nSolução: '+f('p_2')+'\nNegócio: '+f('p_3')+'\nPedido: '+f('p_4')+'\n\n'+
+  'MARKETING\nPúblico: '+f('m_pub')+'\nCanais: '+f('m_can')+'\nConteúdos: '+f('m_con')+'\nMétrica: '+f('m_met')+'\n\n'+
+  'MONETIZAÇÃO\nModelo: '+f('mo_mod')+'\nQuem paga: '+f('mo_quem')+'\nPrimeiro teste: '+f('mo_test')+'\n\n'+
+  'AGENDA\nGeniusCon: '+dtbr(S.f.ev_d0)+'\nFatec Botucatu: '+dtbr(S.f.ev_d1)+'\nCIC Unifio: '+dtbr(S.f.ev_d2)+'\nSimpósio CPS Marília: '+dtbr(S.f.ev_d3)+'\nEscola de Inovadores, Parte I: '+dtbr(S.f.ev_d4)+'\n\n'+
+  'ESCOLA DE INOVADORES, PARTE I\nPrazo: '+dtbr(S.f.ei_prazo)+'\nProblema: '+f('ei_prob')+'\nAfetados: '+f('ei_stake')+'\nEntregaram: '+eqpList();
+  $('#resumo').value=t;
+}
+$('#copiar').addEventListener('click',function(){
+  var ta=$('#resumo'),msg=$('#copiado');
+  function fallback(){ta.focus();ta.select();msg.textContent='Texto selecionado. Use copiar do seu aparelho.'}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(function(){msg.textContent='Copiado.'},fallback)}else fallback();
+});
+
+/* reset (two-step, no confirm dialogs) */
+var armed=false;
+$('#reset').addEventListener('click',function(){
+  var m=$('#resetmsg');
+  if(!armed){armed=true;this.textContent='Toque de novo para apagar tudo';m.textContent='Isso apaga XP, respostas e datas deste navegador.';setTimeout(function(){armed=false;$('#reset').textContent='Zerar progresso';m.textContent=''},5000);return}
+  try{localStorage.removeItem(KEY)}catch(e){}
+  S={checks:{},quiz:{},f:{}};location.reload();
+});
+
+paint();
+var h=(location.hash||'').replace('#','');
+var start=0;phases.forEach(function(p,i){if(p.id===h)start=i});
+show(start,false);
+})();
+</script>
+
+</body></html>
